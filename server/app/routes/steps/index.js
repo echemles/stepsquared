@@ -14,10 +14,20 @@ router.post('/', function(req, res, next){
 		return Tutorial.findById(req.body.tutorialId)
 	})
 	.then(function(tutorial){
-		if(!req.index.index){
+		if(!req.body.index){
 			tutorial.steps.push(createdStep._id)
+			tutorial.save()
+			.then(function(tutorial){
+				res.status(201).send(createdStep)
+			})
+			
 		} else{
 			tutorial.steps.splice(req.body.index, 0, createdStep._id)
+			tutorial.save()
+			.then(function(tutorial){
+				res.status(201).send(createdStep)
+			})
+			
 		}
 	})
 	.then(null, next)
@@ -25,6 +35,7 @@ router.post('/', function(req, res, next){
 })
 
 router.put('/:stepId', function(req, res, next){
+	delete req.body._id
 	req.step.set(req.body)
 	req.step.save()
 	.then(function(step){
@@ -34,9 +45,9 @@ router.put('/:stepId', function(req, res, next){
 })
 
 router.delete('/:stepId', function(req, res, next){
-	req.step.delete
+	req.step.remove()
 	.then(function(step){
-		res.status(204).next();
+		res.sendStatus(204);
 	})
 	.then(null, next)
 })
