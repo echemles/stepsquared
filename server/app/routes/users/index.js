@@ -34,10 +34,11 @@ router.get('/:user_id', function(req, res, next){
 
 //Modify one user
 router.put('/:user_id', function(req, res, next){
+	delete req.body.password;
 	req.userObj.set(req.body);
 	req.userObj.save()
 	.then(function(updatedUser) {
-		res.send(updatedUser);
+		res.json(updatedUser);
 	})
 	.then(null,next);
 })
@@ -46,7 +47,7 @@ router.put('/:user_id', function(req, res, next){
 router.delete('/:user_id', function(req, res, next){
 	req.userObj.remove()
 	.then(function(){ 
-		res.send("successfully deleted user")
+		res.json("successfully deleted user")
 	})
 	.then(null, next);
 })
@@ -55,7 +56,7 @@ router.delete('/:user_id', function(req, res, next){
 router.get('/:user_id/favorites', function(req, res, next) {
 	req.userObj.populate('favorites').execPopulate()
 	.then(function(populatedUser){ 
-		res.send(populatedUser.favorites);
+		res.json(populatedUser.favorites);
 	})
 	.then(null,next);
 })
@@ -64,7 +65,7 @@ router.get('/:user_id/favorites', function(req, res, next) {
 router.get('/:user_id/tutorials', function(req, res, next) {
 	Tutorial.find({author: req.userObj._id})
 	.then(function(tutorials){ 
-		res.send(tutorials)
+		res.json(tutorials)
 	})
 	.then(null,next);
 })
