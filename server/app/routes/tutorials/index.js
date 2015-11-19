@@ -1,5 +1,6 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
+module.exports = router;
 
 var Tutorial = mongoose.model('Tutorial');
 
@@ -31,22 +32,23 @@ router.get('/search/:searchTerm', function(req, res, next){
 	var searchRegex = new RegExp('.*' + searchQuery + '.*', 'i')
 
 	Tutorial.find({$or: [
-		{name: {$regex: {searchRegex}}},
-		{description: {$regex: {searchRegex}}}
+		{name: searchRegex},
+		{description: searchRegex}
 	]})
-	.populate([
-		{
-			path: 'author',
-			match: {$or:[
-				{firstName: {$regex: {searchRegex}}},
-				{lastName: {$regex: {searchRegex}}}
-			]}
-		},
-		{
-			path: 'category',
-			match: {name: {$regex: {searchRegex}}}
-		}
-	])
+	// .populate([
+	// 	{
+	// 		path: 'author',
+	// 		match: {$or:[
+	// 			{'author.firstName': {$regex: {searchRegex}}},
+	// 			{'author.lastName': {$regex: {searchRegex}}}
+	// 		]}
+	// 	},
+	// 	{
+	// 		path: 'category',
+	// 		match: {name: {$regex: {searchRegex}}}
+	// 	}
+	// ])
+	// .execPopulate()
 	.then(function(tutorial){
 		res.json(tutorial)
 	})
@@ -55,7 +57,9 @@ router.get('/search/:searchTerm', function(req, res, next){
 
 router.put('/:tutorialId', function(req, res, next){
 	delete req.foundTutorial._id
+	console.log("body is ", req.body)
 	req.foundTutorial.set(req.body)
+
 	req.foundTutorial.save()
 	.then(function(tutorial){
 		res.json(tutorial)
@@ -65,11 +69,12 @@ router.put('/:tutorialId', function(req, res, next){
 
 router.delete('/:tutorialId', function(req, res, next){
 	req.foundTutorial.remove();
+	res.sendStatus(204)
 })
 
 router.post('/', function(req, res, next){
-	delete req.body.author;
-	req.body.author = req.user._id;
+	// delete req.body.author;
+	// req.body.author = req.user._id;
 	Tutorial.create(req.body)
 	.then(function(tutorial){
 		res.json(tutorial)
