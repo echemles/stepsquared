@@ -44,7 +44,7 @@ schema.pre('save', function (next) {
         this.password = this.constructor.encryptPassword(this.password, this.salt);
     }
 
-    if (!display_name) {
+    if (!this.display_name) {
         this.display_name = this.firstName;
     }
 
