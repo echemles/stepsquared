@@ -57,3 +57,5 @@ schema.methods.standbyTime = function(){
 		return totalTime
 	})
 }
+
+mongoose.model('Tutorial', schema)

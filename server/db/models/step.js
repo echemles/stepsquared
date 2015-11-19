@@ -16,3 +16,5 @@ var schema = new mongoose.Schema({
 	activeTime: {type:Number, default: 0},
 	standByTime: {type: Number, default: 0}
 });
+
+mongoose.model('Step', schema);
