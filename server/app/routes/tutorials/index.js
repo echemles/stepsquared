@@ -56,8 +56,7 @@ router.get('/search/:searchTerm', function(req, res, next){
 })
 
 router.put('/:tutorialId', function(req, res, next){
-	delete req.foundTutorial._id
-	console.log("body is ", req.body)
+	delete req.body._id
 	req.foundTutorial.set(req.body)
 
 	req.foundTutorial.save()
@@ -77,7 +76,7 @@ router.post('/', function(req, res, next){
 	// req.body.author = req.user._id;
 	Tutorial.create(req.body)
 	.then(function(tutorial){
-		res.json(tutorial)
+		res.status(201).json(tutorial)
 	})
 	.then(null, next)
 })
