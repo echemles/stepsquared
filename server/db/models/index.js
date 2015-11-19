@@ -5,3 +5,5 @@ require('./user');
 require('./media');
 require('./category');
 require('./help');
+require('./tutorial');
+require('./step');
