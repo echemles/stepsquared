@@ -16,7 +16,7 @@ var schema = new mongoose.Schema({
 	photos: [{type: objectId, ref: 'Media', minLength: 1}],
 	author: {type: objectId, ref: 'User', required: true},
 	steps: [{type: objectId, ref: 'Step', minLength: 1}],
-	upvotes: [{type: objectId, ref: 'User', required: true}],
+	upvotes: [{type: objectId, ref: 'User'}],
 	equipment: [{type: String}]
 
 });
