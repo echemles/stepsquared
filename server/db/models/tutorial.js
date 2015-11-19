@@ -2,6 +2,7 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var _ = require('lodash');
+var requirementSchema = require('./requirementSchema');
 
 var objectId = mongoose.Schema.Types.ObjectId;
 
@@ -10,28 +11,49 @@ var schema = new mongoose.Schema({
 	category: {type: objectId, ref: 'Category'},
 	description: {type: String, required: true},
 	quantity: {type: Number, default: 1, required: true},
-	requirements: [{{type: objectId, ref: 'Requirement'}, minLength: 1}],
+	requirements: [{type: requirementSchema, minLength: 1}],
 	//min length 1 for photos??
-	photos: [{{type: objectId, ref: 'Media'}, minLength: 1}],
+	photos: [{type: objectId, ref: 'Media', minLength: 1}],
 	author: {type: objectId, ref: 'User', required: true},
-	steps: [{{type: objectId, ref: 'Step'}, minLength: 1}],
+	steps: [{type: objectId, ref: 'Step', minLength: 1}],
 	upvotes: [{type: objectId, ref: 'User', required: true}],
 	equipment: [{type: String}]
 
-})
+});
 
 schema.methods.totalPoints = function(){
-
+	return this.upvotes.length;
 }
 
 schema.methods.totalTime = function(){
-	
+	return this.populate('steps').exec()
+	.then(function(tutorial){
+		var totalTime = 0;
+		tutorial.steps.forEach(function(step){
+			totalTime += step.activeTime  + step.standByTime
+		})
+		return totalTime
+	})
 }
 
 schema.methods.activeTime = function(){
-	
+	return this.populate('steps').exec()
+	.then(function(tutorial){
+		var totalTime = 0;
+		tutorial.steps.forEach(function(step){
+			totalTime += step.activeTime 
+		})
+		return totalTime
+	})
 }
 
 schema.methods.standbyTime = function(){
-	
+	return this.populate('steps').exec()
+	.then(function(tutorial){
+		var totalTime = 0;
+		tutorial.steps.forEach(function(step){
+			totalTime += step.standByTime 
+		})
+		return totalTime
+	})
 }
