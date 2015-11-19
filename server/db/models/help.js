@@ -11,4 +11,4 @@ var schema = new mongoose.Schema({
 
 
 
-module.exports = mongoose.model('Help', schema);
+mongoose.model('Help', schema);

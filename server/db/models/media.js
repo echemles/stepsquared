@@ -19,4 +19,4 @@ var schema = new mongoose.Schema({
 
 
 
-module.exports = mongoose.model('Media', schema);
+mongoose.model('Media', schema);
