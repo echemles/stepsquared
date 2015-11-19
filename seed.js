@@ -32,23 +32,22 @@ var Media = mongoose.model('Media');
 var seedUsers = function () {
 
     var users = {
-                email: 'testing@fsa.com',
-                password: 'password',
-                firstName: 'Omri',
-                lastName: 'Bernstein',
-            }
-
-
+        email: 'testing@fsa.com',
+        password: 'password',
+        firstName: 'Omri',
+        lastName: 'Bernstein' 
+    }
     return User.create(users);
 
 };
 
-var seedTutorials = function(user){
+var seedTutorials = function(userId, categoryId){
     var tutorial = {
         name: 'Brownies',
-        decription: 'Yumpp brownies description',
+        description: 'Yumpp brownies description',
         quantity: 3,
-        author: user
+        author: userId,
+        category: categoryId
     }
     return Tutorial.create(tutorial)
 }
@@ -70,9 +69,10 @@ var seedMedias = function(){
     return Media.create(media)
 }
 
-var seedSteps = function(media){
+var seedSteps = function(mediaId){
     var step = {
         name: 'Satueee onions',
+        description: 'a descripton',
         requirements: [
             {
                 quantity: 1, 
@@ -85,14 +85,23 @@ var seedSteps = function(media){
                 item: 'chocolate'
             }
         ],
-        media: media
+        media: mediaId
     }
     return Step.create(step)
 }
 
 connectToDb.then(function () {
-    
-    }).then(function () {
+    mongoose.connection.db.dropDatabase()
+    .then(function(){
+        return Promise.all([seedUsers(), seedCategories(), seedMedias()])
+    })
+    .then(function(values){
+        var user = values[0];
+        var media = values[2];
+        var category = values[1]
+        return Promise.join(seedTutorials(user._id, category._id), seedSteps(media._id))
+    })
+    .then(function () {
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
     }).catch(function (err) {
