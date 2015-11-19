@@ -4,6 +4,7 @@ module.exports = router;
 var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Tutorial = mongoose.model('Tutorial')
 
 router.param('user_id', function(req, res, next) {
 	User.findById(req.params.user_id)
@@ -15,7 +16,7 @@ router.param('user_id', function(req, res, next) {
 })
 
 
-//***CREATE USER IS IN SIGNUP ROUTER***
+//***CREATE USER IS IN AUTH ROUTER under /signup route***
 
 //Get all users
 router.get('/', function(req, res, next){
@@ -43,7 +44,7 @@ router.put('/:user_id', function(req, res, next){
 
 //Delete one user
 router.delete('/:user_id', function(req, res, next){
-	req.userObj.delete()
+	req.userObj.remove()
 	.then(function(){ 
 		res.send("successfully deleted user")
 	})
@@ -52,7 +53,7 @@ router.delete('/:user_id', function(req, res, next){
 
 //Get all favorite tutorials for one user
 router.get('/:user_id/favorites', function(req, res, next) {
-	req.userObj.populate('favorites').exec()
+	req.userObj.populate('favorites').execPopulate()
 	.then(function(populatedUser){ 
 		res.send(populatedUser.favorites);
 	})
@@ -60,7 +61,7 @@ router.get('/:user_id/favorites', function(req, res, next) {
 })
 
 //Get all tutorials created by one user
-router.get('/user_id/tutorials', function(req, res, next) {
+router.get('/:user_id/tutorials', function(req, res, next) {
 	Tutorial.find({author: req.userObj._id})
 	.then(function(tutorials){ 
 		res.send(tutorials)
