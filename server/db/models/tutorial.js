@@ -8,7 +8,7 @@ var objectId = mongoose.Schema.Types.ObjectId;
 
 var schema = new mongoose.Schema({
 	name: {type: String, required: true},
-	category: {type: objectId, ref: 'Category'},
+	category: {type: objectId, ref: 'Category', required: true},
 	description: {type: String, required: true},
 	quantity: {type: Number, default: 1, required: true},
 	requirements: {type: [requirementSchema], minLength: 1},
