@@ -5,6 +5,33 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
+function logInUser (req,res,next) {
+    var authCb = function (err, user) {
+
+        if (err) return next(err);
+
+        if (!user) {
+            var error = new Error('Invalid login credentials.');
+            error.status = 401;
+            return next(error);
+        }
+
+        // req.logIn will establish our session.
+        req.logIn(user, function (loginErr) {
+            if (loginErr) return next(loginErr);
+            // We respond with a response object that has user with _id and email.
+            res.status(200).send({
+                user: user.sanitize()
+            });
+        });
+
+    };
+
+    passport.authenticate('local', authCb)(req, res, next);
+
+}
+
+
 module.exports = function (app) {
 
     // When passport.authenticate('local') is used, this function will receive
@@ -28,30 +55,15 @@ module.exports = function (app) {
 
     // A POST /login route is created to handle login.
     app.post('/login', function (req, res, next) {
-
-        var authCb = function (err, user) {
-
-            if (err) return next(err);
-
-            if (!user) {
-                var error = new Error('Invalid login credentials.');
-                error.status = 401;
-                return next(error);
-            }
-
-            // req.logIn will establish our session.
-            req.logIn(user, function (loginErr) {
-                if (loginErr) return next(loginErr);
-                // We respond with a response object that has user with _id and email.
-                res.status(200).send({
-                    user: user.sanitize()
-                });
-            });
-
-        };
-
-        passport.authenticate('local', authCb)(req, res, next);
-
+        logInUser(req,res,next);
     });
+
+    app.post('/signup', function (req, res, next) {
+        User.create(req.body)
+        .then(function() {
+            logInUser(req,res,next)
+        })
+        .then(null,next);
+    })
 
 };
