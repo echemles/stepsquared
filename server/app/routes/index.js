@@ -7,6 +7,7 @@ router.use('/tutorials', require('./tutorials'));
 router.use('/users', require('./users'));
 router.use('/steps', require('./steps'));
 router.use('/help', require('./help'));
+router.use('/media', require('./media'));
 
 
 
