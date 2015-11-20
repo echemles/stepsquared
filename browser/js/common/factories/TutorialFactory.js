@@ -1,35 +1,30 @@
 app.factory('TutorialFactory', function($http){
     var TutorialFactory = {};
 
+    function getData(response){
+        return response.data;
+    }
 
 
     TutorialFactory.fetchAll = function(){
         return $http.get('/api/tutorials/')
-        .then(function(res){
-            return res.data
-        })
+        .then(getData)
     }
 
     TutorialFactory.fetchOne = function(tutorialId){
         return $http.get('/api/tutorials/'+ tutorialId)
-        .then(function(res){
-            return res.data
-        });
+        .then(getData);
     }
 
     TutorialFactory.search = function(searchTerm) {
         return $http.get('/api/tutorials/search/' + searchTerm)
-        .then(function(res) {
-            return res.data;
-        })
+        .then(getData)
     }
 
 
     TutorialFactory.update = function(tutorial){
         return $http.put('/api/tutorials/' + tutorial._id, tutorial)
-        .then(function(res){
-            return res.data
-        });
+        .then(getData);
     }
 
 
@@ -42,9 +37,7 @@ app.factory('TutorialFactory', function($http){
 
     TutorialFactory.create = function(tutorial) {
         return $http.post('/api/tutorials/', tutorial)
-        .then(function(res) {
-            return res.data;
-        })
+        .then(getData)
     }
 
 
