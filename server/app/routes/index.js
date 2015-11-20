@@ -6,6 +6,7 @@ module.exports = router;
 router.use('/tutorials', require('./tutorials'));
 router.use('/users', require('./users'));
 router.use('/steps', require('./steps'));
+router.use('/media', require('./media'));
 
 
 // Make sure this is after all of
