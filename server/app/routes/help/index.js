@@ -20,6 +20,7 @@ router.get('/:helpId', function(req, res, next) {
 })
 
 router.post('/', function(req,res,next) {
+	delete req.body._id
 	Help.create(req.body)
 	.then(function(help) {
 		res.status(201).json(help);
