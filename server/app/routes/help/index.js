@@ -28,7 +28,7 @@ router.post('/', function(req,res,next) {
 })
 
 router.put('/:helpId', function(req,res,next) {
-	delete req.body.id;
+	delete req.body._id;
 	req.help.set(req.body);
 	req.help.save()
 	.then(function(help) {
