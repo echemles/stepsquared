@@ -38,7 +38,10 @@ router.put('/:helpId', function(req,res,next) {
 })
 
 router.delete(':/helpId', function(req,res,next) {
-	req.help.remove();
-	res.sendStatus(204);
+	req.help.remove()
+	.then(function() {
+		res.sendStatus(204);
+	})
+	.then(null, next);
 })
 
