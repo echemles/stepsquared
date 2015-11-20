@@ -1,12 +1,13 @@
 app.factory('HelpFactory', function($http){
 
 	var HelpFactory = {};
+	function getData(response){
+		return response.data;
+	}
 
 	HelpFactory.getOne = function(helpId){
 		return $http.get('/api/help/' + helpId)
-		.then(function(res){
-			return res.data
-		})
+		.then(getData)
 	}
 
 	HelpFactory.delete = function(helpId) {
@@ -18,16 +19,12 @@ app.factory('HelpFactory', function($http){
 
 	HelpFactory.create = function(help){
 		return $http.post('/api/help/', help)
-		.then (function(res){
-			return res.data;
-		})
+		.then (getData)
 	}
 
 	HelpFactory.update = function(help){
 		return $http.put('/api/help/'+ help._id, help)
-		.then (function(res){
-			return res.data;
-		})
+		.then (getData)
 	}
 
 	return HelpFactory;
