@@ -52,6 +52,10 @@ router.delete('/:stepId', function(req, res, next){
 	.then(null, next)
 })
 
+router.get('/:stepId', function(req, res, next){
+	res.send(req.step)
+})
+
 
 router.param('stepId', function(req, res, next, id){
 	Step.findById(id)
