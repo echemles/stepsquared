@@ -6,6 +6,7 @@ module.exports = router;
 router.use('/tutorials', require('./tutorials'));
 router.use('/users', require('./users'));
 router.use('/steps', require('./steps'));
+router.use('/categories', require('./categories'));
 
 
 // Make sure this is after all of
