@@ -8,6 +8,7 @@ var Media = mongoose.model('Media');
 router.param('mediaId', function(req, res, next, id) {
 	Media.findById(id)
 	.then(function(media) {
+		if (!media) throw new Error('No media found')
 		req.foundMedia = media;
 		next();
 	})
@@ -52,6 +53,7 @@ router.delete('/:mediaId', function(req, res, next){
 
 //Create one media
 router.post('/', function(req,res,next) {
+	delete req.body._id
 	Media.create(req.body)
 	.then(function(media) {
 		res.json(media)
