@@ -1,4 +1,4 @@
-app.factory('StepsFactory', function($rootScope, $http){
+app.factory('StepsFactory', function($http){
 
 	var StepsFactory = {};
 
