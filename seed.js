@@ -48,7 +48,7 @@ var seedUsers = function () {
 
 };
 
-var seedTutorials = function(userId, categoryId, stepId){
+var seedTutorials = function(userId, categoryId, stepId, userId2){
     var tutorial = [
         {
             name: 'Brownies',
@@ -112,6 +112,48 @@ var seedTutorials = function(userId, categoryId, stepId){
             ],
             steps: [stepId],
             equipment: ['Oven', 'Mixer']
+        },
+        {
+            name: 'Brownies',
+            description: 'This is a tutorial for the best brownies ever. They have a lot of chocolate.',
+            quantity: 3,
+            author: userId2,
+            category: categoryId,
+            requirements: [
+                {
+                    quantity: 3,
+                    unit: 'cups',
+                    item: 'Sugar'
+                },
+                {
+                    quantity: 3,
+                    unit: 'feet',
+                    item: 'Eggs'
+                }
+            ],
+            steps: [stepId],
+            equipment: ['Oven', 'Mixer']
+        },
+        {
+            name: 'Brownies',
+            description: 'This is a tutorial for the best brownies ever. They have a lot of chocolate.',
+            quantity: 3,
+            author: userId2,
+            category: categoryId,
+            requirements: [
+                {
+                    quantity: 3,
+                    unit: 'cups',
+                    item: 'Sugar'
+                },
+                {
+                    quantity: 3,
+                    unit: 'feet',
+                    item: 'Eggs'
+                }
+            ],
+            steps: [stepId],
+            equipment: ['Oven', 'Mixer']
         }
     ]
     return Tutorial.create(tutorial)
@@ -157,6 +199,7 @@ var seedSteps = function(mediaId){
 
 connectToDb.then(function () {
     var user;
+    var user2;
     var category;
     mongoose.connection.db.dropDatabase()
     .then(function(){
@@ -164,12 +207,13 @@ connectToDb.then(function () {
     })
     .then(function(values){
         user = values[0][0];
+        user2 = values[0][1];
         media = values[2];
         category = values[1]
         return seedSteps(media._id)
     })
     .then(function(step){
-        return seedTutorials(user._id, category._id, step._id)
+        return seedTutorials(user._id, category._id, step._id, user2._id)
     })
     .then(function () {
         console.log(chalk.green('Seed successful!'));

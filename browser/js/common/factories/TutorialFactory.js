@@ -12,7 +12,7 @@ app.factory('TutorialFactory', function($http){
     }
 
     TutorialFactory.fetchByUser = function(userId){
-        return $http.get('/api/tutorials/user' + userId)
+        return $http.get('/api/tutorials/user/' + userId)
         .then(getData)
     }
 

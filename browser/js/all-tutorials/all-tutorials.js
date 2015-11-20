@@ -1,10 +1,10 @@
 app.config(function($stateProvider){
 	$stateProvider.state('AllTutorials', {
-		url: '/tutorials?userId',
+		url: '/tutorials/:userId',
 		templateUrl: 'js/all-tutorials/all-tutorials.html',
 		controller: 'AllTutorialsCtrl',
 		resolve: {
-			tutorials: function($stateParams, TutorialFactory){
+			tutorials: function($stateParams, TutorialFactory, $location){
 				if($stateParams.userId){
 					return TutorialFactory.fetchByUser($stateParams.userId)
 				}
@@ -28,6 +28,8 @@ app.config(function($stateProvider){
 app.controller('AllTutorialsCtrl', function($scope, tutorials, user){
 	$scope.tutorials = tutorials;
 	$scope.user = user;
+	$scope.title = $scope.user ? $scope.user.firstName: "All Tutorials";
 	console.log("tutorials is ", tutorials)
+	console.log("user is ", user)
 })
 

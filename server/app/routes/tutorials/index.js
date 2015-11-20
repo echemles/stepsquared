@@ -15,7 +15,7 @@ router.param('tutorialId', function(req, res, next, id){
 })
 
 
-router.get('/:tutorialId/user/:userId', function(req, res, next){
+router.get('/user/:userId', function(req, res, next){
 	Tutorial.find({author: req.params.userId}).populate('photos category author')
 	.then(function(tutorials){
 		res.json(tutorials)
