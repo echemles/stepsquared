@@ -1,0 +1,45 @@
+
+    <div class="col-xs-8">
+    <h1>{{user.firstName || user.email}}'s Profile</h1>
+    </div>
+    <div class="col-xs-12">
+
+    <alert type="danger" ng-show="error">
+        {{ error }}
+    </alert>
+    <form id="login-form" name="profileForm" ng-submit="updateUser(user)">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" ng-model="user.email" class="form-control" id="email" placeholder="Update email">
+        </div>
+        <div class="form-group">
+            <label for="signup-firstName">First Name</label>
+            <input type="text" ng-model="user.firstName" class="form-control" id="signup-firstName" placeholder="Update First Name">
+        </div>
+        <div class="form-group">
+            <label for="signup-lastName">Last Name</label>
+            <input type="text" ng-model="user.lastName" class="form-control" id="signup-lastName" placeholder="Update Last Name">
+        </div>
+
+        <div class="form-group">
+            <label for="signup-phone">{{user.firstName || user.email}}'s Bio</label>
+            <input type="text" ng-model="user.description" class="form-control" id="signup" placeholder="Update Your Description">
+        </div>
+
+
+
+
+        <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+
+    </form>
+
+
+
+
+
+
+
+
+
+
