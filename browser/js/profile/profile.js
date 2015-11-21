@@ -14,7 +14,6 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('ProfileCtrl', function (currentUser, growl, $scope, UserFactory) {
-    $scope.error = null;
     $scope.user = currentUser;
 
     $scope.updateUser = function(updatedInfo){
@@ -25,7 +24,7 @@ app.controller('ProfileCtrl', function (currentUser, growl, $scope, UserFactory)
             growl.success("You've updated successfully!")
         })
         .catch(function () {
-            $scope.error = 'Something went wrong!';
+            growl.error('Something went wrong!');
         });
     }
 

@@ -1,0 +1,10 @@
+<div class="container row form-group">
+    <div class="col-xs-4">
+        <label ng-show="new" for="signup-password">Please enter new category name: </label>
+        <label ng-hide="new" for="signup-password">Please update category name: </label>
+        <input type="text" ng-model="category.name" class="form-control"  placeholder="Category Name" </div>
+        <br>
+        <button type="button" ng-click="ok()" class="btn btn-primary">OK</button>
+        <button type="button" ng-click="cancel()" class="btn btn-warning">Cancel</button>
+    </div>
+</div>

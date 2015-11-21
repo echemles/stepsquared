@@ -52,9 +52,12 @@ schema.pre('save', function (next) {
 
 });
 
-schema.methods.fullName = function() {
-    return this.firstName + " " + this.lastName;
-}
+
+
+schema.virtual('fullName')
+.get(function () {
+  return this.firstName + ' ' + this.lastName;
+});
 
 //returns a promise for Total Points
 schema.methods.getTotalPoints = function() {
