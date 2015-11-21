@@ -1,6 +1,6 @@
 app.config(function($stateProvider){
 	$stateProvider.state('AllTutorials', {
-		url: '/tutorials/:userId',
+		url: '/tutorials?userId',
 		templateUrl: 'js/all-tutorials/all-tutorials.html',
 		controller: 'AllTutorialsCtrl',
 		resolve: {
@@ -25,7 +25,7 @@ app.config(function($stateProvider){
 })
 
 
-app.controller('AllTutorialsCtrl', function($scope, tutorials, user){
+app.controller('AllTutorialsCtrl', function($scope, tutorials, user, $stateParams){
 	$scope.tutorials = tutorials;
 	$scope.user = user;
 	$scope.title = $scope.user ? $scope.user.firstName: "All Tutorials";
