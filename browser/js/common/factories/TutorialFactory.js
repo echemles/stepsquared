@@ -11,6 +11,11 @@ app.factory('TutorialFactory', function($http){
         .then(getData)
     }
 
+    TutorialFactory.fetchByUser = function(userId){
+        return $http.get('/api/tutorials/user/' + userId)
+        .then(getData)
+    }
+
     TutorialFactory.fetchOne = function(tutorialId){
         return $http.get('/api/tutorials/'+ tutorialId)
         .then(getData);
