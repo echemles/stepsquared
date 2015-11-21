@@ -29,7 +29,5 @@ app.controller('AllTutorialsCtrl', function($scope, tutorials, user){
 	$scope.tutorials = tutorials;
 	$scope.user = user;
 	$scope.title = $scope.user ? $scope.user.firstName: "All Tutorials";
-	console.log("tutorials is ", tutorials)
-	console.log("user is ", user)
 })
 
