@@ -19,7 +19,7 @@ app.controller('SignupCtrl', function ($scope, AuthService, $state) {
 
         AuthService.signup(userInfo)
         .then(function () {
-            $state.go('products');
+            $state.go('home');
         }).catch(function () {
             $scope.error = 'Please enter a unique and valid email';
         });
