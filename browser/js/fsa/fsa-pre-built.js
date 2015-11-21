@@ -94,7 +94,7 @@
                 });
         };
 
-        this.signup = function (credentials, addressInfo) {
+        this.signup = function (credentials) {
             return $http.post('/signup', credentials)
                 .then(onSuccessfulLogin)
                 .catch(function () {
