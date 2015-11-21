@@ -34,6 +34,7 @@ app.controller('AdminCategoriesCtrl', function ($scope, allCategories, CategoryF
         var addCatModal = $uibModal.open({
             templateUrl: 'js/admin/category-modal.html',
             controller: 'CatModalCtrl',
+            windowClass: 'center-modal',
             resolve: {
                 category: null
             }
@@ -50,6 +51,7 @@ app.controller('AdminCategoriesCtrl', function ($scope, allCategories, CategoryF
         var editCatModal = $uibModal.open({
             templateUrl: 'js/admin/category-modal.html',
             controller: 'CatModalCtrl',
+            windowClass: 'center-modal',
             resolve: {
                 category: function() {
                     return $scope.allCategories[index];
