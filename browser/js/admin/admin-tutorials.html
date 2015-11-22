@@ -1,0 +1,28 @@
+<section>
+	<div class="row">
+        <div class="col-xs-12">
+          <div growl></div>
+          <div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><strong>Manage Tutorials</strong></div>
+          <table class="table table-hover">
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Author</th>
+          <th>Upvotes</th>
+          <th>Actions</th>
+      	</tr>
+          <tr ng-repeat="tutorial in allTutorials">
+            <td>{{ tutorial.name }}</td>
+            <td>{{ tutorial.category.name }}</td>
+            <td>{{ tutorial.author.firstName }} {{tutorial.author.lastName}}</td>
+            <td>{{ tutorial.upvotes.length }}</td>
+            <td><a>Edit</a> | <a ng-click="deleteTutorial($index)">Delete</a></td>
+          </tr>
+          </table>
+
+        </div>
+      </div>
+    </div>
+</section>

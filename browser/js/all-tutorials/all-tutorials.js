@@ -1,5 +1,5 @@
 app.config(function($stateProvider){
-	$stateProvider.state('AllTutorials', {
+	$stateProvider.state('allTutorials', {
 		url: '/tutorials?userId',
 		templateUrl: 'js/all-tutorials/all-tutorials.html',
 		controller: 'AllTutorialsCtrl',

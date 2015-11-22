@@ -35,7 +35,8 @@ var seedUsers = function () {
             email: 'testing@fsa.com',
             password: 'password',
             firstName: 'Omri',
-            lastName: 'Bernstein' 
+            lastName: 'Bernstein',
+            isAdmin: true 
         },
         {
             email: 'marth@fsa.com',

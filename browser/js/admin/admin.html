@@ -1,0 +1,12 @@
+<section id="admin">
+    <div class="col-xs-1">
+        <div class="btn-group-vertical" role="group" aria-label="...">
+            <label ui-sref='admin.users' class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Users'">Users</label>
+            <label ui-sref='admin.tutorials' class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Tutorials'">Tutorials</label>
+            <label ui-sref='admin.categories' class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Categories'">Categories</label>
+        </div>
+    </div>
+    <div class="col-xs-11">
+        <ui-view></ui-view>
+    </div>
+</section>
