@@ -62,7 +62,7 @@ var seedHelp = function(categoryId, mediaId){
     return Help.create(help)
 }
 
-var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2){
+var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2, media1Id){
     var tutorial = [
         {
             name: 'Brownies',
@@ -98,7 +98,8 @@ var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2){
                 }
             ],
             steps: [step1Id, step2Id],
-            equipment: ['Oven', 'Mixer']
+            equipment: ['Oven', 'Mixer'],
+            media: media1Id
         },
         {
             name: 'Brownies',
@@ -134,7 +135,8 @@ var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2){
                 }
             ],
             steps: [step1Id, step2Id],
-            equipment: ['Oven', 'Mixer']
+            equipment: ['Oven', 'Mixer'],
+            media1: media1Id
         },
         {
             name: 'Brownies',
@@ -170,7 +172,8 @@ var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2){
                 }
             ],
             steps: [step1Id, step2Id],
-            equipment: ['Oven', 'Mixer']
+            equipment: ['Oven', 'Mixer'],
+            media1: media1Id
         },
         {
             name: 'Brownies',
@@ -206,7 +209,8 @@ var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2){
                 }
             ],
             steps: [step1Id, step2Id],
-            equipment: ['Oven', 'Mixer']
+            equipment: ['Oven', 'Mixer'],
+            media1: media1Id
         },
         {
             name: 'Brownies',
@@ -227,7 +231,8 @@ var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2){
                 }
             ],
             steps: [step1Id],
-            equipment: ['Oven', 'Mixer']
+            equipment: ['Oven', 'Mixer'],
+            media1: media1Id
         }
     ]
     return Tutorial.create(tutorial)
@@ -342,7 +347,7 @@ connectToDb.then(function () {
     .then(function(steps){
         step1 = steps[0]
         step2 = steps[1]
-        return seedTutorials(user._id, category._id, step1._id, step2._id, user2._id)
+        return seedTutorials(user._id, category._id, step1._id, step2._id, user2._id, media1._id)
     })
     .then(function () {
         console.log(chalk.green('Seed successful!'));
