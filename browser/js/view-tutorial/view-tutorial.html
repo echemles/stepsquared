@@ -1,0 +1,43 @@
+<div>
+    <h1>{{tutorial.name}} Tutorial</h1>   
+
+    <img ng-src="tutorial.photos[0]">
+    <h3>Created By: {{tutorial.author.display_name}}</h3>
+    
+    <h3>Category: {{tutorial.category.name}}</h3>
+    <h3>Description:{{tutorial.description}}</h3>
+    <h3>Equipment: 
+        <div ng-repeat="equip in tutorial.equipment">{{equip}}</div>
+    </h3>
+
+    <h3>Steps: 
+        <div ng-repeat="step in tutorial.steps">{{step.name}}</div>
+    </h3>
+
+    <h3 ng-if="tutorial.category.name == 'Recipes'"> Servings: {{tutorial.quantity}}</h3>
+    <div>
+        <table>
+            <tr>
+                <th>Quantity</th>
+                <th>Unit</th>
+                <th>Item</th>
+            </tr>
+
+            <tr ng-repeat="requirement in tutorial.requirements">
+                <th>{{requirement.quantity}}</th>
+                <th>{{requirement.unit}}</th>
+                <th>{{requirement.item}}</th>
+            </tr>
+        </table>
+
+
+
+
+    </div>
+   
+
+
+
+</div>
+
+

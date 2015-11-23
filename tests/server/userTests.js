@@ -6,9 +6,13 @@ var expect = require('chai').expect;
 var mongoose = require('mongoose');
 
 // Require in all models.
-require('../../../server/db/models');
+require('../../server/db/models');
 
 var User = mongoose.model('User');
+var theCategory;
+
+var theStep;
+var theMedia;
 
 describe('User model', function () {
 
@@ -26,6 +30,7 @@ describe('User model', function () {
     });
 
     describe('password encryption', function () {
+
 
         describe('generateSalt method', function () {
 
@@ -102,8 +107,13 @@ describe('User model', function () {
             var encryptSpy;
             var saltSpy;
 
+            var theAuthor;
+
             var createUser = function () {
-                return User.create({ email: 'obama@gmail.com', password: 'potus' });
+                return User.create({ email: 'obama@gmail.com', 
+                    password: 'potus',
+                    firstName: 'Barrack',
+                    lastName: 'Obama' });
             };
 
             beforeEach(function () {
@@ -117,7 +127,8 @@ describe('User model', function () {
             });
 
             it('should call User.encryptPassword with the given password and generated salt', function (done) {
-                createUser().then(function () {
+                createUser().then(function (newUser) {
+                    theAuthor = newUser;
                     var generatedSalt = saltSpy.getCall(0).returnValue;
                     expect(encryptSpy.calledWith('potus', generatedSalt)).to.be.ok;
                     done();
@@ -139,6 +150,8 @@ describe('User model', function () {
                     done();
                 });
             });
+
+            console.log(theAuthor);
 
         });
 
