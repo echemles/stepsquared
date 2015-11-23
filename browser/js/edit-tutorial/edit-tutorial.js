@@ -36,14 +36,28 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
 
     $scope.tutorial = currentTutorial;
 
+    $scope.tools = [];
     if($scope.tutorial){
+        var equipment = $scope.tutorial.equipment;
+        if(equipment.length){
+            for(var i = 0; i < equipment.length; i++){
+                $scope.tools.push({name: equipment[i]})
+            }
+        }
+        else{
+            $scope.tutorial.equipment = []
+        }
+
         $scope.tutorial.requirements = !$scope.tutorial.requirements ? [{}] : $scope.tutorial.requirements
-        $scope.tutorial.equipment = $scope.tutorial.equipment.length ? $scope.tutorial.equipment : [""]
     }
     $scope.media = $scope.tutorial ? $scope.tutorial.photos[0]: {};
     $scope.file;
 
     $scope.update = function(){
+        $scope.tutorial.equipment = [];
+        $scope.tools.forEach(function(tool){
+            $scope.tutorial.equipment.push(tool.name)
+        })
         if(currentTutorial){
             TutorialFactory.update($scope.tutorial)
             .then(function(){
@@ -110,17 +124,12 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
     }
 
     $scope.addTool = function(){
-        $scope.tutorial.equipment.push("")
+        $scope.tools.push({})
     }
 
     $scope.removeTool = function(idx){
-        $scope.tutorial.equipment.splice(idx, 1)
+        $scope.tools.splice(idx, 1)
     }
-
-
-
-
-
 });
 
 
