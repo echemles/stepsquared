@@ -6,7 +6,7 @@ var Tutorial = mongoose.model('Tutorial');
 var objectId = mongoose.Schema.Types.ObjectId
 
 var schema = new mongoose.Schema({
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     display_name: { type: String }, //defaulting to first name in pre-save hook
@@ -52,9 +52,12 @@ schema.pre('save', function (next) {
 
 });
 
-schema.methods.fullName = function() {
-    return this.firstName + " " + this.lastName;
-}
+
+
+schema.virtual('fullName')
+.get(function () {
+  return this.firstName + ' ' + this.lastName;
+});
 
 //returns a promise for Total Points
 schema.methods.getTotalPoints = function() {

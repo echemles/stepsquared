@@ -6,6 +6,11 @@ app.factory('CategoryFactory', function($http){
 		return response.data;
 	}
 
+	CategoryFactory.getAll = function(){
+		return $http.get('/api/categories/')
+		.then(getData)
+	}
+
 	CategoryFactory.getOne = function(categoryId){
 		return $http.get('/api/categories/' + categoryId)
 		.then(getData)
