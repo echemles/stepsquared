@@ -49,7 +49,7 @@ var seedUsers = function () {
 
 };
 
-var seedTutorials = function(userId, categoryId, stepId, userId2){
+var seedTutorials = function(userId, categoryId, stepId, userId2, mediaId){
     var tutorial = [
         {
             name: 'Brownies',
@@ -70,7 +70,8 @@ var seedTutorials = function(userId, categoryId, stepId, userId2){
                 }
             ],
             steps: [stepId],
-            equipment: ['Oven', 'Mixer']
+            equipment: ['Oven', 'Mixer'],
+            media: mediaId
         },
         {
             name: 'Brownies',
@@ -161,10 +162,18 @@ var seedTutorials = function(userId, categoryId, stepId, userId2){
 }
 
 var seedCategories = function(){
-    var category = {
-        name: 'Recipes'
-    }
-    return Category.create(category)
+    var categories = [
+        {
+            name: 'Recipe'
+        },
+        {
+            name: 'Guitar Lesson'
+        },
+        {
+            name: 'Craft'
+        }
+    ]
+    return Category.create(categories)
 
 }
 
@@ -210,11 +219,11 @@ connectToDb.then(function () {
         user = values[0][0];
         user2 = values[0][1];
         media = values[2];
-        category = values[1]
+        category = values[1][0]
         return seedSteps(media._id)
     })
     .then(function(step){
-        return seedTutorials(user._id, category._id, step._id, user2._id)
+        return seedTutorials(user._id, category._id, step._id, user2._id, media._id)
     })
     .then(function () {
         console.log(chalk.green('Seed successful!'));
