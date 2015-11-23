@@ -5,6 +5,7 @@ module.exports = router;
 var Tutorial = mongoose.model('Tutorial');
 
 router.param('tutorialId', function(req, res, next, id){
+	console.log("id is ", id)
 	Tutorial.findById(id).populate('steps author media category')
 	.then(function(tutorial){
 		if(!tutorial) throw new Error('Tutorial not found')

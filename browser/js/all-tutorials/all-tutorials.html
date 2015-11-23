@@ -1,10 +1,6 @@
 <h1>{{title}}</h1>
 <div ng-repeat = "tutorial in tutorials">
 	<div class = "col-xs-4">
-		<img src = "http://nutritionsmart.com/wp-content/uploads/2014/12/healthy-cooking.jpg" style = "height: 100px"></img>
-		<hr>
-		<h4>{{tutorial.name}}</h4>
-		<p>{{tutorial.category.name}}</p>
-		<p>{{tutorial.description}}</p>
+		<tutorial-tile tutorial = "tutorial"></tutorial-tile>
 	</div>
 </div>

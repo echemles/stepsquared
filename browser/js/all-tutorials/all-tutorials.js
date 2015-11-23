@@ -26,6 +26,7 @@ app.config(function($stateProvider){
 
 
 app.controller('AllTutorialsCtrl', function($scope, tutorials, user, $stateParams){
+	console.log("tutorials is ", tutorials)
 	$scope.tutorials = tutorials;
 	$scope.user = user;
 	$scope.title = $scope.user ? $scope.user.firstName: "All Tutorials";
