@@ -1,0 +1,29 @@
+<div>
+<h1>{{step.name}}</h1>
+
+<div class = "col-xs-6">
+	<div>
+		<h3>Requirements</h3>
+		<table>
+			<tr>
+				<th>Quantity</th>
+				<th>Unit</th>
+				<th>Item</th>
+			</tr>
+			<tr ng-repeat = "requirement in step.requirements">
+				<td>{{requirement.quantity}}</td>
+				<td>{{requirement.unit}}</td>
+				<td>{{requirement.item}}</td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<h3>Description</h3>
+		
+	</div>
+</div>
+
+<div class = "col-xs-6">
+</div>
+
+</div>
