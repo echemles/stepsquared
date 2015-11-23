@@ -62,7 +62,8 @@ var seedHelp = function(categoryId, mediaId){
     return Help.create(help)
 }
 
-var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2, mediaId){
+
+var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2, media1Id){
     var tutorial = [
         {
             name: 'Brownies',
@@ -99,7 +100,7 @@ var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2, medi
             ],
             steps: [step1Id, step2Id],
             equipment: ['Oven', 'Mixer'],
-            media: mediaId
+            media: media1Id
         },
         {
             name: 'Brownies',
@@ -135,7 +136,8 @@ var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2, medi
                 }
             ],
             steps: [step1Id, step2Id],
-            equipment: ['Oven', 'Mixer']
+            equipment: ['Oven', 'Mixer'],
+            media: media1Id
         },
         {
             name: 'Brownies',
@@ -171,7 +173,8 @@ var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2, medi
                 }
             ],
             steps: [step1Id, step2Id],
-            equipment: ['Oven', 'Mixer']
+            equipment: ['Oven', 'Mixer'],
+            media: media1Id
         },
         {
             name: 'Brownies',
@@ -207,7 +210,8 @@ var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2, medi
                 }
             ],
             steps: [step1Id, step2Id],
-            equipment: ['Oven', 'Mixer']
+            equipment: ['Oven', 'Mixer'],
+            media: media1Id
         },
         {
             name: 'Brownies',
@@ -228,7 +232,8 @@ var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2, medi
                 }
             ],
             steps: [step1Id],
-            equipment: ['Oven', 'Mixer']
+            equipment: ['Oven', 'Mixer'],
+            media: media1Id
         }
     ]
     return Tutorial.create(tutorial)

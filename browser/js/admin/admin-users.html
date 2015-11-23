@@ -11,7 +11,7 @@
           <table class="table table-hover">
           <tr><th>Email</th><th>First Name</th><th>Last Name</th><th>Admin</th><th>Action</th></tr>
           <tr ng-repeat="user in allUsers">
-            <td>{{ user.email }}</td>
+            <td><a ui-sref="viewprofile({profileId: user._id})">{{ user.email }}</a></td>
             <td>{{ user.firstName }}</td>
             <td>{{ user.lastName }}</td>
             <td>{{ user.isAdmin }}</td>
