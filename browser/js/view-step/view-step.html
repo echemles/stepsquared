@@ -1,5 +1,11 @@
 <div>
-<h1>{{step.name}}</h1>
+<div>
+	<div><h1>{{step.name}}</h1></div>
+	<div>
+		<label>Active Time</label> {{step.activeTime}}
+		<label>Standby Time</label>{{step.standByTime}}
+	</div>
+</div>
 
 <div class = "col-xs-6">
 	<div>
@@ -17,13 +23,24 @@
 			</tr>
 		</table>
 	</div>
+
 	<div>
 		<h3>Description</h3>
-		
+		<p>{{requirement.description}}</p>
 	</div>
+
+	<p>TODO: Help section- collapsable list of help items or child state of help</p>
+
+
+
 </div>
 
 <div class = "col-xs-6">
+	<div>
+		<img ng-if = "media.type === 'image'" ng-src = "step.media.url"></img>
+		<video ng-if = "media.type === 'video'" ng-src = "step.media.url"></video>
+	</div>
+	
 </div>
 
 </div>
