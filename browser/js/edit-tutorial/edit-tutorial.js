@@ -14,14 +14,21 @@ app.config(function ($stateProvider) {
             },
             categories: function(CategoryFactory){
                 return CategoryFactory.getAll();
+            }, 
+            units: function(TutorialFactory){
+                return TutorialFactory.getUnits()
             }
         }
     });
 
 });
 
-app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutorial, TutorialFactory, MediaFactory, $uibModal, MediaModal, Upload, categories) {
+app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutorial, TutorialFactory, MediaFactory, Upload, categories, units) {
+    $scope.units = units;
+
     $scope.categories = categories; 
+
+    $scope.isUploading = {isUploading: false}
 
     $scope.create = function(){
         TutorialFactory.create($scope.tutorial)
@@ -50,7 +57,6 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
 
         $scope.tutorial.requirements = !$scope.tutorial.requirements ? [{}] : $scope.tutorial.requirements
     }
-    $scope.media = $scope.tutorial ? $scope.tutorial.photos[0]: {};
     $scope.file;
 
     $scope.update = function(){
