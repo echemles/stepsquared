@@ -1,28 +1,22 @@
 app.config(function ($stateProvider) {
 
-    $stateProvider.state('createEditTutorial', {
-        url: '/login',
-        templateUrl: 'js/login/login.html',
-        controller: 'LoginCtrl'
+    $stateProvider.state('viewTutorial', {
+        url: '/viewTutorial/:tutorialId',
+        templateUrl: 'js/view-tutorial/view-tutorial.html',
+        controller: 'viewTutorialCtrl',
+        resolve: {
+            theTutorial: function(TutorialFactory, $stateParams){
+                return TutorialFactory.fetchOne($stateParams.tutorialId)
+            },
+            currentUser: function(AuthService){
+                return AuthService.getLoggedInUser();
+            }
+        }
     });
 
 });
 
-app.controller('LoginCtrl', function ($scope, AuthService, $state) {
-
-    $scope.login = {};
-    $scope.error = null;
-
-    $scope.sendLogin = function (loginInfo) {
-
-        $scope.error = null;
-
-        AuthService.login(loginInfo).then(function () {
-            $state.go('home');
-        }).catch(function () {
-            $scope.error = 'Invalid login credentials.';
-        });
-
-    };
-
+app.controller('viewTutorialCtrl', function ($scope, TutorialFactory, theTutorial, $state) {
+    $scope.tutorial = theTutorial;
+    console.log(theTutorial)
 });
