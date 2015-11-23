@@ -5,7 +5,7 @@ module.exports = router;
 var Tutorial = mongoose.model('Tutorial');
 
 router.param('tutorialId', function(req, res, next, id){
-	Tutorial.findById(id).populate('steps author photos category')
+	Tutorial.findById(id).populate('steps author media category')
 	.then(function(tutorial){
 		if(!tutorial) throw new Error('Tutorial not found')
 			req.foundTutorial = tutorial;
@@ -16,11 +16,15 @@ router.param('tutorialId', function(req, res, next, id){
 
 
 router.get('/user/:userId', function(req, res, next){
-	Tutorial.find({author: req.params.userId}).populate('photos category author')
+	Tutorial.find({author: req.params.userId}).populate('media category author')
 	.then(function(tutorials){
 		res.json(tutorials)
 	})
 	.then(null, next)
+})
+
+router.get('/units', function(req,res, next){
+	res.json(Tutorial.schema.path('requirements').schema.path('unit').enumValues)
 })
 
 router.get('/:tutorialId', function(req, res, next){
@@ -28,7 +32,7 @@ router.get('/:tutorialId', function(req, res, next){
 })	
 
 router.get('/', function(req, res, next){
-	Tutorial.find().populate('photos category author')
+	Tutorial.find().populate('media category author')
 	.then(function(tutorials){
 		res.json(tutorials)
 	})
@@ -65,6 +69,7 @@ router.get('/search/:searchTerm', function(req, res, next){
 
 router.put('/:tutorialId', function(req, res, next){
 	delete req.body._id
+	delete req.body.__v
 	req.foundTutorial.set(req.body)
 
 	req.foundTutorial.save()
@@ -88,6 +93,7 @@ router.post('/', function(req, res, next){
 	})
 	.then(null, next)
 })
+
 
 
 

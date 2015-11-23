@@ -62,6 +62,7 @@ var seedHelp = function(categoryId, mediaId){
     return Help.create(help)
 }
 
+
 var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2, media1Id){
     var tutorial = [
         {
@@ -136,7 +137,7 @@ var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2, medi
             ],
             steps: [step1Id, step2Id],
             equipment: ['Oven', 'Mixer'],
-            media1: media1Id
+            media: media1Id
         },
         {
             name: 'Brownies',
@@ -173,7 +174,7 @@ var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2, medi
             ],
             steps: [step1Id, step2Id],
             equipment: ['Oven', 'Mixer'],
-            media1: media1Id
+            media: media1Id
         },
         {
             name: 'Brownies',
@@ -210,7 +211,7 @@ var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2, medi
             ],
             steps: [step1Id, step2Id],
             equipment: ['Oven', 'Mixer'],
-            media1: media1Id
+            media: media1Id
         },
         {
             name: 'Brownies',
@@ -232,17 +233,25 @@ var seedTutorials = function(userId, categoryId, step1Id, step2Id, userId2, medi
             ],
             steps: [step1Id],
             equipment: ['Oven', 'Mixer'],
-            media1: media1Id
+            media: media1Id
         }
     ]
     return Tutorial.create(tutorial)
 }
 
 var seedCategories = function(){
-    var category = {
-        name: 'Recipes'
-    }
-    return Category.create(category)
+    var categories = [
+        {
+            name: 'Recipe'
+        },
+        {
+            name: 'Guitar Lesson'
+        },
+        {
+            name: 'Craft'
+        }
+    ]
+    return Category.create(categories)
 
 }
 
@@ -337,7 +346,7 @@ connectToDb.then(function () {
         user2 = values[0][1];
         media1 = values[2][0];
         media2 = values[2][1];
-        category = values[1]
+        category = values[1][0]
         return seedHelp(category._id, media1._id)
     })
     .then(function(_help){
