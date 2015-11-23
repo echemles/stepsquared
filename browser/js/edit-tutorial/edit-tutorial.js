@@ -8,16 +8,21 @@ app.config(function ($stateProvider) {
                 if($stateParams.tutorialId){
                     return TutorialFactory.fetchOne($stateParams.tutorialId)
                 } else {
-                    return null;
+                    return {};
                 }
                 
+            },
+            categories: function(CategoryFactory){
+                return CategoryFactory.getAll();
             }
         }
     });
 
 });
 
-app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutorial, TutorialFactory, MediaFactory) {
+app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutorial, TutorialFactory, MediaFactory, $uibModal, MediaModal, Upload, categories) {
+    $scope.categories = categories; 
+
     $scope.create = function(){
         TutorialFactory.create($scope.tutorial)
         .then(function(tutorial){
@@ -30,6 +35,14 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
     }
 
     $scope.tutorial = currentTutorial;
+
+    if($scope.tutorial){
+        $scope.tutorial.requirements = !$scope.tutorial.requirements ? [{}] : $scope.tutorial.requirements
+        $scope.tutorial.equipment = $scope.tutorial.equipment.length ? $scope.tutorial.equipment : [""]
+    }
+    $scope.media = $scope.tutorial ? $scope.tutorial.photos[0]: {};
+    $scope.file;
+
     $scope.update = function(){
         if(currentTutorial){
             TutorialFactory.update($scope.tutorial)
@@ -43,6 +56,14 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
         }
         
     }
+
+    $scope.addMediaModal = function(){
+        var modalInstance = $uibModal.open(MediaModal($scope))
+
+        modalInstance.result.then(function(result){
+            console.log("result from modal is ", result)
+        })
+    }
        
     $scope.delete = function(){
         TutorialFactory.delete($scope.tutorial._id)
@@ -53,11 +74,20 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
         })
     }
 
+
+
+
     $scope.addMedia = function(){
-        MediaFactory.create($scope.media)
+        console.log("in add media")
+        uploadS3($scope.file)
+        .then(function(imageUrl){
+            $scope.media.url = imageUrl;
+            return MediaFactory.create($scope.media)
+        })
         .then(function(media){
             growl.success("Created media successfully!")
-        }, function(err){
+        })
+        .catch(function(err){
             growl.error("Failed to create media")
         })
     } 
@@ -71,6 +101,29 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
         })
     }
 
+    $scope.removeRequirement = function(idx){
+        $scope.tutorial.requirements.splice(idx,1)
+    }
+
+    $scope.addRequirement = function(){
+        $scope.tutorial.requirements.push({})
+    }
+
+    $scope.addTool = function(){
+        $scope.tutorial.equipment.push("")
+    }
+
+    $scope.removeTool = function(idx){
+        $scope.tutorial.equipment.splice(idx, 1)
+    }
+
+
+
 
 
 });
+
+
+
+
+

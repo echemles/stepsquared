@@ -1,34 +1,61 @@
-<form id="login-form" name="editTutorial" ng-submit="editTutorial.$valid && update(tutorial)">
+<form name="editTutorial">
     <h1>Edit Tutorial</h1>
 
-    <alert type="danger" ng-show="error">
-        {{ error }}
-    </alert>
     <div class="form-group">
-        <label for="name">Tutorial Name*</label>
-        <input type="text" ng-model="tutorial.name" required class="form-control" id="name" placeholder="Enter name">
-    </div>
-    <div class="form-group">
-        <label for="category">Category</label>
-        <input type="text" ng-model="tutorial.category" class="form-control" id="signup-first_name" placeholder="First Name">
-    </div>
-    <div class="form-group">
-        <label for="signup-last_name">Last Name*</label>
-        <input type="text" ng-model="tutorial.lastName" class="form-control" id="signup-last_name" placeholder="Last Name">
+        <label>Tutorial Name*</label>
+        <input type="text" ng-model="tutorial.name" class="form-control" placeholder="Enter name">
     </div>
 
-    <div class="form-group">
-        <label for="signup-password">Password*</label>
-        <input type="password" ng-model="tutorial.password" required class="form-control" id="signup-password" placeholder="Password">
+    <div class = "form-group">
+        <label>Category*</label>
+        <select ng-options="category as category.name for category in categories" ng-model="tutorial.category" class = "form-control"></select>
     </div>
 
-    <button 
-    <div class="form-group">
-            <label for="signup-description">Bio</label>
-            <input type="text" ng-model="user.description" class="form-control" id="signup" placeholder="Update Your Description">
-        </div>
+    <div class = "form-group">
+        <label>Description*</label>
+        <textarea ng-model = "tutorial.description" class = "form-control"></textarea>
+    </div>
+
+
     <div>
-        <p><oauth-button provider-name="Google"></oauth-button></p>
+        <label>Requirements</label>
+
+        <table>
+            <tr>
+                <th>Quantity</th>
+                <th>Unit</th>
+                <th>Item</th>
+            </tr>
+            <tr ng-repeat = "(idx, requirement) in tutorial.requirements">
+
+            <td>
+                <input type = "text" ng-model = "requirement.quantity">
+            </td>
+            <td>
+                <input type = "text" ng-model = "requirement.unit">
+            </td>
+            <td>
+                <input type = "text" ng-model = "requirement.item">
+            </td>
+            <td>
+                <span class = "glyphicon glyphicon-remove" ng-click = "removeRequirement(idx)"></span>
+            </td>
+
+            </tr>
+        </table>
+        <button ng-click = "addRequirement()">Add Requirement</button>
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+
+    <button ng-click = "addMediaModal()">Add Media Modal</button>
+
+    <div>
+        <label>Equipment</label>
+        <div ng-repeat = "(idx, tool) in tutorial.equipment">
+            <input type = "text" ng-model = "tool">
+           <span class = "glyphicon glyphicon-remove" ng-click = "removeTool(idx)"></span>
+        </div>
+        <button ng-click = "addTool()">Add Tool</button>
+    </div>
+
+    <button type="submit" class="btn btn-default" ng-click = "editTutorial.$valid && update(tutorial)">Submit</button>
 </form>
