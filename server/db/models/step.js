@@ -12,7 +12,7 @@ var schema = new mongoose.Schema({
 	number: {type: Number, default: 1},
 	media: {type: objectId, ref: 'Media', required: true},
 	description: {type: String, required: true, maxLength:200},
-	help: {type: objectId, ref: 'Help'},
+	help: [{type: objectId, ref: 'Help'}],
 	activeTime: {type:Number, default: 0},
 	standByTime: {type: Number, default: 0}
 });

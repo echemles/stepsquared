@@ -45,6 +45,11 @@ app.factory('TutorialFactory', function($http){
         .then(getData)
     }
 
+    TutorialFactory.getUnits = function(tutorial) {
+        return $http.get('/api/tutorials/units')
+        .then(getData)
+    }
+
 
     return TutorialFactory;
 })

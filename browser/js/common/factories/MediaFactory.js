@@ -28,7 +28,7 @@ app.factory('MediaFactory', function($http){
 		.then(getData)
 	}
 
-	MediaFactory.updateStep = function(media){
+	MediaFactory.update = function(media){
 		return $http.put('/api/media/'+ media._id, media)
 		.then(getData)
 	}
