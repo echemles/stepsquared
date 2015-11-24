@@ -8,6 +8,7 @@ var AWS = require('aws-sdk');
 var accessKeyId =  require('../../../env')['AWS']['accessKey'];
 var secretAccessKey = require('../../../env')['AWS']['secretKey'];
 
+
 AWS.config.update({
     accessKeyId: accessKeyId,
     secretAccessKey: secretAccessKey
@@ -17,24 +18,29 @@ var s3 = new AWS.S3();
 
 
 router.post('/', function (req, res, next) {
+    var media = req.body;
 
-	var data = req.body.buffer;
-
+    var key = media.name;
 	var params = {
-            Bucket: 'stepssquared',
-            Key: Date.now().toString(), //filename
-            Body: data,
+            Bucket: 'trikshot',
+            Key: key,
+            ContentType: media.type,
+            Expires: 60,
             ACL: 'public-read'
     };
     
-    s3.putObject(params, function (err1, res1) {
-    	if (err1) {
-    		console.log("Error uploading data: ", err1);
-    		res.send("Error", err1);
+    s3.getSignedUrl('putObject', params, function (err, data) {
+    	if (err) {
+    		console.log("Error uploading data: ", err);
+    		res.send("Error", err);
     	} else {
-			console.log("Successfully uploaded data to AWS");
-			res1.imageUrl = 'https://s3.amazonaws.com/stepssquared/' + key;
-    		res.status(200).json(res1);
+            var return_data = {
+                signed_request: data,
+                url: 'https://trikshot.s3.amazonaws.com/' + key
+            }
+			console.log("Successfully sent presigned URL.");
+    		res.write(JSON.stringify(return_data));
+            res.end();
       	}
     });
 });
