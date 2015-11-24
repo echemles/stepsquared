@@ -15,9 +15,5 @@ module.exports = {
     "clientID": "INSERT_GOOGLE_CLIENTID_HERE",
     "clientSecret": "INSERT_GOOGLE_CLIENT_SECRET_HERE",
     "callbackURL": "INSERT_GOOGLE_CALLBACK_HERE"
-  },
-  "AWS":{
-    "accessKey": "AKIAJDV24Q3GPQOEVCGQ",
-    "secretKey": "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"
   }
 };
