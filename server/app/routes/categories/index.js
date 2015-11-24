@@ -46,7 +46,10 @@ router.put('/:categoryId', function(req,res,next) {
 })
 
 router.delete('/:categoryId', function(req,res,next) {
-	req.category.remove();
-	res.sendStatus(204);
+	req.category.remove()
+	.then(function(){
+		res.sendStatus(204);
+	})
+	.then(null, next)
 })
 

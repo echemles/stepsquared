@@ -81,13 +81,14 @@ router.put('/:tutorialId', function(req, res, next){
 })
 
 router.delete('/:tutorialId', function(req, res, next){
-	req.foundTutorial.remove();
-	res.sendStatus(204)
+	req.foundTutorial.remove()
+	.then(function(){
+		res.sendStatus(204)
+	})
+	.then(null, next)
 })
 
 router.post('/', function(req, res, next){
-	// delete req.body.author;
-	// req.body.author = req.user._id;
 	Tutorial.create(req.body)
 	.then(function(tutorial){
 		res.status(201).json(tutorial)
