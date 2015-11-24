@@ -8,7 +8,6 @@ app.config(function($stateProvider){
 		},
 		resolve: {
 			theStep: function($stateParams, StepsFactory){
-				console.log("in get step")
 				return StepsFactory.getStep($stateParams.stepId)
 			},
 			theTutorial: function($stateParams, TutorialFactory){
