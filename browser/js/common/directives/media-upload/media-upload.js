@@ -4,7 +4,8 @@ app.directive('mediaUpload', function(UploadFactory){
 		scope: {
 			media: '=',
 			isUploading: '=',
-			types: '='
+			types: '=',
+			updateMedia: '&'
 		},
 		templateUrl: 'js/common/directives/media-upload/media-upload.html',
 		link: function(scope){
@@ -28,7 +29,11 @@ app.directive('mediaUpload', function(UploadFactory){
 			    	scope.isUploading.isUploading = false;
 			        if (xhr.status === 200) {
 			            console.log("Uploaded file: ", data)
-			            scope.media = data;
+			            scope.media.url = url
+			            scope.updateMedia({media: scope.media})
+
+
+			            scope.$digest()
 			            console.log("set the current things media to the returned url")
 			        }
 			    };
