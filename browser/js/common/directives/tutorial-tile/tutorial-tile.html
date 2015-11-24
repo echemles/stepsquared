@@ -1,0 +1,12 @@
+<div>
+	<img src = "http://nutritionsmart.com/wp-content/uploads/2014/12/healthy-cooking.jpg" style = "width: 100%" ui-sref = "viewTutorial({tutorialId:tutorial._id})"></img>
+	<hr>
+	<span>
+		<h4>{{tutorial.name}}</h4>
+		<p>Time</p>
+	</span>
+	<p>{{tutorial.description}}</p> 
+	<hr>
+	<span>Tutorial By <a ui-sref = "allTutorials({userId: tutorial.author._id})">{{tutorial.author.display_name}}</a></span>
+	<p>{{tutorial.category.name}}</p>
+</div>

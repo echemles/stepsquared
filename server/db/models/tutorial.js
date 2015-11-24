@@ -11,11 +11,10 @@ var schema = new mongoose.Schema({
 	category: {type: objectId, ref: 'Category', required: true},
 	description: {type: String, required: true},
 	quantity: {type: Number, default: 1, required: true},
-	requirements: {type: [requirementSchema], minLength: 1},
-	//min length 1 for photos??
-	photos: [{type: objectId, ref: 'Media', minLength: 1}],
+	requirements: [requirementSchema],
+	media: {type: objectId, ref: 'Media'},
 	author: {type: objectId, ref: 'User', required: true},
-	steps: [{type: objectId, ref: 'Step', minLength: 1}],
+	steps: [{type: objectId, ref: 'Step'}],
 	upvotes: [{type: objectId, ref: 'User'}],
 	equipment: [{type: String}]
 
