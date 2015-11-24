@@ -24,6 +24,7 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutorial, TutorialFactory, MediaFactory, Upload, categories, units) {
+    console.log("tutorial.media is ", currentTutorial.media)
     $scope.units = units;
 
     $scope.categories = categories; 
@@ -59,7 +60,9 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
     }
     $scope.file;
 
+
     $scope.update = function(){
+        console.log("tutorial media is ", $scope.tutorial.media)
         $scope.tutorial.equipment = [];
         $scope.tools.forEach(function(tool){
             $scope.tutorial.equipment.push(tool.name)
@@ -112,14 +115,35 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
         })
     } 
 
-    $scope.updateMedia = function(){
-        MediaFactory.update($scope.media)
-        .then(function(media){
-            growl.success("Updated media successfully!")
-        }, function(err){
-            growl.error("Failed to update media")
-        })
+    $scope.updateMedia = function(media){
+        if(!$scope.tutorial.media){
+            //create media object
+            //set the media object of the current tutorial
+            MediaFactory.create(media)
+            .then(function(media){
+                $scope.tutorial.media = media._id
+                return TutorialFactory.update($scope.tutorial)
+            })
+            .then(function(){
+                growl.success("Media uploaded")
+            })
+            .catch(function(err){
+                console.error(err)
+                growl.error("Unable to upload media")
+            })
+        }
+        else{
+            MediaFactory.update(media)
+            .then(function(){
+                growl.success("Media uploaded")
+            })
+            .catch(function(err){
+                console.error(err)
+                growl.error("Unable to upload media")
+            })
+        }
     }
+
 
     $scope.removeRequirement = function(idx){
         $scope.tutorial.requirements.splice(idx,1)
