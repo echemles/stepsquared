@@ -7,6 +7,8 @@ var AWS = require('aws-sdk');
 
 var accessKeyId =  require('../../../env')['AWS']['accessKey'];
 var secretAccessKey = require('../../../env')['AWS']['secretKey'];
+console.log("accessKeyId", accessKeyId)
+console.log("secretAccessKey", secretAccessKey)
 
 
 AWS.config.update({
@@ -22,7 +24,7 @@ router.post('/', function (req, res, next) {
 
     var key = media.name;
 	var params = {
-            Bucket: 'trikshot',
+            Bucket: 'step-squared-media',
             Key: key,
             ContentType: media.type,
             Expires: 60,
@@ -36,7 +38,7 @@ router.post('/', function (req, res, next) {
     	} else {
             var return_data = {
                 signed_request: data,
-                url: 'https://trikshot.s3.amazonaws.com/' + key
+                url: 'https://step-squared-media.s3.amazonaws.com/' + key
             }
 			console.log("Successfully sent presigned URL.");
     		res.write(JSON.stringify(return_data));
