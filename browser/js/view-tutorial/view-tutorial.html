@@ -1,7 +1,7 @@
 <div>
     <h1>{{tutorial.name}} Tutorial</h1>   
 
-    <img ng-src="tutorial.photos[0]">
+    <img ng-src="{{tutorial.media.url}}" style = "width: 400px">
     <h3>Created By: {{tutorial.author.display_name}}</h3>
     
     <h3>Category: {{tutorial.category.name}}</h3>
