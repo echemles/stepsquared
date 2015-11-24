@@ -9,7 +9,6 @@ app.directive('mediaUpload', function(UploadFactory){
 		},
 		templateUrl: 'js/common/directives/media-upload/media-upload.html',
 		link: function(scope){
-			scope.media = scope.media ? scope.media : {};
 
 			scope.getTypes = function(){
 				var res = [];
@@ -20,6 +19,9 @@ app.directive('mediaUpload', function(UploadFactory){
 			}
 
 			var newMedia = document.querySelector("#uploadMedia");
+			var imageRegex = /.*image.*/i;
+			var videoRegex = /.*video.*/i;
+
 
 			function upload_file(file, signed_request, url){
 			    var xhr = new XMLHttpRequest();
@@ -29,7 +31,15 @@ app.directive('mediaUpload', function(UploadFactory){
 			    	scope.isUploading.isUploading = false;
 			        if (xhr.status === 200) {
 			            console.log("Uploaded file: ", data)
+			            if(!scope.media)
+			            	scope.media={};
+			            if(imageRegex.test(file.type))
+			            	scope.media.type='image';
+			            else if (videoRegex.test(file.type))
+			            	scope.media.type='video';
+			            
 			            scope.media.url = url
+
 			            scope.updateMedia({media: scope.media})
 
 
@@ -48,6 +58,7 @@ app.directive('mediaUpload', function(UploadFactory){
 				// var bucket = new AWS.S3({params: {Bucket: 'trikshot'}});
 				scope.isUploading.isUploading = true;
 				var media = event.target.files[0];
+				console.log("media",media);
 				UploadFactory.uploadMedia(media)
 				.then(function(signedURL){
 					console.log("signedURL is ", signedURL)

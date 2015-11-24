@@ -116,7 +116,8 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
     } 
 
     $scope.updateMedia = function(media){
-        if(!$scope.tutorial.media){
+        console.log("sope.tutorual.media", $scope.tutorial.media)
+        if(!$scope.tutorial.media._id){
             //create media object
             //set the media object of the current tutorial
             MediaFactory.create(media)
