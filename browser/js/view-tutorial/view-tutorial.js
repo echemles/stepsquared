@@ -18,4 +18,5 @@ app.config(function ($stateProvider) {
 
 app.controller('viewTutorialCtrl', function ($scope, TutorialFactory, theTutorial, $state) {
     $scope.tutorial = theTutorial;
+    
 });

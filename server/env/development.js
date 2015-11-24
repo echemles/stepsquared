@@ -1,3 +1,5 @@
+var keys = require('../../keys')
+
 module.exports = {
   "DATABASE_URI": "mongodb://localhost:27017/stepSquared",
   "SESSION_SECRET": "Optimus Prime is my real dad",
@@ -17,7 +19,7 @@ module.exports = {
     "callbackURL": "INSERT_GOOGLE_CALLBACK_HERE"
   },
   "AWS":{
-    "accessKey": "AKIAJDV24Q3GPQOEVCGQ",
-    "secretKey": "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"
+    "accessKey": keys.AWS.accessKey,
+    "secretKey": keys.AWS.secretKey
   }
 };
