@@ -356,7 +356,7 @@ connectToDb.then(function () {
     .then(function(steps){
         step1 = steps[0]
         step2 = steps[1]
-        return seedTutorials(user._id, category._id, step1._id, step2._id, user2._id, media1._id)
+        return seedTutorials(user._id, category._id, step1._id, step2._id, user2._id, media2._id)
     })
     .then(function () {
         console.log(chalk.green('Seed successful!'));
