@@ -7,8 +7,6 @@ var AWS = require('aws-sdk');
 
 var accessKeyId =  require('../../../env')['AWS']['accessKey'];
 var secretAccessKey = require('../../../env')['AWS']['secretKey'];
-console.log("accessKeyId", accessKeyId)
-console.log("secretAccessKey", secretAccessKey)
 
 
 AWS.config.update({
