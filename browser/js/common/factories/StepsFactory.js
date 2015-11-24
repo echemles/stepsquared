@@ -5,6 +5,7 @@ app.factory('StepsFactory', function($http){
 	StepsFactory.getStep = function(stepId){
 		return $http.get('/api/steps/' + stepId)
 		.then(function(response){
+			console.log("response data is ", response.data)
 			return response.data
 		})
 	}

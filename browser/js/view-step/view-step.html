@@ -1,11 +1,12 @@
 <div>
-<div>
-	<div><h1>{{step.name}}</h1></div>
+	<a ui-sref = "viewTutorial({tutorialId: tutorial._id})">Go Back to Tutorial</a>
 	<div>
-		<label>Active Time</label> {{step.activeTime}}
-		<label>Standby Time</label>{{step.standByTime}}
+		<div><h1>{{step.name}}</h1></div>
+		<div>
+			<label>Active Time</label> {{step.activeTime}}
+			<label>Standby Time</label>{{step.standByTime}}
+		</div>
 	</div>
-</div>
 
 	<div class = "col-xs-6">
 		<div>

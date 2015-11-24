@@ -1,3 +1,4 @@
+<ui-view></ui-view>
 <div>
     <h1>{{tutorial.name}} Tutorial</h1>   
 
@@ -29,10 +30,11 @@
                 <th>{{requirement.item}}</th>
             </tr>
         </table>
+    </div>
 
-
-
-
+    <div ng-repeat = "(idx, step) in tutorial.steps">
+        <!-- {{step}} -->
+        <a ui-sref = "viewStep({stepId: step._id, tutorialId: tutorial._id, tutorial: tutorial})">{{idx + 1}}:{{step.name}}</a>
     </div>
    
 
