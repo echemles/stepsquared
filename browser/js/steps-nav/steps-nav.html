@@ -1,0 +1,12 @@
+<ui-view></ui-view>
+<footer class="footer navbar-fixed-bottom">
+	<div class="container">
+		<h3> NAV BAR --------- </h3>
+		<ol>
+			<span ng-repeat = "(idx, step) in tutorial.steps">
+				<a ui-sref="stepsNav.edit({stepId: step._id})">{{idx+1}}</a>
+			 </span>
+		</ol>
+		<button ng-click="createStep()">create step</button>
+	</div>
+</footer>

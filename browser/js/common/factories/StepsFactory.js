@@ -16,6 +16,7 @@ app.factory('StepsFactory', function($http){
 		})
 	}
 
+	//MUST INCLUDE a tutorialID, and optional index;
 	StepsFactory.createStep = function(stepInfo){
 		return $http.post('/api/steps/', stepInfo)
 		.then (function(response){

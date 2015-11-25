@@ -1,4 +1,6 @@
+
 <form>
+	
 	<h3 ng-if = "media">Upload Media</h3>
 	<div class = "form-group">
 		<label for = "name">Media Name</label>
@@ -10,13 +12,13 @@
 		<input type = "text" ng-model = "media.tags" class = "form-control" placeholder = "Enter Media Tags separated by comma">
 	</div>
  
-	<input type = "file" id = "uploadMedia" accept = "{{getTypes()}}">
+	<input type = "file" ng-disabled = "!media.name" id = "uploadMedia" accept = "{{getTypes()}}">
 
 	<div>
 		<img ng-if = "media" ng-src = "{{media.url}}" style = "width: 200px;">
 	</div>
 
-	<button ng-click = "updateMedia({media: media})">Update Media</button>
+	<button ng-click = "trueUpdateMedia()">Update Media</button>
 
 
 </form>

@@ -6,6 +6,7 @@ var _ = require('lodash');
 var Tutorial = mongoose.model('Tutorial')
 var Step = mongoose.model('Step')
 
+//Should include a tutorialID in the req.body
 router.post('/', function(req, res, next){
 	var createdStep;
 	Step.create(req.body.step)
@@ -58,7 +59,7 @@ router.get('/:stepId', function(req, res, next){
 
 
 router.param('stepId', function(req, res, next, id){
-	Step.findById(id)
+	Step.findById(id).populate('media').exec()
 	.then(function(step){
 		req.step = step;
 		next()
