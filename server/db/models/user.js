@@ -2,7 +2,7 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var _ = require('lodash');
-var Tutorial = mongoose.model('Tutorial');
+var Tutorial = require('./tutorial')
 var objectId = mongoose.Schema.Types.ObjectId
 
 var schema = new mongoose.Schema({
@@ -11,7 +11,7 @@ var schema = new mongoose.Schema({
     lastName: { type: String, required: true },
     display_name: { type: String }, //defaulting to first name in pre-save hook
     description: { type: String},
-    favorites: [{ type: objectId, ref: 'Tutorial'}],
+    favorites: {type: [{ type: objectId, ref: 'Tutorial', index: true}], default: []},
     password: { type: String, required: true},
     salt: { type: String },
     isAdmin: { type: Boolean, default: false },
@@ -78,4 +78,4 @@ schema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
-mongoose.model('User', schema);
+module.exports = mongoose.model('User', schema);
