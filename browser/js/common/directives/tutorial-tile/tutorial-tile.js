@@ -1,10 +1,11 @@
-app.directive('tutorialTile', function(UserFactory, lodash){
+app.directive('tutorialTile', function(UserFactory, lodash, $state){
 	return {
 		element: 'E',
 		templateUrl: 'js/common/directives/tutorial-tile/tutorial-tile.html',
 		scope: {
 			tutorial: '=',
-			user: '='
+			user: '=',
+			onRemove: '&'
 		},
 		link: function(scope){
 			scope.addFavorite = function(){
@@ -12,7 +13,6 @@ app.directive('tutorialTile', function(UserFactory, lodash){
 				.then(function(user){
 					scope.user = user;
 					scope.tutorial.favorites +=1;
-					scope.$digest()
 				})
 			}
 			scope.removeFavorite = function(){
@@ -20,7 +20,7 @@ app.directive('tutorialTile', function(UserFactory, lodash){
 				.then(function(user){
 					scope.user = user;
 					scope.tutorial.favorites -=1;
-					scope.$digest()
+					if(scope.onRemove) scope.onRemove({tutorial: scope.tutorial})
 				})
 			}
 

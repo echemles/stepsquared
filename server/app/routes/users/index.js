@@ -29,7 +29,11 @@ router.get('/', function(req, res, next){
 
 //Ger one user
 router.get('/:user_id', function(req, res, next){
-	res.send(req.userObj);
+	req.userObj.populate('favorites').execPopulate()
+	.then(function(user){
+		res.send(user);
+	})
+	.then(null, next)
 })
 
 //Modify one user
