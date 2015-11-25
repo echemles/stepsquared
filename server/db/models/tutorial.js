@@ -20,6 +20,11 @@ var schema = new mongoose.Schema({
 
 });
 
+
+schema.methods.getTotalFavorites = function(){
+	return User.count({favorites: this._id}).exec()
+}
+
 schema.methods.totalPoints = function(){
 	return this.upvotes.length;
 }
@@ -35,9 +40,6 @@ schema.methods.totalTime = function(){
 	})
 }
 
-schema.methods.getTotalFavorites = function(){
-	return User.count({favorites: this._id})
-}
 
 schema.methods.activeTime = function(){
 	return this.populate('steps').exec()

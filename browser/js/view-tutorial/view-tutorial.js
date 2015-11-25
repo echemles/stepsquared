@@ -10,13 +10,17 @@ app.config(function ($stateProvider) {
             },
             currentUser: function(AuthService){
                 return AuthService.getLoggedInUser();
+            },
+            favorites: function(TutorialFactory, $stateParams){
+                return TutorialFactory.getFavorites($stateParams.tutorialId)
             }
         }
     });
 
 });
 
-app.controller('viewTutorialCtrl', function ($scope, TutorialFactory, theTutorial, $state) {
+app.controller('viewTutorialCtrl', function ($scope,favorites, TutorialFactory, theTutorial, $state) {
+
     $scope.tutorial = theTutorial;
     
 });

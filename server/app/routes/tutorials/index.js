@@ -32,13 +32,29 @@ router.get('/units', function(req,res, next){
 
 //Get a tutorial by id
 router.get('/:tutorialId', function(req, res, next){
-	res.json(req.foundTutorial)
+	// req.foundTutorial.favorites.then(function(something){
+	// 	console.log("something is ", something)
+	// })
+
+	req.foundTutorial.getTotalFavorites()
+	.then(function(favs){
+		console.log("favorites is ", favs)
+		var tutorial = req.foundTutorial.toJSON()
+		tutorial.favorites = favs;
+		res.json(tutorial)
+	})
+	// req.foundTutorial.getTotalFavorites()
+	// .then(function(favs){
+	// 	res.foundTutorial.favorites = favs;
+	// 	res.json(req.foundTutorial)
+	// })
 })	
 
 //Get all tutorials
 router.get('/', function(req, res, next){
 	Tutorial.find().populate('media category author')
 	.then(function(tutorials){
+
 		res.json(tutorials)
 	})
 	.then(null, next)
