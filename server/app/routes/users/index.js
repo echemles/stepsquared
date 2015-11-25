@@ -61,6 +61,25 @@ router.get('/:user_id/favorites', function(req, res, next) {
 	.then(null,next);
 })
 
+//Add tutorial to users favorites
+router.post('/:user_id/favorites/:tutorialId', function(req, res, next){
+	req.userObj.update({$push: {favorites: req.params.tutorialId}})
+	.then(function(response){
+		res.json(response)
+	})
+	.then(null, next)
+})
+
+//Delete tutorial from users favorites
+router.delete('/:user_id/favorites/:tutorialId', function(req, res, next){
+	req.userObj.update({$pull: {favorites: req.params.tutorialId}})
+	.then(function(response){
+		res.json(response)
+	})
+	.then(null, next)
+})
+
+
 //Get all tutorials created by one user
 router.get('/:user_id/tutorials', function(req, res, next) {
 	Tutorial.find({author: req.userObj._id})

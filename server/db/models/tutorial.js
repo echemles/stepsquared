@@ -3,6 +3,7 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var _ = require('lodash');
 var requirementSchema = require('./requirementSchema');
+var User = require('./user');
 
 var objectId = mongoose.Schema.Types.ObjectId;
 
@@ -15,7 +16,6 @@ var schema = new mongoose.Schema({
 	media: {type: objectId, ref: 'Media'},
 	author: {type: objectId, ref: 'User', required: true},
 	steps: [{type: objectId, ref: 'Step'}],
-	upvotes: [{type: objectId, ref: 'User'}],
 	equipment: [{type: String}]
 
 });
@@ -33,6 +33,10 @@ schema.methods.totalTime = function(){
 		})
 		return totalTime
 	})
+}
+
+schema.methods.getTotalFavorites = function(){
+	return User.count({favorites: this._id})
 }
 
 schema.methods.activeTime = function(){
@@ -57,4 +61,4 @@ schema.methods.standbyTime = function(){
 	})
 }
 
-mongoose.model('Tutorial', schema)
+module.exports = mongoose.model('Tutorial', schema)
