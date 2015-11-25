@@ -6,7 +6,12 @@
 			<span ng-repeat = "(idx, step) in tutorial.steps">
 				<a ui-sref="stepsNav.edit({stepId: step._id})">{{idx+1}}</a>
 			 </span>
+			 
 		</ol>
+		<button ui-sref="stepsNav.edit({stepId: step._id})">Back</button>
+		<button ui-sref="stepsNav.edit({stepId: step._id})">Next</button>
 		<button ng-click="createStep()">create step</button>
+		
+
 	</div>
 </footer>

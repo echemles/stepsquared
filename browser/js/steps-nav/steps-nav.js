@@ -86,8 +86,25 @@ console.log("in child state", $scope.tutorial)
 });
 
 
-app.controller('StepsNavCtrl', function ($scope, $state, growl, currentTutorial, TutorialFactory, MediaFactory, StepsFactory, units) {
+app.controller('StepsNavCtrl', function ($scope, $state, growl, currentTutorial, TutorialFactory, MediaFactory, StepsFactory, lodash, units) {
     $scope.tutorial = currentTutorial;
+    
+    $scope.nextStep = function(){
+        var currentIdx = lodash.findIndex($scope.tutorial.steps, function(step){ return step == $scope.currentStep.step._id})
+        console.log("THIS IS THE NEXT STEP index", currentIdx)
+        // $scope.currentStep.step = $scope.tutorial.steps[currentIdx+1]
+        // return $scope.tutorial.steps[currentIdx+1]._id
+
+    }
+    $scope.prevStep = function(){
+        var currentIdx = lodash.findIndex($scope.tutorial.steps, function(step){ return step == $scope.currentStep.step._id})
+        console.log("THIS IS THE Prev STEP index", currentIdx)
+        // $scope.currentStep.step = $scope.tutorial.steps[currentIdx-1]
+        // return $scope.tutorial.steps[currentIdx-1]._id
+
+    }
+
+
     $scope.currentStep = {
     	step: null
     };
