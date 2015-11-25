@@ -6,6 +6,7 @@ var _ = require('lodash');
 var Tutorial = mongoose.model('Tutorial')
 var Step = mongoose.model('Step')
 
+// @OB heavy logic, move to model somehow (for example, tutorial.createStep instance method)
 router.post('/', function(req, res, next){
 	var createdStep;
 	Step.create(req.body.step)

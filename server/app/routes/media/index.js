@@ -46,7 +46,7 @@ router.put('/:mediaId', function(req, res, next){
 router.delete('/:mediaId', function(req, res, next){
 	req.foundMedia.remove()
 	.then(function(){ 
-		res.json("successfully deleted media")
+		res.json("successfully deleted media") // @OB kind of non standard, but that could be OK
 	})
 	.then(null, next);
 })
@@ -56,7 +56,7 @@ router.post('/', function(req,res,next) {
 	delete req.body._id
 	Media.create(req.body)
 	.then(function(media) {
-		res.json(media)
+		res.json(media) // @OB generally would recommend 201 for clarity
 	})
 	.then(null,next);
 })

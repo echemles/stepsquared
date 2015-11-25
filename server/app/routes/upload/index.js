@@ -16,7 +16,7 @@ AWS.config.update({
 
 var s3 = new AWS.S3();
 
-
+// @OB heavy router logic, I'd recommend abstracting to some sort of custom module, "S3Utility" or whatever, or perhaps with your media model code
 router.post('/', function (req, res, next) {
     var media = req.body;
     var ext = media.name.match(/\..{3}/)[0]
@@ -38,7 +38,7 @@ router.post('/', function (req, res, next) {
                 signed_request: data,
                 url: 'https://step-squared-media.s3.amazonaws.com/' + key
             }
-			console.log("Successfully sent presigned URL.");
+			console.log("Successfully sent presigned URL."); // @OB dead code
     		res.write(JSON.stringify(return_data));
             res.end();
       	}

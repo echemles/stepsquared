@@ -47,7 +47,7 @@ router.put('/:user_id', function(req, res, next){
 router.delete('/:user_id', function(req, res, next){
 	req.userObj.remove()
 	.then(function(){ 
-		res.json("successfully deleted user")
+		res.json("successfully deleted user") // @OB kind of non standard, but that could be OK
 	})
 	.then(null, next);
 })
@@ -63,7 +63,7 @@ router.get('/:user_id/favorites', function(req, res, next) {
 
 //Get all tutorials created by one user
 router.get('/:user_id/tutorials', function(req, res, next) {
-	Tutorial.find({author: req.userObj._id})
+	Tutorial.find({author: req.userObj._id}) // @OB consider indexing (zero urgency)
 	.then(function(tutorials){ 
 		res.json(tutorials)
 	})

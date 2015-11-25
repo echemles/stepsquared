@@ -5,7 +5,7 @@ module.exports = router;
 var Tutorial = mongoose.model('Tutorial');
 
 router.param('tutorialId', function(req, res, next, id){
-	console.log("id is ", id)
+	console.log("id is ", id) // @OB dead code
 	Tutorial.findById(id).populate('steps author media category')
 	.then(function(tutorial){
 		if(!tutorial) throw new Error('Tutorial not found')
@@ -15,7 +15,7 @@ router.param('tutorialId', function(req, res, next, id){
 	.then(null, next)
 })
 
-
+// @OB seems non-standard, maybe use query string instead of route params
 router.get('/user/:userId', function(req, res, next){
 	Tutorial.find({author: req.params.userId}).populate('media category author')
 	.then(function(tutorials){
@@ -25,6 +25,7 @@ router.get('/user/:userId', function(req, res, next){
 })
 
 router.get('/units', function(req,res, next){
+	// @OB cool!
 	res.json(Tutorial.schema.path('requirements').schema.path('unit').enumValues)
 })
 
@@ -33,7 +34,7 @@ router.get('/:tutorialId', function(req, res, next){
 })	
 
 router.get('/', function(req, res, next){
-	Tutorial.find().populate('media category author')
+	Tutorial.find().populate('media category author') // @OB sanitize author?
 	.then(function(tutorials){
 		res.json(tutorials)
 	})
@@ -48,6 +49,7 @@ router.get('/search/:searchTerm', function(req, res, next){
 		{name: searchRegex},
 		{description: searchRegex}
 	]})
+	// @OB dead code
 	// .populate([
 	// 	{
 	// 		path: 'author',
