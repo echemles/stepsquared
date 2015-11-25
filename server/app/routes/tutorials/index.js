@@ -101,6 +101,18 @@ router.delete('/:tutorialId', function(req, res, next){
 	.then(null, next)
 })
 
+//Add a review for a tutorial
+router.post('/:tutorialId/review', function(req, res, next){
+	//need to make sure the user is the current logged in user
+	//check to make sure this user does not have a rating for the requested tutorial
+	req.foundTutorial.update({$push: {reviews: req.body}})
+	.then(function(result){
+		res.json(result)
+	})
+	.then(null, next)
+})
+
+
 //Add a tutorial
 router.post('/', function(req, res, next){
 	Tutorial.create(req.body)

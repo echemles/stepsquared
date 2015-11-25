@@ -7,6 +7,11 @@ var User = require('./user');
 
 var objectId = mongoose.Schema.Types.ObjectId;
 
+var reviewSchema = new mongoose.Schema({
+	user: {type: objectId, ref: 'User', required: true},
+	rating: {type: Number, min: 1, max: 5, required: true}
+});
+
 var schema = new mongoose.Schema({
 	name: {type: String, required: true},
 	category: {type: objectId, ref: 'Category', required: true},
@@ -16,9 +21,22 @@ var schema = new mongoose.Schema({
 	media: {type: objectId, ref: 'Media'},
 	author: {type: objectId, ref: 'User', required: true},
 	steps: [{type: objectId, ref: 'Step'}],
-	equipment: [{type: String}]
+	equipment: [{type: String}],
+	reviews: [reviewSchema]
 
+},{
+	toJSON: {
+		virtuals: true
+	}
 });
+
+schema.virtual('avgRating').get(function(){
+	var sum = _.sum(this.reviews, function(review){
+		return review.rating;
+	})
+	if (!sum) return 0;
+	return Math.round(sum/this.reviews.length)
+})
 
 
 schema.methods.getTotalFavorites = function(){
