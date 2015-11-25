@@ -25,15 +25,19 @@ app.config(function($stateProvider){
 			},
 			categories: function(CategoryFactory) {
 				return CategoryFactory.getAll();
+			},
+			loggedInUser: function(AuthService){
+				return AuthService.getLoggedInUser();
 			}
 		}
 	})
 })
 
 
-app.controller('AllTutorialsCtrl', function($scope, tutorials, user, categories, $stateParams){
+app.controller('AllTutorialsCtrl', function($scope, tutorials,loggedInUser, user, categories, $stateParams){
 	$scope.tutorials = tutorials;
 	$scope.user = user;
+	$scope.loggedInUser = loggedInUser
 
 	if($scope.user) {
 		$scope.title = $scope.user
