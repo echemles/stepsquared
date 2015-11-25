@@ -19,8 +19,8 @@ var s3 = new AWS.S3();
 
 router.post('/', function (req, res, next) {
     var media = req.body;
-
-    var key = media.name;
+    var ext = media.name.match(/\..{3}/)[0]
+    var key = Date.now().toString() + ext;
 	var params = {
             Bucket: 'step-squared-media',
             Key: key,
