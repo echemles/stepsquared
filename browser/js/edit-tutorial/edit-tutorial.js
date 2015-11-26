@@ -24,7 +24,6 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutorial, TutorialFactory, MediaFactory, Upload, categories, units) {
-    console.log("tutorial.media is ", currentTutorial.media)
     $scope.units = units;
 
     $scope.categories = categories; 
@@ -37,7 +36,8 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
             currentTutorial = tutorial;
             $scope.tutorial = tutorial;
             growl.success("Created tutorial successfully!")
-        }, function(err){
+        })
+        .catch(function(){
             growl.error("Failed to create tutorial")
         })     
     }
@@ -60,9 +60,7 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
     }
     $scope.file;
 
-
     $scope.update = function(){
-        console.log("tutorial media is ", $scope.tutorial.media)
         $scope.tutorial.equipment = [];
         $scope.tools.forEach(function(tool){
             $scope.tutorial.equipment.push(tool.name)
@@ -71,49 +69,24 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
             TutorialFactory.update($scope.tutorial)
             .then(function(){
                 growl.success("Updated tutorial successfully!")
-            }, function(err){
+            })
+            .catch(function(){
                 growl.error("Failed to update tutorial")
             })
         } else {
             $scope.create();
         }
-        
     }
 
-    $scope.addMediaModal = function(){
-        var modalInstance = $uibModal.open(MediaModal($scope))
-
-        modalInstance.result.then(function(result){
-            console.log("result from modal is ", result)
-        })
-    }
-       
     $scope.delete = function(){
         TutorialFactory.delete($scope.tutorial._id)
         .then(function(){
             growl.success("Deleted tutorial successfully!")
-        }, function(err){
+        })
+        .catch(function(){
             growl.error("Failed to delete tutorial")
         })
     }
-
-
-
-
-    $scope.addMedia = function(){
-        console.log("in add media")
-        uploadS3($scope.file)
-        .then(function(imageUrl){
-            $scope.media.url = imageUrl;
-            return MediaFactory.create($scope.media)
-        })
-        .then(function(media){
-            growl.success("Created media successfully!")
-        })
-        .catch(function(err){
-            growl.error("Failed to create media")
-        })
-    } 
 
     $scope.updateMedia = function(media){
         if(!$scope.tutorial.media){

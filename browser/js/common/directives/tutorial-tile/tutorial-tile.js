@@ -1,4 +1,4 @@
-app.directive('tutorialTile', function(UserFactory, lodash){
+app.directive('tutorialTile', function(UserFactory){
 	return {
 		element: 'E',
 		templateUrl: 'js/common/directives/tutorial-tile/tutorial-tile.html',

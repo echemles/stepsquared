@@ -1,7 +1,6 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Tutorial = mongoose.model('Tutorial')
@@ -28,7 +27,7 @@ router.get('/', function(req, res, next){
 })
 
 //Ger one user
-router.get('/:user_id', function(req, res, next){
+router.get('/:user_id', function(req, res){
 	res.send(req.userObj);
 })
 
