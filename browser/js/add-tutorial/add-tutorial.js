@@ -38,15 +38,6 @@ app.controller('AddTutorialCtrl', function ($scope, $state, growl, TutorialFacto
             growl.error("Failed to create tutorial")
         })     
     }
-       
-    $scope.delete = function(){
-        TutorialFactory.delete($scope.tutorial._id)
-        .then(function(){
-            growl.success("Deleted tutorial successfully!")
-        }, function(err){
-            growl.error("Failed to delete tutorial")
-        })
-    }
 
     $scope.updateMedia = function(media){
         media.type = 'image';
