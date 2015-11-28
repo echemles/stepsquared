@@ -18,14 +18,13 @@ app.controller('AdminTutorialsCtrl', function ($scope, AuthService, allTutorials
 
     $scope.allTutorials = allTutorials;
  
-
     $scope.deleteTutorial = function (index){
         TutorialFactory.delete($scope.allTutorials[index]._id)
             .then(function(){
             	$scope.allTutorials.splice(index,1);
                 growl.success("Successfully deleted tutorial")
             })
-            .catch(function(err) {
+            .catch(function() {
                 growl.error("Error deleting tutorial")
             })
         }

@@ -1,7 +1,6 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Tutorial = mongoose.model('Tutorial')
@@ -27,9 +26,13 @@ router.get('/', function(req, res, next){
 	.then(null, next)
 })
 
-//Ger one user
+//Get one user
 router.get('/:user_id', function(req, res, next){
-	res.send(req.userObj);
+	req.userObj.populate('favorites').execPopulate()
+	.then(function(user){
+		res.send(user);
+	})
+	.then(null, next)
 })
 
 //Modify one user

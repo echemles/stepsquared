@@ -1,6 +1,5 @@
 'use strict';
 var mongoose = require('mongoose');
-var _ = require('lodash');
 
 var schema = new mongoose.Schema({
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true},

@@ -1,7 +1,6 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var _ = require('lodash');
 var mongoose = require('mongoose');
 var Media = mongoose.model('Media');
 
@@ -16,7 +15,6 @@ router.param('mediaId', function(req, res, next, id) {
 })
 
 
-
 //Get all media
 router.get('/', function(req, res, next){
 	Media.find()
@@ -27,7 +25,7 @@ router.get('/', function(req, res, next){
 })
 
 //Get one media
-router.get('/:mediaId', function(req, res, next){
+router.get('/:mediaId', function(req, res){
 	res.json(req.foundMedia);
 })
 
