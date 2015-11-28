@@ -53,6 +53,7 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
     $scope.delete = function() {
     	StepsFactory.deleteStep($scope.step._id)
     	.then(function() {
+            //need to delete step from Tutorial as well
     		$state.go('stepsNav',{tutorialId: $scope.tutorial._id})
     	})
     }
@@ -60,7 +61,6 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
 
 
     $scope.updateMedia = function(mediaId){
-
         $scope.step.media = mediaId;
         return StepsFactory.updateStep($scope.step)
         .then(function(step){
