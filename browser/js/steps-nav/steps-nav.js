@@ -90,17 +90,25 @@ app.controller('StepsNavCtrl', function ($scope, $state, growl, currentTutorial,
     $scope.tutorial = currentTutorial;
     
     $scope.nextStep = function(){
-        var currentIdx = lodash.findIndex($scope.tutorial.steps, function(step){ return step == $scope.currentStep.step._id})
-        console.log("THIS IS THE NEXT STEP index", currentIdx)
-        // $scope.currentStep.step = $scope.tutorial.steps[currentIdx+1]
-        // return $scope.tutorial.steps[currentIdx+1]._id
-
+        var currentIdx = lodash.findIndex($scope.tutorial.steps, function(step){ return step._id == $scope.currentStep.step._id})
+        if(currentIdx+1 < $scope.tutorial.steps.length){
+            $scope.currentStep.step = $scope.tutorial.steps[currentIdx+1]
+        } else{
+            growl.error("There isn't a next step! Click CREATE STEP to make a new one!")
+        }
+        $state.go('stepsNav.edit', {stepId: $scope.currentStep.step._id})
     }
+
     $scope.prevStep = function(){
-        var currentIdx = lodash.findIndex($scope.tutorial.steps, function(step){ return step == $scope.currentStep.step._id})
-        console.log("THIS IS THE Prev STEP index", currentIdx)
-        // $scope.currentStep.step = $scope.tutorial.steps[currentIdx-1]
-        // return $scope.tutorial.steps[currentIdx-1]._id
+        var currentIdx = lodash.findIndex($scope.tutorial.steps, function(step){ return step._id == $scope.currentStep.step._id})
+        if(currentIdx-1 >-1){
+            $scope.currentStep.step = $scope.tutorial.steps[currentIdx-1]
+        } else {
+            growl.error("This is the first step!")
+        }
+        
+
+        $state.go('stepsNav.edit', {stepId: $scope.currentStep.step._id })
 
     }
 
@@ -121,7 +129,7 @@ app.controller('StepsNavCtrl', function ($scope, $state, growl, currentTutorial,
         StepsFactory.createStep({tutorialId: $scope.tutorial._id, step: {}})
         .then(function(step){
         	$scope.tutorial.steps.push(step)
-        	
+        	console.log("HERE ARE THE TUTORIAL STEPS", $scope.tutorial.steps)
         	newStepId = step._id;
         	return TutorialFactory.update($scope.tutorial)
         })
