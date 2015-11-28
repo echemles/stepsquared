@@ -52,7 +52,6 @@ console.log("in child state", $scope.tutorial)
     $scope.delete = function() {
     	StepsFactory.deleteStep($scope.step._id)
     	.then(function() {
-    		
     		$state.go('stepsNav',{tutorialId: $scope.tutorial._id})
     	})
     }
@@ -64,12 +63,9 @@ console.log("in child state", $scope.tutorial)
         $scope.step.media = mediaId;
         return StepsFactory.updateStep($scope.step)
         .then(function(step){
-        	console.log("attempt to update Media",step)
-        	console.log("$SCOPE.STEP", $scope.step)
             growl.success("Media uploaded")
         })
         .catch(function(err){
-            console.error(err)
             growl.error("Unable to upload media")
         })
     }
@@ -78,7 +74,6 @@ console.log("in child state", $scope.tutorial)
     $scope.removeRequirement = function(idx){
         $scope.step.requirements.splice(idx,1)
     }
-
     $scope.addRequirement = function(){
         $scope.step.requirements.push({})
     }
@@ -92,6 +87,7 @@ app.controller('StepsNavCtrl', function ($scope, $state, growl, currentTutorial,
     $scope.nextStep = function(){
         var currentIdx = lodash.findIndex($scope.tutorial.steps, function(step){ return step._id == $scope.currentStep.step._id})
         if(currentIdx+1 < $scope.tutorial.steps.length){
+            console.log("here are the tutorial requirements", $scope.tutorial.requirements)
             $scope.currentStep.step = $scope.tutorial.steps[currentIdx+1]
         } else{
             growl.error("There isn't a next step! Click CREATE STEP to make a new one!")
@@ -126,7 +122,6 @@ app.controller('StepsNavCtrl', function ($scope, $state, growl, currentTutorial,
         StepsFactory.createStep({tutorialId: $scope.tutorial._id, step: {}})
         .then(function(step){
         	$scope.tutorial.steps.push(step)
-        	console.log("HERE ARE THE TUTORIAL STEPS", $scope.tutorial.steps)
         	newStepId = step._id;
         	return TutorialFactory.update($scope.tutorial)
         })

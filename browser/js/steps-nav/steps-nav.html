@@ -1,16 +1,25 @@
 <ui-view></ui-view>
 <footer class="footer navbar-fixed-bottom">
 	<div class="container">
-		<h3> NAV BAR --------- </h3>
+		<h3> ------ ADD/EDIT STEP NAVBAR ------- </h3>
+		<h4>Ingredients</h4>
+		<div ng-repeat = "req in tutorial.requirements">
+
+			<p>{{ req.quantity}} {{req.unit}} {{req.item}}</p>
+		</div>
+
+
+
 		<ol>
 			<button ng-click="prevStep()">Back</button>
 			<span ng-repeat = "(idx, step) in tutorial.steps">
 				<a ui-sref="stepsNav.edit({stepId: step._id})">{{idx+1}}</a>
 			</span>
 			<button ng-click="nextStep()">Next</button>
+			<button ng-click="createStep()">create step</button>
 		</ol>
 
-		<button ng-click="createStep()">create step</button>
+		
 		
 	</div>
 </footer>
