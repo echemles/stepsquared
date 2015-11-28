@@ -4,7 +4,7 @@ app.config(function($stateProvider){
 		templateUrl: 'js/all-tutorials/all-tutorials.html',
 		controller: 'AllTutorialsCtrl',
 		resolve: {
-			tutorials: function($stateParams, TutorialFactory, $location){
+			tutorials: function($stateParams, TutorialFactory){
 				if($stateParams.userId){
 					return TutorialFactory.fetchByUser($stateParams.userId)
 				}

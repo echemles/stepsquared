@@ -1,9 +1,9 @@
 'use strict';
 var crypto = require('crypto');
 var mongoose = require('mongoose');
-var _ = require('lodash');
 var Tutorial = require('./tutorial')
-var objectId = mongoose.Schema.Types.ObjectId
+var objectId = mongoose.Schema.Types.ObjectId;
+var _ = require('lodash');
 
 var schema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
@@ -20,7 +20,7 @@ var schema = new mongoose.Schema({
 });
 
 // method to remove sensitive information from user objects before sending them out
-schema.methods.sanitize =  function () {
+schema.methods.sanitize = function () {
     return _.omit(this.toJSON(), ['password', 'salt']);
 };
 

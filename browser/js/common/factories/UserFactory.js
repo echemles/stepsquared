@@ -1,8 +1,6 @@
 app.factory('UserFactory', function($http, AuthService){
     var UserFactory = {};
 
-
-
     UserFactory.fetchAll = function(){
         return $http.get('/api/users/')
         .then(function(users){
@@ -18,7 +16,6 @@ app.factory('UserFactory', function($http, AuthService){
         return $http.get('/api/users/'+ user_id)
         .then(getData);
     }
-
 
     UserFactory.updateUser = function(user){
         return $http.put('/api/users/' + user._id, user)

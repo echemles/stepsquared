@@ -2,15 +2,27 @@ app.config(function ($stateProvider) {
     $stateProvider.state('home', {
         url: '/',
         templateUrl: 'js/home/home.html',
-        controller: 'HomeCtrl'
+        controller: 'HomeCtrl',
+        resolve: {
+        	user: function(AuthService, UserFactory){
+        		return AuthService.getLoggedInUser()
+        	},
+        	userFavorites: function(user, TutorialFactory){
+        		return TutorialFactory.getFavoritesForUser(user._id)
+        	}
+        }
     });
 });
 
-app.controller('HomeCtrl', function($scope){
-	// console.log("annyang is ", annyang)
+
+app.controller('HomeCtrl', function($scope, user, userFavorites){
+	$scope.user = user;
+	$scope.userFavorites = userFavorites;
+
 	// function speak(textToSpeak) {
 	//    // Create a new instance of SpeechSynthesisUtterance
 	//    var newUtterance = new SpeechSynthesisUtterance();
+
 
 	//    // Set the text
 	//    newUtterance.text = textToSpeak;
@@ -32,9 +44,15 @@ app.controller('HomeCtrl', function($scope){
 	//   // Add our commands to annyang
 	//   annyang.addCommands(commands);
 
+	   // Add this text to the utterance queue
+	   // window.speechSynthesis.speak(newUtterance);
+	// }
+
+
 	//   // Start listening.
 	//   annyang.start();
 	// }
+
 	// Get some required handles
 	// var startRecBtn = document.getElementById('startRecBtn');
 	// var stopRecBtn = document.getElementById('stopRecBtn');

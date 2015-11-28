@@ -21,13 +21,13 @@ app.controller('AdminCategoriesCtrl', function ($scope, allCategories, CategoryF
 
     $scope.deleteCategory = function (index){
         CategoryFactory.delete($scope.allCategories[index]._id)
-            .then(function(){
-            	$scope.allCategories.splice(index,1);
-                growl.success("Successfully deleted category")
-            })
-            .catch(function(err) {
-                growl.error("Error deleting category")
-            })
+        .then(function(){
+        	$scope.allCategories.splice(index,1);
+            growl.success("Successfully deleted category")
+        })
+        .catch(function() {
+            growl.error("Error deleting category")
+        })
     }
 
     $scope.addCategory = function() {
@@ -85,7 +85,7 @@ app.controller('CatModalCtrl', function ($scope, $uibModalInstance, CategoryFact
             .then(function(newCategory) {
                 $uibModalInstance.close(newCategory);
             })
-            .catch(function(err) {
+            .catch(function() {
                 $uibModalInstance.dismiss("Error creating category");
             })
         }
@@ -94,7 +94,7 @@ app.controller('CatModalCtrl', function ($scope, $uibModalInstance, CategoryFact
             .then(function(updatedCategory) {
                 $uibModalInstance.close(updatedCategory);
             })
-            .catch(function(err) {
+            .catch(function() {
                 $uibModalInstance.dismiss("Error updating category");
             })
         }

@@ -5,7 +5,6 @@ module.exports = router;
 var Tutorial = mongoose.model('Tutorial');
 
 router.param('tutorialId', function(req, res, next, id){
-	console.log("id is ", id)
 	Tutorial.findById(id).populate('steps author media category')
 	.then(function(tutorial){
 		if(!tutorial) throw new Error('Tutorial not found')
@@ -26,7 +25,7 @@ router.get('/user/:userId', function(req, res, next){
 })
 
 //Get all possible unit options for a tutorial requirement
-router.get('/units', function(req,res, next){
+router.get('/units', function(req,res){
 	res.json(Tutorial.schema.path('requirements').schema.path('unit').enumValues)
 })
 
@@ -38,6 +37,7 @@ router.get('/:tutorialId', function(req, res, next){
 		tutorial.favorites = favs;
 		res.json(tutorial)
 	})
+	.then(null, next)
 })	
 
 //Get all tutorials
@@ -55,24 +55,19 @@ router.get('/search/:searchTerm', function(req, res, next){
 	var searchQuery = req.params.searchTerm;
 	var searchRegex = new RegExp('.*' + searchQuery + '.*', 'i')
 
-	Tutorial.find({$or: [
-		{name: searchRegex},
-		{description: searchRegex}
-	]})
-	// .populate([
-	// 	{
-	// 		path: 'author',
-	// 		match: {$or:[
-	// 			{'author.firstName': {$regex: {searchRegex}}},
-	// 			{'author.lastName': {$regex: {searchRegex}}}
-	// 		]}
-	// 	},
-	// 	{
-	// 		path: 'category',
-	// 		match: {name: {$regex: {searchRegex}}}
-	// 	}
-	// ])
-	// .execPopulate()
+	Tutorial.find()
+	.populate('author category')
+	.then(function(tutorials){
+		tutorials = tutorials.filter(function(tutorial){
+			var tests = [tutorial.author.firstName, tutorial.author.lastName, tutorial.name, tutorial.category.name]
+			var tutorialValid = tests.some(function(test){
+				var testResult = searchRegex.test(test)
+				return testResult;
+			})
+			return tutorialValid;
+		})
+		return tutorials;
+	})
 	.then(function(tutorial){
 		res.json(tutorial)
 	})
