@@ -5,8 +5,8 @@ var _ = require('lodash');
 
 var AWS = require('aws-sdk');
 
-var accessKeyId =  require('../../../env')['AWS']['accessKey'];
-var secretAccessKey = require('../../../env')['AWS']['secretKey'];
+var accessKeyId =  require('../../env')['AWS']['accessKey'];
+var secretAccessKey = require('../../env')['AWS']['secretKey'];
 
 
 AWS.config.update({
