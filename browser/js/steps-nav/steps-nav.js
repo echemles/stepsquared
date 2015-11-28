@@ -31,18 +31,19 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactory, $state) {
+app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactory, $state, TutorialFactory) {
 	$scope.step = currentStep;
 	$scope.currentStep.step = currentStep;
-	$scope.step.requirements = !$scope.step.requirements ? [{}] : $scope.step.requirements
-console.log("in child state", $scope.tutorial)
-
-	
+	$scope.step.requirements = !$scope.step.requirements ? [{}] : $scope.step.requirements;
 	$scope.mediaObj = currentStep.media;
 
     $scope.update = function(){
         StepsFactory.updateStep($scope.step)
-        .then(function(){
+        .then(function(step){
+            $scope.tutorial.requirements.push($scope.step.requirements[$scope.step.requirements.length-1])
+            return TutorialFactory.update($scope.tutorial)     
+        })
+        .then(function(tutorial){
             growl.success("Updated step successfully!")
         }, function(err){
             growl.error("Failed to update step")
@@ -111,10 +112,6 @@ app.controller('StepsNavCtrl', function ($scope, $state, growl, currentTutorial,
     };
 
     $scope.units = units;
-    $scope.abc = function() {
-    	console.log($scope.currentStep.step);
-    }
-
 
     $scope.isUploading = {isUploading: false}
     var newStepId;
@@ -140,7 +137,6 @@ app.controller('StepsNavCtrl', function ($scope, $state, growl, currentTutorial,
 
 
        
-
 });
 
 

@@ -1,12 +1,12 @@
 <ui-view></ui-view>
 <footer class="footer navbar-fixed-bottom">
 	<div class="container">
-		<h3> ------ ADD/EDIT STEP NAVBAR ------- </h3>
+<!-- 		<h3> ------ ADD/EDIT STEP NAVBAR ------- </h3> -->
 		<h4>Ingredients</h4>
-		<div ng-repeat = "req in tutorial.requirements">
+		<span ng-repeat = "req in tutorial.requirements">
 
-			<p>{{ req.quantity}} {{req.unit}} {{req.item}}</p>
-		</div>
+			<button>{{ req.quantity}} {{req.unit}} {{req.item}}</button>
+		</span>
 
 
 
