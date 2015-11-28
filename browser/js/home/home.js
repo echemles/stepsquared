@@ -43,9 +43,11 @@ app.controller('HomeCtrl', function($scope, user, userFavorites){
 
 	//   // Add our commands to annyang
 	//   annyang.addCommands(commands);
+
 	   // Add this text to the utterance queue
 	   // window.speechSynthesis.speak(newUtterance);
 	// }
+
 
 	//   // Start listening.
 	//   annyang.start();

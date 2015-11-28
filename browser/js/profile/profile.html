@@ -38,13 +38,15 @@
                     <hr>
                     <span>
                         <h4>{{tutorial.name}}</h4>
-                        <p>Time</p>
+                        <p>Time </p>
                     </span>
                     <button ui-sref = "editTutorial({tutorialId:tutorial._id})" class='btn btn-default'>Edit this Tutorial</button>
                 </div>
             </div>
         </div>
-            
+        <br>
+
+        <button ui-sref="addTutorial({userId: user._id})" class='btn btn-default'>Add Tutorial</button>
 
     </form>
 
