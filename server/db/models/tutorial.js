@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 var requirementSchema = require('./requirementSchema');
 var User = require('./user');
+var _ = require('lodash');
 
 var objectId = mongoose.Schema.Types.ObjectId;
 

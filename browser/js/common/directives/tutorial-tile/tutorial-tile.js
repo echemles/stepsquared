@@ -8,6 +8,7 @@ app.directive('tutorialTile', function(UserFactory, lodash, $state){
 			onRemove: '&'
 		},
 		link: function(scope){
+			console.log("tutorial is ", scope.tutorial)
 			scope.addFavorite = function(){
 				UserFactory.addFavorite(scope.user._id, scope.tutorial._id)
 				.then(function(user){
