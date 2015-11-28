@@ -2,12 +2,22 @@ app.config(function ($stateProvider) {
     $stateProvider.state('home', {
         url: '/',
         templateUrl: 'js/home/home.html',
-        controller: 'HomeCtrl'
+        controller: 'HomeCtrl',
+        resolve: {
+        	user: function(AuthService, UserFactory){
+        		return AuthService.getLoggedInUser()
+        	},
+        	userFavorites: function(user, TutorialFactory){
+        		return TutorialFactory.getFavoritesForUser(user._id)
+        	}
+        }
     });
 });
 
-app.controller('HomeCtrl', function($scope){
-	// console.log("annyang is ", annyang)
+app.controller('HomeCtrl', function($scope, user, userFavorites){
+	$scope.user = user;
+	$scope.userFavorites = userFavorites;
+
 	function speak(textToSpeak) {
 	   // Create a new instance of SpeechSynthesisUtterance
 	   var newUtterance = new SpeechSynthesisUtterance();
@@ -16,12 +26,12 @@ app.controller('HomeCtrl', function($scope){
 	   newUtterance.text = textToSpeak;
 
 	   // Add this text to the utterance queue
-	   window.speechSynthesis.speak(newUtterance);
+	   // window.speechSynthesis.speak(newUtterance);
 	}
 	speak('Welcome to Step Squared, speak the command next to go to the next recipe item')
 	if (annyang) {
 	  // Let's define a command.
-	  console.log("in annyang")
+	  // console.log("in annyang")
 	  var commands = {
 	    'hello': function() { alert('Hello world!'); },
 	    'next': function(){
@@ -33,8 +43,9 @@ app.controller('HomeCtrl', function($scope){
 	  annyang.addCommands(commands);
 
 	  // Start listening.
-	  annyang.start();
+	  // annyang.start();
 	}
+
 	// Get some required handles
 	// var startRecBtn = document.getElementById('startRecBtn');
 	// var stopRecBtn = document.getElementById('stopRecBtn');

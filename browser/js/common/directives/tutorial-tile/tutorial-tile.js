@@ -1,22 +1,26 @@
-app.directive('tutorialTile', function(UserFactory){
+app.directive('tutorialTile', function(UserFactory, lodash, $state){
 	return {
 		element: 'E',
 		templateUrl: 'js/common/directives/tutorial-tile/tutorial-tile.html',
 		scope: {
 			tutorial: '=',
-			user: '='
+			user: '=',
+			onRemove: '&'
 		},
 		link: function(scope){
 			scope.addFavorite = function(){
 				UserFactory.addFavorite(scope.user._id, scope.tutorial._id)
 				.then(function(user){
 					scope.user = user;
+					scope.tutorial.favorites +=1;
 				})
 			}
 			scope.removeFavorite = function(){
 				UserFactory.removeFavorite(scope.user._id, scope.tutorial._id)
 				.then(function(user){
 					scope.user = user;
+					scope.tutorial.favorites -=1;
+					if(scope.onRemove) scope.onRemove({tutorial: scope.tutorial})
 				})
 			}
 

@@ -77,6 +77,12 @@ app.factory('TutorialFactory', function($http, $q){
         .then(getData)
     }
 
+    TutorialFactory.getFavoritesForUser = function(userId){
+        return $http.get('/api/users/' + userId + '/favorites')
+        .then(getData).then(favoritesAll)
+    }
+
+
 
     return TutorialFactory;
 })
