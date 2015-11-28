@@ -51,9 +51,10 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
     }
 
     $scope.delete = function() {
+        //need to delete step from Tutorial as well
     	StepsFactory.deleteStep($scope.step._id)
     	.then(function() {
-            //need to delete step from Tutorial as well
+            
     		$state.go('stepsNav',{tutorialId: $scope.tutorial._id})
     	})
     }
@@ -73,6 +74,7 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
 
 
     $scope.removeRequirement = function(idx){
+        //need to delete requirements from Tutorial as well
         $scope.step.requirements.splice(idx,1)
     }
     $scope.addRequirement = function(){
