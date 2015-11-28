@@ -2,7 +2,8 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var Tutorial = require('./tutorial')
-var objectId = mongoose.Schema.Types.ObjectId
+var objectId = mongoose.Schema.Types.ObjectId;
+var _ = require('lodash');
 
 var schema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
