@@ -5,6 +5,14 @@ var Tutorial = require('./tutorial')
 var objectId = mongoose.Schema.Types.ObjectId;
 var _ = require('lodash');
 
+var requirementSchema = require('./requirementSchema');
+
+var grocerySchema = new mongoose.Schema({
+    name: {type: String, required: true},
+    recipeId: String,
+    list: {type: [requirementSchema], required: true}
+})
+
 var schema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     firstName: { type: String, required: true },
@@ -15,6 +23,7 @@ var schema = new mongoose.Schema({
     password: { type: String, required: true},
     salt: { type: String },
     isAdmin: { type: Boolean, default: false },
+    grocery: [grocerySchema],
     following: [{ type: objectId, ref: 'User'}],
     followers: [{ type: objectId, ref: 'User'}]
 });

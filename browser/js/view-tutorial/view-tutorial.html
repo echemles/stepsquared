@@ -26,12 +26,15 @@
             </tr>
 
             <tr ng-repeat="requirement in tutorial.requirements">
-                <th>{{requirement.quantity}}</th>
-                <th>{{requirement.unit}}</th>
-                <th>{{requirement.item}}</th>
+                <td><input type="checkbox" ng-click="toggleItemInList(requirement)"></td>
+                <td>{{requirement.quantity}}</td>
+                <td>{{requirement.unit}}</td>
+                <td>{{requirement.item}}</td>
             </tr>
         </table>
     </div>
+
+    <button class='btn btn-default' ng-click="saveList()">Save List</button>
 
     <div ng-repeat = "(idx, step) in tutorial.steps">
         <!-- {{step}} -->

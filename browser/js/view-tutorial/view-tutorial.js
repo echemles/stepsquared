@@ -19,8 +19,33 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('viewTutorialCtrl', function ($scope,favorites, TutorialFactory, theTutorial) {
-
+app.controller('viewTutorialCtrl', function ($scope,favorites, growl, TutorialFactory, theTutorial, AuthService, UserFactory) {
     $scope.tutorial = theTutorial;
-    
+    $scope.list = []; 
+
+    $scope.toggleItemInList = function(requirement){
+        // adds or remove from grocery list
+        if($scope.list.indexOf(requirement) === -1){
+            $scope.list.push(requirement)
+        } else {
+            $scope.list.splice($scope.list.indexOf(requirement), 1);
+        }
+    }
+
+    $scope.saveList = function(){
+        var groceryList = {};
+        groceryList.recipeId = theTutorial._id;
+        groceryList.name = theTutorial.name;
+        groceryList.list = $scope.list;
+        var userId = AuthService.getLoggedInUser().$$state.value._id;
+        UserFactory.updateGrocery(groceryList, userId)
+        .then(function(){
+            growl.success("Your grocery list has been updated.")
+        });
+        // UserFactory.updateGrocery(groceryList, )
+    }
+
+    // theTutorial.requirements.forEach(function(requirement){
+    //     $scope.list.push({requirement: false})
+    // })
 });

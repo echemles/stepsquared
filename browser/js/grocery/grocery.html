@@ -1,0 +1,7 @@
+<h1>Grocery List</h1>
+<div ng-repeat="list in grocery">
+	<h3 ui-sref = "viewTutorial({tutorialId:list.recipeId})">{{list.name}}</h3>
+	<ol>
+		<li ng-repeat="item in list.list"> {{item.item}} ({{item.quantity}} {{item.unit}})</li>
+	</ol>
+</div>
