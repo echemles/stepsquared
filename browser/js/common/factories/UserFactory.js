@@ -54,6 +54,16 @@ app.factory('UserFactory', function($http, AuthService){
         })
     }
 
+    UserFactory.follow = function(user_id, to_follow_id){
+        return $http.post(`/api/users/${user_id}/follow/${to_follow_id}`)
+        .then(getData)
+    }
+
+    UserFactory.unfollow = function(user_id, to_unfollow_id){
+        return $http.delete(`/api/users/${user_id}/unfollow/${to_follow_id}`)
+        .then(getData)
+    }
+
 
     return UserFactory;
 })
