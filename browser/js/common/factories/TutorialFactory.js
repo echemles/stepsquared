@@ -41,7 +41,6 @@ app.factory('TutorialFactory', function($http, $q){
         })
     }
 
-
     TutorialFactory.search = function(searchTerm) {
         return $http.get('/api/tutorials/search/' + searchTerm)
         .then(getData).then(favoritesAll)
@@ -80,6 +79,13 @@ app.factory('TutorialFactory', function($http, $q){
     TutorialFactory.getFavoritesForUser = function(userId){
         return $http.get('/api/users/' + userId + '/favorites')
         .then(getData).then(favoritesAll)
+    }
+
+    TutorialFactory.addReview = function(tutorialId, rating, userId){
+        var review = {rating: rating, user: userId}
+        console.log("review is ", review)
+        return $http.post(`/api/tutorials/${tutorialId}/review`, review)
+        .then(getData)
     }
 
 
