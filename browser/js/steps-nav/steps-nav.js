@@ -106,10 +106,7 @@ app.controller('StepsNavCtrl', function ($scope, $state, growl, currentTutorial,
         } else {
             growl.error("This is the first step!")
         }
-        
-
         $state.go('stepsNav.edit', {stepId: $scope.currentStep.step._id })
-
     }
 
 

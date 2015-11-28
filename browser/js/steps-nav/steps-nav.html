@@ -3,19 +3,14 @@
 	<div class="container">
 		<h3> NAV BAR --------- </h3>
 		<ol>
+			<button ng-click="prevStep()">Back</button>
 			<span ng-repeat = "(idx, step) in tutorial.steps">
 				<a ui-sref="stepsNav.edit({stepId: step._id})">{{idx+1}}</a>
 			</span>
-			 	<button ng-click="prevStep()">Back</button>
-			 	<button ng-click="nextStep()">Next</button>
-
-
+			<button ng-click="nextStep()">Next</button>
 		</ol>
-
-		<button ng-click="nextStep()">HELLO</button>
 
 		<button ng-click="createStep()">create step</button>
 		
-
 	</div>
 </footer>
