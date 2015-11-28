@@ -3,6 +3,10 @@
 	<hr>
 	<span>
 		<h4>{{tutorial.name}}</h4>
+		<p>Favorites: {{tutorial.favorites}}</p>
+		<span ng-if = "hasFavorite()" class = "glyphicon glyphicon-heart" ng-click = "removeFavorite()"></span>
+		<span ng-if = "!hasFavorite()" class = "glyphicon glyphicon-heart-empty" ng-click = "addFavorite()"></span>
+
 		<p>Time</p>
 	</span>
 	<p>{{tutorial.description}}</p> 

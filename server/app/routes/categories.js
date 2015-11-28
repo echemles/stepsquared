@@ -2,7 +2,6 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
 module.exports = router;
-var _ = require('lodash');
 var Category = mongoose.model('Category')
 
 router.param('categoryId', function(req, res, next, id){
@@ -15,7 +14,7 @@ router.param('categoryId', function(req, res, next, id){
 	.then(null, next)
 })
 
-router.get('/:categoryId', function(req, res, next) {
+router.get('/:categoryId', function(req, res) {
 	res.json(req.category);
 })
 

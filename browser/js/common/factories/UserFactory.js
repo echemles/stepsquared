@@ -1,7 +1,5 @@
-app.factory('UserFactory', function($http){
+app.factory('UserFactory', function($http, AuthService){
     var UserFactory = {};
-
-
 
     UserFactory.fetchAll = function(){
         return $http.get('/api/users/')
@@ -10,19 +8,18 @@ app.factory('UserFactory', function($http){
         })
     }
 
-    UserFactory.fetchOne = function(user_id){
-        return $http.get('/api/users/'+ user_id)
-        .then(function(res){
-            return res.data
-        });
+    function getData(response){
+        return response.data
     }
 
+    UserFactory.fetchOne = function(user_id){
+        return $http.get('/api/users/'+ user_id)
+        .then(getData);
+    }
 
     UserFactory.updateUser = function(user){
         return $http.put('/api/users/' + user._id, user)
-        .then(function(res){
-            return res.data
-        });
+        .then(getData);
     }
 
 
@@ -35,16 +32,26 @@ app.factory('UserFactory', function($http){
 
     UserFactory.getFavorites = function(user_id){
         return $http.get('/api/users/' + user_id + '/favorites')
-        .then(function(res){
-            return res.data;
-        });
+        .then(getData);
     }
 
     UserFactory.getTutorials = function(user_id){
         return $http.get('/api/users/' + user_id + '/tutorials')
-        .then(function(res){
-            return res.data;
-        });
+        .then(getData);
+    }
+
+    UserFactory.addFavorite = function(user_id, tutorial_id){
+        return $http.post('/api/users/' + user_id + '/favorites/' + tutorial_id)
+        .then(function(){
+            return AuthService.getLoggedInUser(true)
+        })
+    }
+
+    UserFactory.removeFavorite = function(user_id, tutorial_id){
+        return $http.delete('/api/users/' + user_id + '/favorites/' + tutorial_id)
+        .then(function(){
+            return AuthService.getLoggedInUser(true)
+        })
     }
 
 

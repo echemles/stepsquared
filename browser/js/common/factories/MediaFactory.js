@@ -1,12 +1,11 @@
 app.factory('MediaFactory', function($http){
-
 	var MediaFactory = {};
 
 	function getData(response){
 		return response.data;
 	}
 
-	MediaFactory.getAll = function(mediaId){
+	MediaFactory.getAll = function(){
 		return $http.get('/api/media/')
 		.then(getData)
 	}
@@ -18,9 +17,7 @@ app.factory('MediaFactory', function($http){
 
 	MediaFactory.delete = function(mediaId) {
 		return $http.delete('/api/media/'+mediaId)
-		.then(function(res){
-			return "Media successfully deleted"
-		})
+		.then(getData)
 	}
 
 	MediaFactory.create = function(media){

@@ -2,7 +2,6 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
 module.exports = router;
-var _ = require('lodash');
 var Tutorial = mongoose.model('Tutorial')
 var Step = mongoose.model('Step')
 
@@ -18,14 +17,14 @@ router.post('/', function(req, res, next){
 		if(!req.body.index){
 			tutorial.steps.push(createdStep._id)
 			tutorial.save()
-			.then(function(tutorial){
+			.then(function(){
 				res.status(201).send(createdStep)
 			})
 			
 		} else{
 			tutorial.steps.splice(req.body.index, 0, createdStep._id)
 			tutorial.save()
-			.then(function(tutorial){
+			.then(function(){
 				res.status(201).send(createdStep)
 			})
 			
@@ -47,13 +46,13 @@ router.put('/:stepId', function(req, res, next){
 
 router.delete('/:stepId', function(req, res, next){
 	req.step.remove()
-	.then(function(step){
+	.then(function(){
 		res.sendStatus(204);
 	})
 	.then(null, next)
 })
 
-router.get('/:stepId', function(req, res, next){
+router.get('/:stepId', function(req, res){
 	res.send(req.step)
 })
 

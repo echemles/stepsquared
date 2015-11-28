@@ -15,6 +15,7 @@ router.param('tutorialId', function(req, res, next, id){
 })
 
 
+//Get tutorials by a specific author
 router.get('/user/:userId', function(req, res, next){
 	Tutorial.find({author: req.params.userId}).populate('media category author')
 	.then(function(tutorials){
@@ -23,50 +24,57 @@ router.get('/user/:userId', function(req, res, next){
 	.then(null, next)
 })
 
-router.get('/units', function(req,res, next){
+//Get all possible unit options for a tutorial requirement
+router.get('/units', function(req,res){
 	res.json(Tutorial.schema.path('requirements').schema.path('unit').enumValues)
 })
 
+//Get a tutorial by id
 router.get('/:tutorialId', function(req, res, next){
-	res.json(req.foundTutorial)
+	req.foundTutorial.getTotalFavorites()
+	.then(function(favs){
+		var tutorial = req.foundTutorial.toJSON()
+		tutorial.favorites = favs;
+		res.json(tutorial)
+	})
+	.then(null, next)
 })	
 
+//Get all tutorials
 router.get('/', function(req, res, next){
 	Tutorial.find().populate('media category author')
 	.then(function(tutorials){
+
 		res.json(tutorials)
 	})
 	.then(null, next)
 })
 
+//Search for a tutorial
 router.get('/search/:searchTerm', function(req, res, next){
 	var searchQuery = req.params.searchTerm;
 	var searchRegex = new RegExp('.*' + searchQuery + '.*', 'i')
 
-	Tutorial.find({$or: [
-		{name: searchRegex},
-		{description: searchRegex}
-	]})
-	// .populate([
-	// 	{
-	// 		path: 'author',
-	// 		match: {$or:[
-	// 			{'author.firstName': {$regex: {searchRegex}}},
-	// 			{'author.lastName': {$regex: {searchRegex}}}
-	// 		]}
-	// 	},
-	// 	{
-	// 		path: 'category',
-	// 		match: {name: {$regex: {searchRegex}}}
-	// 	}
-	// ])
-	// .execPopulate()
+	Tutorial.find()
+	.populate('author category')
+	.then(function(tutorials){
+		tutorials = tutorials.filter(function(tutorial){
+			var tests = [tutorial.author.firstName, tutorial.author.lastName, tutorial.name, tutorial.category.name]
+			var tutorialValid = tests.some(function(test){
+				var testResult = searchRegex.test(test)
+				return testResult;
+			})
+			return tutorialValid;
+		})
+		return tutorials;
+	})
 	.then(function(tutorial){
 		res.json(tutorial)
 	})
 	.then(null, next)
 })
 
+//Update a tutorial
 router.put('/:tutorialId', function(req, res, next){
 	delete req.body._id
 	delete req.body.__v
@@ -79,6 +87,7 @@ router.put('/:tutorialId', function(req, res, next){
 	.then(null, next)
 })
 
+//Delete a tutorial
 router.delete('/:tutorialId', function(req, res, next){
 	req.foundTutorial.remove()
 	.then(function(){
@@ -87,10 +96,20 @@ router.delete('/:tutorialId', function(req, res, next){
 	.then(null, next)
 })
 
+//Add a tutorial
 router.post('/', function(req, res, next){
 	Tutorial.create(req.body)
 	.then(function(tutorial){
 		res.status(201).json(tutorial)
+	})
+	.then(null, next)
+})
+
+//Get the number of favorites for a tutorial
+router.get('/:tutorialId/favorites', function(req, res, next){
+	req.foundTutorial.getTotalFavorites()
+	.then(function(favs){
+		res.json(favs)
 	})
 	.then(null, next)
 })

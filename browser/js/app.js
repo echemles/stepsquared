@@ -1,6 +1,7 @@
 'use strict';
 
-window.app = angular.module('FullstackGeneratedApp', ['fsaPreBuilt', 'ui.router', 'ui.bootstrap', 'angular-growl', 'ngAnimate', 'ngFileUpload', 'ngLodash']);
+
+window.app = angular.module('FullstackGeneratedApp', ['fsaPreBuilt', 'ui.router', 'ui.bootstrap', 'angular-growl', 'ngAnimate', 'ngFileUpload','ngLodash']);
 
 
 app.config(function ($urlRouterProvider, $locationProvider) {

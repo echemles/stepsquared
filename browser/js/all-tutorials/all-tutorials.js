@@ -4,7 +4,7 @@ app.config(function($stateProvider){
 		templateUrl: 'js/all-tutorials/all-tutorials.html',
 		controller: 'AllTutorialsCtrl',
 		resolve: {
-			tutorials: function($stateParams, TutorialFactory, $location){
+			tutorials: function($stateParams, TutorialFactory){
 				if($stateParams.userId){
 					return TutorialFactory.fetchByUser($stateParams.userId)
 				}
@@ -25,15 +25,19 @@ app.config(function($stateProvider){
 			},
 			categories: function(CategoryFactory) {
 				return CategoryFactory.getAll();
+			},
+			loggedInUser: function(AuthService){
+				return AuthService.getLoggedInUser();
 			}
 		}
 	})
 })
 
 
-app.controller('AllTutorialsCtrl', function($scope, tutorials, user, categories, $stateParams){
+app.controller('AllTutorialsCtrl', function($scope, tutorials,loggedInUser, user, categories, $stateParams){
 	$scope.tutorials = tutorials;
 	$scope.user = user;
+	$scope.loggedInUser = loggedInUser
 
 	if($scope.user) {
 		$scope.title = $scope.user

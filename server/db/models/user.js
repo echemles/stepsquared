@@ -1,9 +1,9 @@
 'use strict';
 var crypto = require('crypto');
 var mongoose = require('mongoose');
+var Tutorial = require('./tutorial')
+var objectId = mongoose.Schema.Types.ObjectId;
 var _ = require('lodash');
-var Tutorial = mongoose.model('Tutorial');
-var objectId = mongoose.Schema.Types.ObjectId
 
 var schema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
@@ -11,7 +11,7 @@ var schema = new mongoose.Schema({
     lastName: { type: String, required: true },
     display_name: { type: String }, //defaulting to first name in pre-save hook
     description: { type: String},
-    favorites: [{ type: objectId, ref: 'Tutorial'}],
+    favorites: {type: [{ type: objectId, ref: 'Tutorial', index: true}], default: []},
     password: { type: String, required: true},
     salt: { type: String },
     isAdmin: { type: Boolean, default: false },
@@ -20,7 +20,7 @@ var schema = new mongoose.Schema({
 });
 
 // method to remove sensitive information from user objects before sending them out
-schema.methods.sanitize =  function () {
+schema.methods.sanitize = function () {
     return _.omit(this.toJSON(), ['password', 'salt']);
 };
 
@@ -78,4 +78,4 @@ schema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
-mongoose.model('User', schema);
+module.exports = mongoose.model('User', schema);

@@ -1,7 +1,6 @@
 'use strict';
 var router = require('express').Router();
 module.exports = router;
-var _ = require('lodash');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Tutorial = mongoose.model('Tutorial')
@@ -27,9 +26,13 @@ router.get('/', function(req, res, next){
 	.then(null, next)
 })
 
-//Ger one user
+//Get one user
 router.get('/:user_id', function(req, res, next){
-	res.send(req.userObj);
+	req.userObj.populate('favorites').execPopulate()
+	.then(function(user){
+		res.send(user);
+	})
+	.then(null, next)
 })
 
 //Modify one user
@@ -60,6 +63,25 @@ router.get('/:user_id/favorites', function(req, res, next) {
 	})
 	.then(null,next);
 })
+
+//Add tutorial to users favorites
+router.post('/:user_id/favorites/:tutorialId', function(req, res, next){
+	req.userObj.update({$push: {favorites: req.params.tutorialId}})
+	.then(function(response){
+		res.json(response)
+	})
+	.then(null, next)
+})
+
+//Delete tutorial from users favorites
+router.delete('/:user_id/favorites/:tutorialId', function(req, res, next){
+	req.userObj.update({$pull: {favorites: req.params.tutorialId}})
+	.then(function(response){
+		res.json(response)
+	})
+	.then(null, next)
+})
+
 
 //Get all tutorials created by one user
 router.get('/:user_id/tutorials', function(req, res, next) {

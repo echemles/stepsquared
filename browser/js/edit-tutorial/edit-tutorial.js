@@ -24,7 +24,6 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutorial, TutorialFactory, MediaFactory, Upload, categories, units) {
-    console.log("tutorial.media is ", currentTutorial.media)
     $scope.units = units;
     $scope.mediaObj = currentTutorial.media
 
@@ -38,7 +37,8 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
             currentTutorial = tutorial;
             $scope.tutorial = tutorial;
             growl.success("Created tutorial successfully!")
-        }, function(err){
+        })
+        .catch(function(){
             growl.error("Failed to create tutorial")
         })     
     }
@@ -61,7 +61,6 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
     }
     $scope.file;
 
-
     $scope.update = function(){
         $scope.tutorial.equipment = [];
         $scope.tools.forEach(function(tool){
@@ -71,42 +70,52 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
             TutorialFactory.update($scope.tutorial)
             .then(function(){
                 growl.success("Updated tutorial successfully!")
-            }, function(err){
+            })
+            .catch(function(){
                 growl.error("Failed to update tutorial")
             })
         } else {
             $scope.create();
         }
-        
     }
-       
+
     $scope.delete = function(){
         TutorialFactory.delete($scope.tutorial._id)
         .then(function(){
             growl.success("Deleted tutorial successfully!")
-        }, function(err){
+        })
+        .catch(function(){
             growl.error("Failed to delete tutorial")
         })
     }
 
-
-
-
-
-    $scope.updateMedia = function(mediaId){
-
-        $scope.tutorial.media = mediaId;
-        return TutorialFactory.update($scope.tutorial)
-        .then(function(){
-            console.log("UPDATE MEDIA IN EDIT TUTORIAL", $scope.tutorial.media);
-
-            growl.success("Media uploaded")
-
-        })
-        .catch(function(err){
-            console.error(err)
-            growl.error("Unable to upload media")
-        })
+    $scope.updateMedia = function(media){
+        if(!$scope.tutorial.media){
+            //create media object
+            //set the media object of the current tutorial
+            MediaFactory.create(media)
+            .then(function(media){
+                $scope.tutorial.media = media._id
+                return TutorialFactory.update($scope.tutorial)
+            })
+            .then(function(){
+                growl.success("Media uploaded")
+            })
+            .catch(function(err){
+                console.error(err)
+                growl.error("Unable to upload media")
+            })
+        }
+        else{
+            MediaFactory.update(media)
+            .then(function(){
+                growl.success("Media uploaded")
+            })
+            .catch(function(err){
+                console.error(err)
+                growl.error("Unable to upload media")
+            })
+        }
     }
 
 
