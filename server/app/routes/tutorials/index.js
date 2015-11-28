@@ -26,7 +26,7 @@ router.get('/user/:userId', function(req, res, next){
 })
 
 //Get all possible unit options for a tutorial requirement
-router.get('/units', function(req,res, next){
+router.get('/units', function(req,res){
 	res.json(Tutorial.schema.path('requirements').schema.path('unit').enumValues)
 })
 
@@ -38,6 +38,7 @@ router.get('/:tutorialId', function(req, res, next){
 		tutorial.favorites = favs;
 		res.json(tutorial)
 	})
+	.then(null, next)
 })	
 
 //Get all tutorials

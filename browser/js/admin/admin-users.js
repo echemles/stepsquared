@@ -18,7 +18,6 @@ app.controller('AdminUsersCtrl', function ($scope, AuthService, $state, allUsers
     $scope.error = null;
 
     $scope.allUsers = allUsers;
- 
 
     $scope.deleteUser = function (index){
         AuthService.getLoggedInUser()
@@ -32,7 +31,7 @@ app.controller('AdminUsersCtrl', function ($scope, AuthService, $state, allUsers
                         $scope.allUsers.splice(index,1);
                         growl.success("Successfully deleted user")
                     })
-                    .catch(function(err) {
+                    .catch(function() {
                         growl.error("Error deleting user")
                     })
                 }

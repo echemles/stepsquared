@@ -5,6 +5,7 @@ app.factory('TutorialFactory', function($http, $q){
         return response.data;
     }
 
+
     function favoritesAll(tutorials){
         var tutorialPromises = tutorials.map(function(tutorial){
             return TutorialFactory.getFavorites(tutorial._id)
@@ -15,6 +16,7 @@ app.factory('TutorialFactory', function($http, $q){
         })
         return $q.all(tutorialPromises)
     }
+
 
     TutorialFactory.fetchAll = function(){
         return $http.get('/api/tutorials/')
@@ -39,6 +41,7 @@ app.factory('TutorialFactory', function($http, $q){
         })
     }
 
+
     TutorialFactory.search = function(searchTerm) {
         return $http.get('/api/tutorials/search/' + searchTerm)
         .then(getData).then(favoritesAll)
@@ -53,20 +56,21 @@ app.factory('TutorialFactory', function($http, $q){
 
     TutorialFactory.delete = function(tutorialId){
         return $http.delete('/api/tutorials/' + tutorialId)
-        .then(function(){
-            return "Tutorial successfully deleted"
-        });
+        .then(getData);
     }
+
 
     TutorialFactory.create = function(tutorial) {
         return $http.post('/api/tutorials/', tutorial)
         .then(getData)
     }
 
-    TutorialFactory.getUnits = function(tutorial) {
+
+    TutorialFactory.getUnits = function() {
         return $http.get('/api/tutorials/units')
         .then(getData)
     }
+
 
     TutorialFactory.getFavorites = function(tutorialId){
         return $http.get('/api/tutorials/' + tutorialId + '/favorites')

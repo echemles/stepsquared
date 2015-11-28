@@ -19,7 +19,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('viewTutorialCtrl', function ($scope,favorites, TutorialFactory, theTutorial, $state) {
+app.controller('viewTutorialCtrl', function ($scope,favorites, TutorialFactory, theTutorial) {
 
     $scope.tutorial = theTutorial;
     
