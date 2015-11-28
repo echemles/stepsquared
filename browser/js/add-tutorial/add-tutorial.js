@@ -38,14 +38,6 @@ app.controller('AddTutorialCtrl', function ($scope, $state, growl, TutorialFacto
             growl.error("Failed to create tutorial")
         })     
     }
-
-    $scope.addMediaModal = function(){
-        var modalInstance = $uibModal.open(MediaModal($scope))
-
-        modalInstance.result.then(function(result){
-            console.log("result from modal is ", result)
-        })
-    }
        
     $scope.delete = function(){
         TutorialFactory.delete($scope.tutorial._id)
@@ -56,33 +48,30 @@ app.controller('AddTutorialCtrl', function ($scope, $state, growl, TutorialFacto
         })
     }
 
-
-    $scope.addMedia = function(){
-        uploadS3($scope.file)
-        .then(function(imageUrl){
-            $scope.media.type = 'image';
-            $scope.media.url = imageUrl;
-            return MediaFactory.create($scope.media)
-        })
-        .then(function(media){
-            growl.success("Created media successfully!")
-        })
-        .catch(function(err){
-            growl.error("Failed to create media")
-        })
-    } 
-
     $scope.updateMedia = function(media){
         media.type = 'image';
-        MediaFactory.create(media)
-        .then(function(media){
-            $scope.tutorial.media = media._id
-            growl.success("Media uploaded")
-        })
-        .catch(function(err){
-            console.error(err)
-            growl.error("Unable to upload media")
-        })
+        if($scope.tutorial.media){
+            MediaFactory.update(media)
+            .then(function(){
+                growl.success("Media uploaded")
+            })
+            .catch(function(err){
+                console.error(err)
+                growl.error("Unable to upload media")
+            })
+        }
+        else{
+            MediaFactory.create(media)
+            .then(function(media){
+                $scope.tutorial.media = media._id
+                growl.success("Media uploaded")
+            })
+            .catch(function(err){
+                console.error(err)
+                growl.error("Unable to upload media")
+            })
+            
+        }
     }
 
 
