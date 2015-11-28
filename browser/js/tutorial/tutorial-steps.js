@@ -6,7 +6,7 @@ app.config(function ($stateProvider){
 	});
 });
 
-app.controller('StepCtrl', function ($scope, $state){
+app.controller('StepCtrl', function ($scope){
 
 
 })

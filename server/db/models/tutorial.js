@@ -1,7 +1,5 @@
 'use strict';
-var crypto = require('crypto');
 var mongoose = require('mongoose');
-var _ = require('lodash');
 var requirementSchema = require('./requirementSchema');
 var User = require('./user');
 
@@ -52,7 +50,7 @@ schema.methods.totalTime = function(){
 	.then(function(tutorial){
 		var totalTime = 0;
 		tutorial.steps.forEach(function(step){
-			totalTime += step.activeTime  + step.standByTime
+			totalTime += step.activeTime + step.standByTime
 		})
 		return totalTime
 	})

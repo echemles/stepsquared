@@ -1,7 +1,5 @@
 'use strict';
-var crypto = require('crypto');
 var mongoose = require('mongoose');
-var _ = require('lodash');
 var requirementSchema = require('./requirementSchema');
 
 var objectId = mongoose.Schema.Types.ObjectId;

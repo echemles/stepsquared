@@ -10,7 +10,7 @@
 		<input type = "text" ng-model = "media.tags" class = "form-control" placeholder = "Enter Media Tags separated by comma">
 	</div>
  
-	<input type = "file" id = "uploadMedia" accept = "{{getTypes()}}">
+	<input type = "file" id = "uploadMedia" accept = "image/*">
 
 	<div>
 		<img ng-if = "media" ng-src = "{{media.url}}" style = "width: 200px;">
