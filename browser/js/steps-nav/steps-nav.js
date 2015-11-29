@@ -77,7 +77,36 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
     	})
     }
 
+    
 
+    $scope.getAllStepReqs = function(){
+        var arrOfSteps = $scope.$parent.tutorial.steps; 
+        var reqsObj = {};
+        for(var i =0; i < arrOfSteps.length; i++){
+            for(var j =0; j < arrOfSteps[i].requirements.length; j++){
+                var requirement = arrOfSteps[i].requirements[j];
+                if(!reqsObj[requirement.unitItem]){
+                    reqsObj[requirement.unitItem] =0;
+                } 
+                reqsObj[requirement.unitItem]+= requirement.quantity;
+            }
+        }
+        return reqsObj;
+    }
+    $scope.availableReqs = function(){
+        var usedReqs = $scope.getAllStepReqs();
+        var availableReqsArr = angular.copy($scope.$parent.tutorial.requirements)
+        console.log("availableReqsArr is ", availableReqsArr)
+        for(var i = 0; i < availableReqsArr.length; i++){
+            if(usedReqs[availableReqsArr[i].unitItem]){
+               availableReqsArr[i].quantity -= usedReqs[availableReqsArr[i].unitItem]
+            }
+            
+        }
+        return availableReqsArr;
+    }
+    $scope.theAvailableReqs = $scope.availableReqs();
+    console.log($scope.theAvailableReqs[0])
 
     $scope.updateMedia = function(media){
         if(!$scope.step.media) {
@@ -94,7 +123,6 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
 
 
     $scope.removeRequirement = function(idx){
-        //need to delete requirements from Tutorial as well
         $scope.step.requirements.splice(idx,1)
     }
     $scope.addRequirement = function(){

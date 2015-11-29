@@ -31,10 +31,7 @@
                     <input type="text" ng-model="requirement.quantity" class="form-control">
                 </td>
                 <td>
-                    <select ng-options="unit for unit in units" ng-model="requirement.unit" class="form-control"></select>
-                </td>
-                <td>
-                    <select ng-options="requirement in tutorial.requirements" ng-model="requirement.item" class="form-control"></select>
+                    <select ng-options="item for item.unitItem in theAvailableReqs" ng-model="requirement.unitItem" class="form-control"></select>
                 </td>
                 <td>
                     <span class="glyphicon glyphicon-remove" ng-click="removeRequirement(idx)"></span>
