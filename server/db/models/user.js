@@ -15,8 +15,7 @@ var schema = new mongoose.Schema({
     password: { type: String, required: true},
     salt: { type: String },
     isAdmin: { type: Boolean, default: false },
-    following: [{ type: objectId, ref: 'User'}],
-    followers: [{ type: objectId, ref: 'User'}]
+    following: [{ type: objectId, ref: 'User', index: true}]
 });
 
 // method to remove sensitive information from user objects before sending them out

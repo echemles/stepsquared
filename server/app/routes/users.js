@@ -28,7 +28,7 @@ router.get('/', function(req, res, next){
 
 //Get one user
 router.get('/:user_id', function(req, res, next){
-	req.userObj.populate('favorites').execPopulate()
+	req.userObj.populate('favorites following').execPopulate()
 	.then(function(user){
 		res.send(user);
 	})
@@ -90,4 +90,24 @@ router.get('/:user_id/tutorials', function(req, res, next) {
 		res.json(tutorials)
 	})
 	.then(null,next);
+})
+
+//Follow someone
+router.post('/:user_id/follow/:other_userid', function(req, res, next){
+	if(req.userObj.following.indexOf(req.params.other_userid) === -1) req.userObj.following.push(req.params.other_userid)
+	req.userObj.save()
+	.then(function(user){
+		res.json(user)
+	})
+	.then(null, next)
+})
+
+//Unfollow someone
+router.delete('/:user_id/unfollow/:other_userid', function(req,res, next){
+	req.userObj.following.pull(req.params.other_userid)
+	req.userObj.save()
+	.then(function(user){
+		res.json(user)
+	})
+	.then(null, next)
 })
