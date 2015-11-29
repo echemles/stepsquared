@@ -36,8 +36,9 @@ app.config(function ($stateProvider) {
 
 });
 
+
 //CHILD STATE CONTROLLER
-app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactory, $state, TutorialFactory, lodash, $rootScope) {
+app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactory, $state, TutorialFactory, lodash, MediaFactory, $rootScope) {
 	$scope.step = currentStep;
 	$scope.currentStep.step = currentStep;
     var currentIdx = lodash.findIndex($scope.tutorial.steps, function(step){ 
@@ -78,15 +79,17 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
 
 
 
-    $scope.updateMedia = function(mediaId){
-        $scope.step.media = mediaId;
-        return StepsFactory.updateStep($scope.step)
-        .then(function(step){
-            growl.success("Media uploaded")
-        })
-        .catch(function(err){
-            growl.error("Unable to upload media")
-        })
+    $scope.updateMedia = function(media){
+        if(!$scope.step.media) {
+            return MediaFactory.create(media)
+            .then(function(media) {
+                $scope.step.media = media._id;
+                return StepsFactory.updateStep($scope.step)
+            })
+        }
+        else {
+            return MediaFactory.update(media)
+        }
     }
 
 
