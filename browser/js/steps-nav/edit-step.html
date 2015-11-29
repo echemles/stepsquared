@@ -1,3 +1,5 @@
+<div class="container-fluid">
+<div class="col-xs-12">
 <form name="editStep">
     <h1>Edit Step</h1>
 
@@ -43,25 +45,26 @@
 
         <button ng-click="addRequirement()">Add Requirement</button>
     </div>
-
+</div>
     <media-upload media="mediaObj" is-uploading="isUploading" types="['photo']" update-media="updateMedia(media)"></media-upload>
-
-    <div class="form-group">
+    
+    <div class="form-group col-xs-12">
         <label>Active Time</label>
         <input type="text" ng-model="step.activeTime" class="form-control" placeholder="Enter active time">
-    </div>
 
-    <div class="form-group">
-        <label>Standby Time</label>
+
+            <label>Standby Time</label>
         <input type="text" ng-model="step.standByTime" class="form-control" placeholder="Enter standby time">
-    </div>
+    
 
     <button type="submit" class="btn btn-default" ng-click = "editStep.$valid && update()" ng-disabled = "isUploading.isUploading">Update</button>
     <button class = "btn btn-default" ng-click="delete()">Delete Step </button>
 </form>
+    </div>
 
 
 
+</div>
 
 
 
