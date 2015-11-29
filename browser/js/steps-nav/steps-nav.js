@@ -31,7 +31,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactory, $state, TutorialFactory) {
+app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactory, $state, TutorialFactory, MediaFactory) {
 	$scope.step = currentStep;
 	$scope.currentStep.step = currentStep;
 	$scope.step.requirements = !$scope.step.requirements ? [{}] : $scope.step.requirements;
@@ -61,15 +61,17 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
 
 
 
-    $scope.updateMedia = function(mediaId){
-        $scope.step.media = mediaId;
-        return StepsFactory.updateStep($scope.step)
-        .then(function(step){
-            growl.success("Media uploaded")
-        })
-        .catch(function(err){
-            growl.error("Unable to upload media")
-        })
+    $scope.updateMedia = function(media){
+        if(!$scope.step.media) {
+            MediaFactory.create(media)
+            .then(function(media) {
+                $scope.step.media = media._id;
+                return StepsFactory.updateStep($scope.step)
+            })
+        }
+        else {
+            return MediaFactory.update(media)
+        }
     }
 
 

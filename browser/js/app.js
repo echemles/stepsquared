@@ -16,6 +16,8 @@ app.config(['growlProvider', function(growlProvider) {
 }]);
 
 
+
+
 // This app.run is for controlling access to specific states.
 app.run(function ($rootScope, AuthService, $state) {
 

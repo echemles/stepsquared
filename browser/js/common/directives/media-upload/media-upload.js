@@ -1,4 +1,10 @@
-app.directive('mediaUpload', function(UploadFactory, MediaFactory, growl){
+// app.filter('trustUrl', function ($sce) {
+//     return function(url) {
+//       return $sce.trustAsResourceUrl(url);
+//     };
+// });
+
+app.directive('mediaUpload', function(UploadFactory, MediaFactory, growl, $sce){
 	return {
 		restrict: 'E',
 		scope: {
@@ -9,18 +15,67 @@ app.directive('mediaUpload', function(UploadFactory, MediaFactory, growl){
 		},
 		templateUrl: 'js/common/directives/media-upload/media-upload.html',
 		link: function(scope){
+
+			var media; 
+			var newMedia = document.querySelector("#uploadMedia");
+			
+			var imageRegex = /.*image.*/i;
+			var videoRegex = /.*video.*/i;
+
+			scope.showPreview = false;
+			scope.showProgress=false;
+
+			scope.trustUrl = function(url) {
+				return $sce.trustAsResourceUrl(url);
+			}
+
+
+			function updateMediaDocument() {
+				scope.updateMedia({media: scope.media})
+	        	.then(function() {
+	        		growl.success('Successfully uploaded and saved media')
+	        	})
+	        	.catch(function(err) {
+	        		growl.error('There was an error uploading media');
+	        	})
+			}
+
 			if(!scope.media) {
 				scope.media = {};
 			}
+			else {
+				scope.showPreview = true;
+			}
 
 			scope.trueUpdateMedia = function() {
-				scope.isUploading.isUploading = true;
-				var media = event.target.files[0];
-				console.log("media",media);
-				UploadFactory.uploadMedia(media)
-				.then(function(signedURL){
-					upload_file(media, signedURL.signed_request, signedURL.url)
-				})
+				//If file has been chosen, upload file and update Media document
+				if(media) {
+					if (imageRegex.test(media.type)) {
+						scope.media.type = 'image'
+					}
+					else if (videoRegex.test(media.type)) {
+						scope.media.type = 'video'
+					}
+					else {
+						growl.error("Sorry invalid file type");
+						return;
+					}
+
+					scope.isUploading.isUploading = true;
+					scope.percentage = 0;
+					scope.showProgress = true;
+
+
+					console.log("starting to upload media",media);
+					UploadFactory.uploadMedia(media)
+					.then(function(signedURL){
+						upload_file(media, signedURL.signed_request, signedURL.url)
+					})
+				}
+				else {
+					updateMediaDocument();
+				}
+				
 			}
 
 			scope.getTypes = function(){
@@ -31,10 +86,7 @@ app.directive('mediaUpload', function(UploadFactory, MediaFactory, growl){
 				return res.join(' ')
 			}
 
-			var newMedia = document.querySelector("#uploadMedia");
-			var imageRegex = /.*image.*/i;
-			var videoRegex = /.*video.*/i;
-			scope.percentage = 0;
+
 
 			function upload_file(file, signed_request, url){
 				var xhr = new XMLHttpRequest();
@@ -50,20 +102,14 @@ app.directive('mediaUpload', function(UploadFactory, MediaFactory, growl){
 				xhr.onload = function() {
 			    	scope.isUploading.isUploading = false;
 			    	if (xhr.status === 200){
-			    		console.log("COMPLETED", url)
-			        	scope.media.url = url
-			    		scope.updateMedia({media: scope.media})
-			    		.then(function() {
-			    			return MediaFactory.update(scope.media)
-			    		})
-			    		.then(function() {
-			    			growl.success('Successfully uploaded media')
-			    		})
-			    		.catch(function(err) {
-			    			growl.error(err);
-			    		})
+			        	scope.media.url = url;
+			        	updateMediaDocument();
+			        	if(scope.media.type == 'video')
+			        		document.getElementById('video').setAttribute('src',scope.media.url);
+			        	scope.showPreview = true;
 			    	}
 				};
+
 				xhr.onerror = function(err) {
 			    	scope.isUploading.isUploading = false;
 			    	console.error(err)
@@ -71,9 +117,9 @@ app.directive('mediaUpload', function(UploadFactory, MediaFactory, growl){
 				xhr.send(file);
 			}
 
-			// newMedia.onchange = function(event){
-				
-			// }
+			newMedia.onchange = function(event){
+				media = event.target.files[0];
+			}
 
 		}
 	}
