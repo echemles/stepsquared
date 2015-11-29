@@ -63,7 +63,7 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
 
     $scope.updateMedia = function(media){
         if(!$scope.step.media) {
-            MediaFactory.create(media)
+            return MediaFactory.create(media)
             .then(function(media) {
                 $scope.step.media = media._id;
                 return StepsFactory.updateStep($scope.step)

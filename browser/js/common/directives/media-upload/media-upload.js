@@ -66,7 +66,6 @@ app.directive('mediaUpload', function(UploadFactory, MediaFactory, growl, $sce){
 					scope.showProgress = true;
 
 
-					console.log("starting to upload media",media);
 					UploadFactory.uploadMedia(media)
 					.then(function(signedURL){
 						upload_file(media, signedURL.signed_request, signedURL.url)
