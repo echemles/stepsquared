@@ -94,15 +94,8 @@ router.get('/:user_id/tutorials', function(req, res, next) {
 
 //Follow someone
 router.post('/:user_id/follow/:other_userid', function(req, res, next){
-	console.log("in follow router")
-	console.log("before save user is ", req.userObj)
 	if(req.userObj.following.indexOf(req.params.other_userid) === -1) req.userObj.following.push(req.params.other_userid)
-	console.log("after push user is ", req.userObj)
 	req.userObj.save()
-	.then(function(user){
-		console.log("saved user is ", user)
-		return user.populate('favorites following').execPopulate()
-	})
 	.then(function(user){
 		res.json(user)
 	})

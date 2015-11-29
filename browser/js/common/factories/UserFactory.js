@@ -60,7 +60,7 @@ app.factory('UserFactory', function($http, AuthService){
     }
 
     UserFactory.unfollow = function(user_id, to_unfollow_id){
-        return $http.delete(`/api/users/${user_id}/unfollow/${to_follow_id}`)
+        return $http.delete(`/api/users/${user_id}/unfollow/${to_unfollow_id}`)
         .then(getData)
     }
 

@@ -1,6 +1,6 @@
 
 
-<div ng-if = "user!==loggedInUser">
+<div ng-if = "user._id!==loggedInUser._id">
   <button class = "btn btn-default" ng-if = "!isFollowing()" ng-click = "follow()">Follow</button>
   <button class = "btn btn-default" ng-if = "isFollowing()" ng-click = "unfollow()">Unfollow</button>
 </div>

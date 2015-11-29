@@ -19,15 +19,14 @@ app.config(function ($stateProvider) {
 app.controller('ViewProfileCtrl', function (userProfile, loggedInUser, $scope, lodash, UserFactory, growl) {
     $scope.user = userProfile;
     $scope.loggedInUser = loggedInUser;
-    console.log("user is ", $scope.user)
-    console.log("logged in user is ", $scope.loggedInUser);
 
     $scope.isFollowing = function(){
-        var output = lodash.contains($scope.loggedInUser.following, function(userId){
-                return userId === $scope.user._id;
+        var output = lodash.find($scope.loggedInUser.following, function(followingUserId){
+                return followingUserId === $scope.user._id;
             }
-        )
-        return output;  
+        )   
+        output = !!output
+        return !!output;  
     }
 
     $scope.follow = function(){
@@ -36,7 +35,7 @@ app.controller('ViewProfileCtrl', function (userProfile, loggedInUser, $scope, l
             $scope.loggedInUser = user;
         })
         .catch(function(){
-            growl.error('Unable to follow this user')
+            growl.error(`Unable to follow ${$scope.user.firstName}`)
         })
     }
 
