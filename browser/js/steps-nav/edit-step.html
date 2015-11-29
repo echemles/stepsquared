@@ -32,7 +32,7 @@
                     <select ng-options="unit for unit in units" ng-model="requirement.unit" class="form-control"></select>
                 </td>
                 <td>
-                    <input type="text" ng-model="requirement.item" class="form-control">
+                    <select ng-options="requirement in tutorial.requirements" ng-model="requirement.item" class="form-control"></select>
                 </td>
                 <td>
                     <span class="glyphicon glyphicon-remove" ng-click="removeRequirement(idx)"></span>
@@ -40,8 +40,8 @@
 
             </tr>
         </table>
-
-        <button ng-click="addRequirement()">Add Requirement</button>
+        <button ng-click="addRequirement()">Old Add Requirement</button> 
+        <button ui-sref="editTutorial({tutorialId: tutorial._id})">Add Requirement</button>
     </div>
 
     <media-upload media="mediaObj" is-uploading="isUploading" types="['photo']" update-media="updateMedia(media)"></media-upload>

@@ -22,8 +22,13 @@ app.config(function ($stateProvider) {
         templateUrl: 'js/steps-nav/edit-step.html',
         controller: 'EditStepCtrl',
         resolve: {
-        	currentStep: function(StepsFactory, $stateParams){
+        	currentStep: function(StepsFactory, $stateParams, $state){
             	return StepsFactory.getStep($stateParams.stepId)
+                .then(function(something){
+                    if(!something) $state.go('editTutorial', {tutorialId: $stateParams.tutorialId})
+                    else return something;
+
+                })
             }
 
         }
@@ -31,9 +36,15 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactory, $state, TutorialFactory) {
+//CHILD STATE CONTROLLER
+app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactory, $state, TutorialFactory, lodash, $rootScope) {
 	$scope.step = currentStep;
 	$scope.currentStep.step = currentStep;
+    var currentIdx = lodash.findIndex($scope.tutorial.steps, function(step){ 
+        return step._id == $scope.currentStep.step._id
+    })
+    $scope.currentIndex.idx = currentIdx;
+
 	$scope.step.requirements = !$scope.step.requirements ? [{}] : $scope.step.requirements;
 	$scope.mediaObj = currentStep.media;
 
@@ -51,11 +62,17 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
     }
 
     $scope.delete = function() {
-        //need to delete step from Tutorial as well
-    	StepsFactory.deleteStep($scope.step._id)
-    	.then(function() {
-            
-    		$state.go('stepsNav',{tutorialId: $scope.tutorial._id})
+    	StepsFactory.deleteStep($scope.tutorial._id, $scope.step._id)
+    	.then(function(tutorial) {
+            $scope.$parent.tutorial = tutorial;
+            if($scope.tutorial.steps.length > 0){
+                var indexToNavigate = $scope.currentIndex.idx === 0 ? 0: $scope.currentIndex.idx - 1
+                var stepIdToNavigate = $scope.tutorial.steps[indexToNavigate]._id
+              $state.go('stepsNav.edit',{stepId: stepIdToNavigate})  
+            } else{
+                $state.go('editTutorial', {tutorialId: $scope.tutorial._id})
+            }
+    		
     	})
     }
 
@@ -83,29 +100,31 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
 
 });
 
-
+//PARENT STATE CONTROLLER
 app.controller('StepsNavCtrl', function ($scope, $state, growl, currentTutorial, TutorialFactory, MediaFactory, StepsFactory, lodash, units) {
     $scope.tutorial = currentTutorial;
+
+    $scope.currentIndex = {
+        idx: null
+    }
     
     $scope.nextStep = function(){
-        var currentIdx = lodash.findIndex($scope.tutorial.steps, function(step){ return step._id == $scope.currentStep.step._id})
-        if(currentIdx+1 < $scope.tutorial.steps.length){
-            console.log("here are the tutorial requirements", $scope.tutorial.requirements)
-            $scope.currentStep.step = $scope.tutorial.steps[currentIdx+1]
+        if($scope.currentIndex.idx+1 < $scope.tutorial.steps.length){
+            $scope.currentStep.step = $scope.tutorial.steps[$scope.currentIndex.idx+1]
+            $state.go('stepsNav.edit', {stepId: $scope.currentStep.step._id})
         } else{
             growl.error("There isn't a next step! Click CREATE STEP to make a new one!")
         }
-        $state.go('stepsNav.edit', {stepId: $scope.currentStep.step._id})
+        
     }
 
     $scope.prevStep = function(){
-        var currentIdx = lodash.findIndex($scope.tutorial.steps, function(step){ return step._id == $scope.currentStep.step._id})
-        if(currentIdx-1 >-1){
-            $scope.currentStep.step = $scope.tutorial.steps[currentIdx-1]
+        if($scope.currentIndex.idx-1 >-1){
+            $scope.currentStep.step = $scope.tutorial.steps[$scope.currentIndex.idx-1]
+            $state.go('stepsNav.edit', {stepId: $scope.currentStep.step._id })
         } else {
-            growl.error("This is the first step!")
+            $state.go('editTutorial', {tutorialId: $scope.tutorial._id})
         }
-        $state.go('stepsNav.edit', {stepId: $scope.currentStep.step._id })
     }
 
 

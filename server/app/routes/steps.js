@@ -44,10 +44,20 @@ router.put('/:stepId', function(req, res, next){
 	.then(null, next)
 })
 
-router.delete('/:stepId', function(req, res, next){
+router.delete('/tutorial/:tutorialId/step/:stepId', function(req, res, next){
 	req.step.remove()
 	.then(function(){
-		res.sendStatus(204);
+		return Tutorial.findById(req.params.tutorialId)
+	})
+	.then(function(tutorial){
+		tutorial.steps.pull(req.params.stepId)
+		return tutorial.save()
+	})
+	.then(function(tutorial){
+		return tutorial.populate('steps').execPopulate()
+	})
+	.then(function(tutorial){
+		res.json(tutorial)
 	})
 	.then(null, next)
 })

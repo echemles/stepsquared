@@ -10,8 +10,8 @@ app.factory('StepsFactory', function($http){
 		.then(getData)
 	}
 
-	StepsFactory.deleteStep = function(stepId) {
-		return $http.delete('/api/steps/'+stepId)
+	StepsFactory.deleteStep = function(tutorialId, stepId) {
+		return $http.delete('/api/steps/tutorial/'+tutorialId+'/step/'+stepId)
 		.then(getData)
 	}
 
