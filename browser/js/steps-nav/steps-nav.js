@@ -95,7 +95,6 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
     $scope.availableReqs = function(){
         var usedReqs = $scope.getAllStepReqs();
         var availableReqsArr = angular.copy($scope.$parent.tutorial.requirements)
-        console.log("availableReqsArr is ", availableReqsArr)
         for(var i = 0; i < availableReqsArr.length; i++){
             if(usedReqs[availableReqsArr[i].unitItem]){
                availableReqsArr[i].quantity -= usedReqs[availableReqsArr[i].unitItem]
