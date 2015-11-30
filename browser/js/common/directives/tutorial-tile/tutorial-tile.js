@@ -15,12 +15,8 @@ app.directive('tutorialTile', function(UserFactory, lodash, $state){
 					scope.tutorial.favorites +=1;
 				})
 			}
-			// element.css({
-			// 	'background-image': `
-			// })
-			scope.backgroundImage = `url(${scope.tutorial.media.url})`
-			// console.log("background iamge is ", )
 
+			scope.backgroundImage = `url(${scope.tutorial.media.url})`
 
 			scope.hideInfo = false;
 			scope.showInfo = function(){
