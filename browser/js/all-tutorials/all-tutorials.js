@@ -34,10 +34,12 @@ app.config(function($stateProvider){
 })
 
 
-app.controller('AllTutorialsCtrl', function($scope, tutorials,loggedInUser, user, categories, $stateParams){
+app.controller('AllTutorialsCtrl', function($scope, tutorials,loggedInUser, user, categories, $stateParams, lodash){
 	$scope.tutorials = tutorials;
 	$scope.user = user;
 	$scope.loggedInUser = loggedInUser
+	$scope.tutorialsPages = lodash.chunk(tutorials, 4)
+
 
 	if($scope.user) {
 		$scope.title = $scope.user
@@ -46,12 +48,15 @@ app.controller('AllTutorialsCtrl', function($scope, tutorials,loggedInUser, user
 		$scope.title = "Search Results for " + $stateParams.searchquery;
 	}
 	else {
-		$scope.title = "All Tutorials"
+		$scope.title = "All Recipes"
 	}
 
 	$scope.categories = categories;
 	$scope.selectedCategory = {name: 'All'}
 	$scope.categories.unshift($scope.selectedCategory);
+
+
+
 
 	$scope.categoryFilter = function() {
 		if($scope.selectedCategory.name === 'All') return {};

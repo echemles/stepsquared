@@ -1,13 +1,5 @@
-<div class="container-fluid">
-	<div>
-<!-- 	    <div class="btn-group" uib-dropdown is-open="status.isopen">
-	      <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-	        Filter by Category <span class="caret"></span>
-	      </button>
-	      <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
-	        <li ng-repeat = "category in categories" role="menuitem"><a href="#">{{category.name}}</a></li>
-	      </ul>
-	    </div> -->
+<div id = "all-tutorials" class = "clearfix">
+	<div id = "tutorial-filters">
 	    Filter by Category:
 	    <select ng-model="selectedCategory"
         ng-options="category.name for category in categories">
@@ -15,13 +7,19 @@
 
 	</div>
 
-
+	<div class = "page-header">
 		<h1>{{title}}</h1>
-		<div ng-repeat = "tutorial in tutorials | filter: categoryFilter()"> 
+	</div>
 
-			<div class = "col-xs-4">
-				<tutorial-tile tutorial = "tutorial" user = "loggedInUser"></tutorial-tile>
+	<uib-carousel interval = "10000">
+		<uib-slide ng-repeat = "page in tutorialsPages" active = "slide.active">
+
+			<div ng-repeat = "tutorial in page | filter: categoryFilter()"> 
+				<div class = "col-xs-4">
+					<tutorial-tile tutorial = "tutorial" user = "loggedInUser"></tutorial-tile>
+				</div>
 			</div>
+		</uib-slide>
+	</uib-carousel>
 
-</div>
 </div>
