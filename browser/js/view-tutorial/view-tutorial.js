@@ -19,7 +19,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('viewTutorialCtrl', function ($scope,favorites, growl, TutorialFactory, theTutorial, AuthService, UserFactory) {
+app.controller('viewTutorialCtrl', function ($scope,favorites, growl, TutorialFactory, theTutorial, AuthService, UserFactory, currentUser) {
     $scope.tutorial = theTutorial;
     $scope.list = []; 
 
@@ -37,15 +37,10 @@ app.controller('viewTutorialCtrl', function ($scope,favorites, growl, TutorialFa
         groceryList.recipeId = theTutorial._id;
         groceryList.name = theTutorial.name;
         groceryList.list = $scope.list;
-        var userId = AuthService.getLoggedInUser().$$state.value._id;
+        var userId = currentUser._id;
         UserFactory.updateGrocery(groceryList, userId)
         .then(function(){
             growl.success("Your grocery list has been updated.")
         });
-        // UserFactory.updateGrocery(groceryList, )
     }
-
-    // theTutorial.requirements.forEach(function(requirement){
-    //     $scope.list.push({requirement: false})
-    // })
 });

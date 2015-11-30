@@ -37,7 +37,7 @@ router.get('/:user_id', function(req, res, next){
 })
 
 router.get('/:user_id/grocery', function(req, res, next){
-	res.send(req.userObj.grocery)
+	res.json(req.userObj.grocery)
 })
 
 //Modify one user
@@ -67,10 +67,11 @@ router.put('/grocery/:user_id', function(req, res, next){
 	}
 
 	req.userObj.save()
-	.then(function(updatedUser) {
+	.then(function() {
 		res.sendStatus(200);
 	})
 	.then(null,next);
+
 })
 
 //Delete one user
