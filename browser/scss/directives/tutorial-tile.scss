@@ -11,7 +11,7 @@
 			.red-circle{
 				width: 30px;
 				height: 30px;
-				background: red;
+				background: $yellow;
 				-moz-border-radius:30px;
 				-webkit-border-radius:30px;
 				border-radius:30px;
@@ -20,6 +20,9 @@
 					margin-left:3.5px;
 					margin-top:5px;
 					font-size: 20px;
+				}
+				.glyphicon-heart{
+					color:red;
 				}
 			}
 			.total-hearts{
