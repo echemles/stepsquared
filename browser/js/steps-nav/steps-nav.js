@@ -50,12 +50,11 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
 	$scope.mediaObj = currentStep.media;
 
     $scope.update = function(){
+        for(var i = 0; i < $scope.step.requirements.length; i++){
+           delete $scope.step.requirements[i].$$hashKey 
+        }
         StepsFactory.updateStep($scope.step)
         .then(function(step){
-            $scope.tutorial.requirements.push($scope.step.requirements[$scope.step.requirements.length-1])
-            return TutorialFactory.update($scope.tutorial)     
-        })
-        .then(function(tutorial){
             growl.success("Updated step successfully!")
         }, function(err){
             growl.error("Failed to update step")
@@ -106,7 +105,6 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
         return availableReqsArr;
     }
     $scope.theAvailableReqs = $scope.availableReqs();
-    console.log($scope.theAvailableReqs[0])
 
     $scope.updateMedia = function(media){
         if(!$scope.step.media) {
