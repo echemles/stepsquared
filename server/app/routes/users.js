@@ -3,7 +3,8 @@ var router = require('express').Router();
 module.exports = router;
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var Tutorial = mongoose.model('Tutorial')
+var Tutorial = mongoose.model('Tutorial');
+var _ = require('lodash');
 
 router.param('user_id', function(req, res, next) {
 	User.findById(req.params.user_id)
@@ -35,6 +36,10 @@ router.get('/:user_id', function(req, res, next){
 	.then(null, next)
 })
 
+router.get('/:user_id/grocery', function(req, res, next){
+	res.json(req.userObj.grocery)
+})
+
 //Modify one user
 router.put('/:user_id', function(req, res, next){
 	delete req.body.password;
@@ -44,6 +49,29 @@ router.put('/:user_id', function(req, res, next){
 		res.json(updatedUser);
 	})
 	.then(null,next);
+})
+
+//Modify grocery list in user
+router.put('/grocery/:user_id', function(req, res, next){
+	var listToAdd = req.body;
+	var recipeId = listToAdd.recipeId;
+
+	var recipeIndex = _.findIndex(req.userObj.grocery, function(list){
+		return list.recipeId === recipeId;
+	})
+
+	if(recipeIndex === -1){
+		req.userObj.grocery.push(listToAdd);
+	} else {
+		req.userObj.grocery.splice(recipeIndex, 1, listToAdd);
+	}
+
+	req.userObj.save()
+	.then(function() {
+		res.sendStatus(200);
+	})
+	.then(null,next);
+
 })
 
 //Delete one user
