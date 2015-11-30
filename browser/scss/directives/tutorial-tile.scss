@@ -1,0 +1,35 @@
+.tutorial-tile-container{
+	width: 80%;
+	margin:auto;
+	.tutorial-tile{
+		height:200px;
+		color:white;
+		.hearts{
+			float:right;
+			margin-right:5px;
+			margin-top:5px;
+			.red-circle{
+				width: 30px;
+				height: 30px;
+				background: red;
+				-moz-border-radius:30px;
+				-webkit-border-radius:30px;
+				border-radius:30px;
+				display:inline-block;
+				.glyphicon{
+					margin-left:3.5px;
+					margin-top:5px;
+					font-size: 20px;
+				}
+			}
+			.total-hearts{
+				font-size:20px;
+			}
+		}
+		.tutorial-info{
+			padding:15px 20px;
+		}
+	}
+	margin-bottom:30px;
+	
+}

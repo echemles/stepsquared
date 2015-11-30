@@ -1,9 +1,13 @@
+$backgroundTopLeft: #199fa2;
+$backgroundBottomRight: #b9d5d7;
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  background: #fdfdfd;
+  // background: #fdfdfd;
+  background: -webkit-linear-gradient(left top, $backgroundTopLeft, $backgroundBottomRight);
   padding-bottom: 110px; 
 }
 
