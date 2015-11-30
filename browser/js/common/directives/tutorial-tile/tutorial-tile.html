@@ -12,11 +12,17 @@
 			<div class = "tutorial-description">
 				<p>{{tutorial.description.substring(0,55) + '...'}}</p> 
 			</div>
+			<div class = "tutorial-ratings">
+				Ratings
+			</div>
+			<button class = "view-tutorial-button" ui-sref = "viewTutorial({tutorialId: tutorial._id})"><a>Start Cooking<a></button>
 		</div>
 	</div>
 
 	<div>
-		<div class = "tutorial-title"><h4>{{tutorial.name}}</h4></div>
-		<span>By <a ui-sref = "allTutorials({userId: tutorial.author._id})">{{tutorial.author.display_name}}</a></span>
+		<div class = "tutorial-title">
+			<h4>{{tutorial.name}}</h4>
+		</div>
+		<p>by <a ui-sref = "allTutorials({userId: tutorial.author._id})">{{tutorial.author.display_name}}</a></p>
 	</div>
 </div>

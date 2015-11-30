@@ -35,14 +35,35 @@
 			padding:55px 20px;
 			.tutorial-description{
 				font-size:20px;
+				font-weight:300;
+				font-family: 'Roboto Condensed','Helvetica', sans-serif;
+			}
+			.view-tutorial-button{
+				background-color:$yellow;
+				border:none;
+				margin-top:10px;
+				width:140px;
+				height:30px;
+				a{				
+					text-transform: uppercase;
+					font-weight:500;
+					font-size:13px;
+					color:white;
+					font-family: 'Roboto', 'Helvetica', sans-serif;
+				}
 			}
 		}
 	}
-
 	.tutorial-title{
-		font-weight:300;
-		font-size:30px;
+		h4{
+			font-weight:900;
+			font-size:20px;
+			color:black;
+			font-family: 'Roboto', 'Helvetica', sans-serif;
+			text-transform: uppercase;	
+		}
 	}
 	margin-bottom:30px;
+
 	
 }
