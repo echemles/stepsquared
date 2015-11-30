@@ -21,5 +21,9 @@ module.exports = {
   "AWS":{
     "accessKey": keys.AWS.accessKey,
     "secretKey": keys.AWS.secretKey
+  },
+  "TWILIO":{
+    "clientID": keys.TWILIO.clientID,
+    "clientSecret": keys.TWILIO.clientSecret
   }
 };
