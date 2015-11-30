@@ -10,6 +10,7 @@ router.use('/categories', require('./categories'));
 router.use('/help', require('./help'));
 router.use('/media', require('./media'));
 router.use('/upload', require('./upload'));
+router.use('/twilio', require('./twilio'));
 
 
 // Make sure this is after all of
