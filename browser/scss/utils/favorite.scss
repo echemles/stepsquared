@@ -1,0 +1,25 @@
+@mixin heart-icon-mixin($heart-size){
+	.hearts{
+		display:inline-block;
+		.total-hearts{
+			font-size:20px;
+		}
+		.red-circle{
+			width: 1.2 * $heart-size;
+			height: 1.2 * $heart-size;
+			background: $yellow;
+			-moz-border-radius:$heart-size;
+			-webkit-border-radius:$heart-size;
+			border-radius:$heart-size;
+			display:inline-block;
+			.glyphicon{
+				margin-top:12%;
+				margin-right:5.5%;
+				font-size: $heart-size;
+			}
+			.glyphicon-heart{
+				color:red;
+			}
+		}
+	}
+}
