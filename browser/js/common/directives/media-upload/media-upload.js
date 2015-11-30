@@ -1,9 +1,3 @@
-// app.filter('trustUrl', function ($sce) {
-//     return function(url) {
-//       return $sce.trustAsResourceUrl(url);
-//     };
-// });
-
 app.directive('mediaUpload', function(UploadFactory, MediaFactory, growl, $sce){
 	return {
 		restrict: 'E',
@@ -48,7 +42,6 @@ app.directive('mediaUpload', function(UploadFactory, MediaFactory, growl, $sce){
 			}
 
 			scope.trueUpdateMedia = function() {
-				//If file has been chosen, upload file and update Media document
 				if(media) {
 					if (imageRegex.test(media.type)) {
 						scope.media.type = 'image'
@@ -69,6 +62,9 @@ app.directive('mediaUpload', function(UploadFactory, MediaFactory, growl, $sce){
 					UploadFactory.uploadMedia(media)
 					.then(function(signedURL){
 						upload_file(media, signedURL.signed_request, signedURL.url)
+					})
+					.catch(function(err){
+						growl.error('There was an error uploading media');
 					})
 				}
 				else {
