@@ -25,16 +25,21 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
         return step._id == $scope.currentStep.step._id
     })
     $scope.currentIndex.idx = currentIdx;
+    $scope.$parent.currentIndex.idx = currentIdx;
 
 	$scope.step.requirements = !$scope.step.requirements ? [{}] : $scope.step.requirements;
 	$scope.mediaObj = currentStep.media;
 
     $scope.update = function(){
         for(var i = 0; i < $scope.step.requirements.length; i++){
-           delete $scope.step.requirements[i].$$hashKey 
+           delete $scope.step.requirements[i].$$hashKey;
+           delete $scope.step.requirements[i].item;
+           delete $scope.step.requirements[i].unit;
+
         }
-        StepsFactory.updateStep($scope.step)
-        .then(function(step){
+        StepsFactory.updateStep($scope.tutorial._id, $scope.step)
+        .then(function(tutorial){
+            $scope.$parent.tutorial = tutorial;
             growl.success("Updated step successfully!")
         }, function(err){
             growl.error("Failed to update step")
@@ -60,12 +65,14 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
         var arrOfSteps = $scope.$parent.tutorial.steps; 
         var reqsObj = {};
         for(var i =0; i < arrOfSteps.length; i++){
-            for(var j =0; j < arrOfSteps[i].requirements.length; j++){
-                var requirement = arrOfSteps[i].requirements[j];
-                if(!reqsObj[requirement.unitItem]){
-                    reqsObj[requirement.unitItem] =0;
-                } 
-                reqsObj[requirement.unitItem]+= requirement.quantity;
+            if( i != $scope.currentIndex.idx) {
+                for(var j =0; j < arrOfSteps[i].requirements.length; j++){
+                    var requirement = arrOfSteps[i].requirements[j];
+                    if(!reqsObj[requirement.unitItem]){
+                        reqsObj[requirement.unitItem] =0;
+                    } 
+                    reqsObj[requirement.unitItem]+= requirement.quantity;
+                }
             }
         }
         return reqsObj;
@@ -81,7 +88,12 @@ app.controller('EditStepCtrl', function ($scope, currentStep, growl, StepsFactor
         }
         return availableReqsArr;
     }
+
     $scope.theAvailableReqs = $scope.availableReqs();
+    $scope.availReqObj = {};
+    for(var i=0; i<$scope.theAvailableReqs.length; i++ ) {
+        $scope.availReqObj[$scope.theAvailableReqs[i].unitItem] = $scope.theAvailableReqs[i].quantity;
+    }
 
     $scope.updateMedia = function(media){
         if(!$scope.step.media) {

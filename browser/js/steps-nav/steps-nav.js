@@ -22,6 +22,10 @@ app.controller('StepsNavCtrl', function ($scope, $state, growl, currentTutorial,
         idx: null
     }
     
+    $scope.isActive = function(idx){
+        return $scope.currentIndex.idx == idx;
+    }
+
     $scope.nextStep = function(){
         if($scope.currentIndex.idx+1 < $scope.tutorial.steps.length){
             $scope.currentStep.step = $scope.tutorial.steps[$scope.currentIndex.idx+1]
