@@ -57,9 +57,16 @@
         </div>
         <button ng-click = "addTool()">Add Tool</button>
     </div>
-    <button type="submit" class="btn btn-default" ng-click = "editTutorial.$valid && update(tutorial)" ng-disabled = "isUploading.isUploading">Update</button>
-</form>
 
+
+    <button type="submit" class="btn btn-default" ng-click = "editTutorial.$valid && update(tutorial)" ng-disabled = "isUploading.isUploading">Update</button>
+
+
+</form>
+    <h3>Steps</h3>
+    <div ng-repeat = "(idx, step) in tutorial.steps">
+        <a ui-sref = "stepsNav.edit({stepId: step._id, tutorialId: tutorial._id})">{{idx + 1}}:{{step.name}}</a>
+    </div>
 
 
 

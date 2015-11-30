@@ -5,12 +5,12 @@
 
     <div class="form-group">
         <label>Step Name*</label>
-        <input type="text" ng-model="step.name" class="form-control" placeholder="Enter name">
+        <input type="text" ng-model="step.name" class="form-control" placeholder="Enter name" required>
     </div>
 
     <div class = "form-group">
         <label>Description*</label>
-        <textarea ng-model="step.description" class="form-control"></textarea>
+        <textarea ng-model="step.description" class="form-control" required></textarea>
     </div>
 
 <!-- insert help here -->
@@ -22,16 +22,15 @@
         <table>
             <tr>
                 <th>Quantity</th>
-                <th>Unit</th>
-                <th>Item</th>
+                <th>Unit_Item</th>
             </tr>
             <tr ng-repeat="(idx, requirement) in step.requirements">
 
                 <td>
-                    <input type="text" ng-model="requirement.quantity" class="form-control">
+                    <input type="number" step=0.01 min=0 max={{availReqObj[requirement.unitItem]}} ng-model="requirement.quantity" class="form-control">
                 </td>
                 <td>
-                    <select ng-options="item.unitItem as item.unitItem for item in theAvailableReqs" ng-model="requirement.unitItem" class="form-control"></select>
+                    <select ng-options="unitItem as unitItem for (unitItem, quantity) in availReqObj" ng-model="requirement.unitItem" class="form-control"></select>
                 </td>
                 <td>
                     <span class="glyphicon glyphicon-remove" ng-click="removeRequirement(idx)"></span>
@@ -39,8 +38,8 @@
 
             </tr>
         </table>
-        <button ng-click="addRequirement()">Old Add Requirement</button> 
-        <button ui-sref="editTutorial({tutorialId: tutorial._id})">Add Requirement</button>
+        <button ng-click="addRequirement()">Add Step Requirement</button> 
+        <button ui-sref="editTutorial({tutorialId: tutorial._id})">Edit Tutorial Requirements</button>
     </div>
 </div>
     <media-upload media="mediaObj" is-uploading="isUploading" types="['photo']" update-media="updateMedia(media)"></media-upload>
@@ -54,7 +53,7 @@
         <input type="text" ng-model="step.standByTime" class="form-control" placeholder="Enter standby time">
     
 
-    <button type="submit" class="btn btn-default" ng-click = "editStep.$valid && update()" ng-disabled = "isUploading.isUploading">Update</button>
+    <button type="submit" class="btn btn-default" ng-disabled="editStep.$invalid" ng-click = "update()" ng-disabled = "isUploading.isUploading">Update</button>
     <button class = "btn btn-default" ng-click="delete()">Delete Step </button>
 </form>
     </div>
