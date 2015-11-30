@@ -12,8 +12,9 @@
 		<ol>
 			<button ng-click="prevStep()">Back</button>
 			<span ng-repeat = "(idx, step) in tutorial.steps">
-				<a ui-sref="stepsNav.edit({stepId: step._id})">{{idx+1}}</a>
+				<a ng-class="{boldtext: isActive(idx)}" ui-sref="stepsNav.edit({stepId: step._id})">{{idx+1}}</a>
 			</span>
+
 			<button ng-click="nextStep()">Next</button>
 			<button ng-click="createStep()">Create Step</button>
 		</ol>

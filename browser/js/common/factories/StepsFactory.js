@@ -21,8 +21,8 @@ app.factory('StepsFactory', function($http){
 		.then(getData)
 	}
 
-	StepsFactory.updateStep = function(stepInfo){
-		return $http.put('/api/steps/'+ stepInfo._id, stepInfo)
+	StepsFactory.updateStep = function(tutorialId, stepInfo){
+		return $http.put('/api/steps/tutorial/'+ tutorialId+'/step/'+stepInfo._id, stepInfo)
 		.then(getData)
 	}
 

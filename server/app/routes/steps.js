@@ -34,12 +34,15 @@ router.post('/', function(req, res, next){
 
 })
 
-router.put('/:stepId', function(req, res, next){
+router.put('/tutorial/:tutorialId/step/:stepId', function(req, res, next){
 	delete req.body._id
 	req.step.set(req.body)
 	req.step.save()
 	.then(function(step){
-		res.send(step)
+		return Tutorial.findById(req.params.tutorialId).populate('steps').exec()
+	})
+	.then(function(tutorial){
+		res.json(tutorial);
 	})
 	.then(null, next)
 })
