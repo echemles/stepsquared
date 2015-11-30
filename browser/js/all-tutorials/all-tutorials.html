@@ -1,5 +1,5 @@
 <div class="container-fluid">
-	<div class = "col-xs-2">
+	<div>
 <!-- 	    <div class="btn-group" uib-dropdown is-open="status.isopen">
 	      <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
 	        Filter by Category <span class="caret"></span>
@@ -15,13 +15,13 @@
 
 	</div>
 
-	<div class = "col-xs-10">
-	<h1>{{title}}</h1>
-<div ng-repeat = "tutorial in tutorials | filter: categoryFilter()"> 
 
-	<div class = "col-xs-4">
-		<tutorial-tile tutorial = "tutorial" user = "loggedInUser"></tutorial-tile>
-	</div>
-</div>
+		<h1>{{title}}</h1>
+		<div ng-repeat = "tutorial in tutorials | filter: categoryFilter()"> 
+
+			<div class = "col-xs-4">
+				<tutorial-tile tutorial = "tutorial" user = "loggedInUser"></tutorial-tile>
+			</div>
+
 </div>
 </div>
