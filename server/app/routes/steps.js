@@ -5,6 +5,7 @@ module.exports = router;
 var Tutorial = mongoose.model('Tutorial')
 var Step = mongoose.model('Step')
 
+//Should include a tutorialID in the req.body
 router.post('/', function(req, res, next){
 	var createdStep;
 	Step.create(req.body.step)
@@ -43,10 +44,20 @@ router.put('/:stepId', function(req, res, next){
 	.then(null, next)
 })
 
-router.delete('/:stepId', function(req, res, next){
+router.delete('/tutorial/:tutorialId/step/:stepId', function(req, res, next){
 	req.step.remove()
 	.then(function(){
-		res.sendStatus(204);
+		return Tutorial.findById(req.params.tutorialId)
+	})
+	.then(function(tutorial){
+		tutorial.steps.pull(req.params.stepId)
+		return tutorial.save()
+	})
+	.then(function(tutorial){
+		return tutorial.populate('steps').execPopulate()
+	})
+	.then(function(tutorial){
+		res.json(tutorial)
 	})
 	.then(null, next)
 })
@@ -57,7 +68,7 @@ router.get('/:stepId', function(req, res){
 
 
 router.param('stepId', function(req, res, next, id){
-	Step.findById(id)
+	Step.findById(id).populate('media').exec()
 	.then(function(step){
 		req.step = step;
 		next()

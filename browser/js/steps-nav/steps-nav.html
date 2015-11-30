@@ -1,0 +1,24 @@
+<ui-view></ui-view>
+<footer class="footer navbar-fixed-bottom">
+	<div class="container">
+		<h4>Ingredients</h4>
+		<span ng-repeat="req in tutorial.requirements track by $index">
+
+			<span>{{ req.quantity}} {{req.unit}} {{req.item}} | </span>
+		</span>
+
+
+
+		<ol>
+			<button ng-click="prevStep()">Back</button>
+			<span ng-repeat = "(idx, step) in tutorial.steps">
+				<a ui-sref="stepsNav.edit({stepId: step._id})">{{idx+1}}</a>
+			</span>
+			<button ng-click="nextStep()">Next</button>
+			<button ng-click="createStep()">Create Step</button>
+		</ol>
+
+		
+		
+	</div>
+</footer>
