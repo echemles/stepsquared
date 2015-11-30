@@ -4,6 +4,7 @@
 	.tutorial-tile{
 		height:200px;
 		color:white;
+
 		.hearts{
 			float:right;
 			margin-right:5px;
@@ -29,9 +30,18 @@
 				font-size:20px;
 			}
 		}
+
 		.tutorial-info{
-			padding:15px 20px;
+			padding:55px 20px;
+			.tutorial-description{
+				font-size:20px;
+			}
 		}
+	}
+
+	.tutorial-title{
+		font-weight:300;
+		font-size:30px;
 	}
 	margin-bottom:30px;
 	

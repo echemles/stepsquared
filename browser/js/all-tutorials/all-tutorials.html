@@ -11,7 +11,7 @@
 		<h1>{{title}}</h1>
 	</div>
 
-	<uib-carousel interval = "10000">
+	<uib-carousel interval = "100000">
 		<uib-slide ng-repeat = "page in tutorialsPages" active = "slide.active">
 
 			<div ng-repeat = "tutorial in page | filter: categoryFilter()"> 

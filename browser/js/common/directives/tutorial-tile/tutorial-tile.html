@@ -9,16 +9,14 @@
 		</div>
 
 		<div ng-if = "!hideInfo" class = "tutorial-info">
-			<span>
-				<p>Time</p>
-			</span>
-			<p>{{tutorial.description.substring(0,100) + '...'}}</p> 
-			<p>{{tutorial.category.name}}</p>
+			<div class = "tutorial-description">
+				<p>{{tutorial.description.substring(0,55) + '...'}}</p> 
+			</div>
 		</div>
 	</div>
 
 	<div>
-		<h4>{{tutorial.name}}</h4>
+		<div class = "tutorial-title"><h4>{{tutorial.name}}</h4></div>
 		<span>By <a ui-sref = "allTutorials({userId: tutorial.author._id})">{{tutorial.author.display_name}}</a></span>
 	</div>
 </div>
