@@ -1,5 +1,6 @@
 'use strict';
 
+
 window.app = angular.module('FullstackGeneratedApp', ['fsaPreBuilt', 'ui.router', 'ui.bootstrap', 'angular-growl', 'ngAnimate', 'ngFileUpload','ngLodash']);
 
 
@@ -13,6 +14,8 @@ app.config(function ($urlRouterProvider, $locationProvider) {
 app.config(['growlProvider', function(growlProvider) {
   growlProvider.globalTimeToLive(5000);
 }]);
+
+
 
 
 // This app.run is for controlling access to specific states.

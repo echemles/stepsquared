@@ -25,6 +25,7 @@ app.config(function ($stateProvider) {
 
 app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutorial, TutorialFactory, MediaFactory, Upload, categories, units) {
     $scope.units = units;
+    $scope.mediaObj = currentTutorial.media
 
     $scope.categories = categories; 
 
@@ -90,30 +91,14 @@ app.controller('EditTutorialCtrl', function ($scope, $state, growl, currentTutor
 
     $scope.updateMedia = function(media){
         if(!$scope.tutorial.media){
-            //create media object
-            //set the media object of the current tutorial
-            MediaFactory.create(media)
+            return MediaFactory.create(media)
             .then(function(media){
                 $scope.tutorial.media = media._id
                 return TutorialFactory.update($scope.tutorial)
             })
-            .then(function(){
-                growl.success("Media uploaded")
-            })
-            .catch(function(err){
-                console.error(err)
-                growl.error("Unable to upload media")
-            })
         }
         else{
-            MediaFactory.update(media)
-            .then(function(){
-                growl.success("Media uploaded")
-            })
-            .catch(function(err){
-                console.error(err)
-                growl.error("Unable to upload media")
-            })
+            return MediaFactory.update(media)
         }
     }
 

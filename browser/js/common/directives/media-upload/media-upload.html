@@ -1,8 +1,10 @@
-<form>
+<div class="col-xs-4">
+<form name="mediaForm" ng-submit="trueUpdateMedia()">
+
 	<h3 ng-if = "media">Upload Media</h3>
 	<div class = "form-group">
 		<label for = "name">Media Name</label>
-		<input type = "text" ng-model = "media.name" class = "form-control" placeholder = "Enter Media Name">
+		<input type = "text" ng-model = "media.name" class = "form-control" placeholder = "Enter Media Name" required>
 	</div>
 
 	<div class = "form-group">
@@ -10,13 +12,19 @@
 		<input type = "text" ng-model = "media.tags" class = "form-control" placeholder = "Enter Media Tags separated by comma">
 	</div>
  
-	<input type = "file" id = "uploadMedia" accept = "image/*">
+	<input type = "file" ng-disabled = "!media.name" id = "uploadMedia" accept = "{{getTypes()}}">
 
 	<div>
-		<img ng-if = "media" ng-src = "{{media.url}}" style = "width: 200px;">
+		<img ng-if = "showPreview && media.type == 'image'" ng-src = "{{media.url}}" style = "width: 200px;">
+		<video id="video" ng-if = "showPreview && media.type == 'video'" width="320" height="240" controls>
+			 <source ng-src="{{trustUrl(media.url)}}">
+		</video>
 	</div>
 
-	<button ng-click = "updateMedia({media: media})">Update Media</button>
+	<uib-progressbar max="100" value="percentage" ng-show="showProgress"><span style="color:white; white-space:nowrap;">{{percentage}}%</span></uib-progressbar>
+	
+	<button class="btn btn-default" ng-disabled = "!media.name"ng-click = "trueUpdateMedia()">Save Media</button>
 
 
 </form>
+</div>

@@ -17,11 +17,20 @@ app.factory('UserFactory', function($http, AuthService){
         .then(getData);
     }
 
+    UserFactory.fetchGrocery = function(user_id){
+        return $http.get('/api/users/'+ user_id + '/grocery')
+        .then(getData);
+    }
+
     UserFactory.updateUser = function(user){
         return $http.put('/api/users/' + user._id, user)
         .then(getData);
     }
 
+    UserFactory.updateGrocery = function(list, userId){
+        return $http.put('/api/users/grocery/' + userId, list)
+        .then(getData);
+    }
 
     UserFactory.deleteUser = function(user_id){
         return $http.delete('/api/users/' + user_id)

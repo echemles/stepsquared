@@ -1,6 +1,5 @@
 <div class = "tutorial-tile-container">
 	<div class = "tutorial-tile" ng-mouseover = "showInfo()" ng-mouseleave = "removeInfo()" class = "clearfix" style = "background-image: {{backgroundImage}}">
-		<!-- <img src = "http://nutritionsmart.com/wp-content/uploads/2014/12/healthy-cooking.jpg" style = "width: 100%" ui-sref = "viewTutorial({tutorialId:tutorial._id})" class = "tutorial-image"></img> -->
 		<div class = "hearts">
 			<div class = "red-circle">
 				<span ng-if = "hasFavorite()" class = "glyphicon glyphicon-heart" ng-click = "removeFavorite()"></span>
@@ -11,7 +10,6 @@
 
 		<div ng-if = "!hideInfo" class = "tutorial-info">
 			<span>
-
 				<p>Time</p>
 			</span>
 			<p>{{tutorial.description.substring(0,100) + '...'}}</p> 
@@ -24,3 +22,4 @@
 		<span>By <a ui-sref = "allTutorials({userId: tutorial.author._id})">{{tutorial.author.display_name}}</a></span>
 	</div>
 </div>
+

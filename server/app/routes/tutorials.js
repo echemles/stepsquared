@@ -5,7 +5,7 @@ module.exports = router;
 var Tutorial = mongoose.model('Tutorial');
 
 router.param('tutorialId', function(req, res, next, id){
-	Tutorial.findById(id).populate('steps author media category')
+	Tutorial.findById(id).populate('steps author media category reviews.user')
 	.then(function(tutorial){
 		if(!tutorial) throw new Error('Tutorial not found')
 			req.foundTutorial = tutorial;
@@ -95,6 +95,22 @@ router.delete('/:tutorialId', function(req, res, next){
 	})
 	.then(null, next)
 })
+
+//Add a review for a tutorial
+router.post('/:tutorialId/review', function(req, res, next){
+	//need to make sure the user is the current logged in user
+	//check to make sure this user does not have a rating for the requested tutorial
+	req.foundTutorial.reviews.push(req.body)
+	req.foundTutorial.save()
+	.then(function(tutorial){
+		return tutorial.populate('steps author media category reviews.user').execPopulate()
+	})
+	.then(function(tutorial){
+		res.json(tutorial)
+	})
+	.then(null, next)
+})
+
 
 //Add a tutorial
 router.post('/', function(req, res, next){
