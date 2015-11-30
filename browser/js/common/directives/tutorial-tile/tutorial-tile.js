@@ -7,7 +7,7 @@ app.directive('tutorialTile', function(UserFactory, lodash, $state){
 			user: '=',
 			onRemove: '&'
 		},
-		link: function(scope){
+		link: function(scope, element){
 			scope.addFavorite = function(){
 				UserFactory.addFavorite(scope.user._id, scope.tutorial._id)
 				.then(function(user){
@@ -15,6 +15,22 @@ app.directive('tutorialTile', function(UserFactory, lodash, $state){
 					scope.tutorial.favorites +=1;
 				})
 			}
+			// element.css({
+			// 	'background-image': `
+			// })
+			scope.backgroundImage = `url(${scope.tutorial.media.url})`
+			// console.log("background iamge is ", )
+
+
+			scope.hideInfo = false;
+			scope.showInfo = function(){
+				scope.hideInfo = false;
+			}
+
+			scope.removeInfo = function(){
+				scope.hideInfo = false;
+			}
+
 			scope.removeFavorite = function(){
 				UserFactory.removeFavorite(scope.user._id, scope.tutorial._id)
 				.then(function(user){
