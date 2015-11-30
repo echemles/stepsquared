@@ -37,6 +37,22 @@
         </table>
     </div>
 
+    <div ng-repeat = "(idx, step) in tutorial.steps">
+        <!-- {{step}} -->
+        <a ui-sref = "viewStep(     {stepId: step._id, tutorialId: tutorial._id, tutorial: tutorial})">{{idx + 1}}:{{step.name}}</a>
+    </div>
+
+    <div ng-if = "!alreadyReviewed()">
+        <label>Rating</label>
+        <input type = "number" ng-model="review.rating"></input>
+        <button class = "btn btn-default" ng-click = "addReview()">Add Review</button>
+    </div>
+    
+    <h3>Reviews</h3>
+    <div ng-repeat = "review in tutorial.reviews">
+        <p>User: {{review.user.display_name}}</p>
+        <p>Rating: {{review.rating}}</p>
+    </div>
    
 
 
