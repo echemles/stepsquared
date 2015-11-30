@@ -9,7 +9,6 @@ app.config(function ($stateProvider) {
                 .then(function(step){
                     if(!step) $state.go('editTutorial', {tutorialId: $stateParams.tutorialId})
                     else return step;
-
                 })
             }
 

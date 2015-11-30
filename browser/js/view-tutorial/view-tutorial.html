@@ -11,16 +11,17 @@
     <h3>Equipment: 
         <div ng-repeat="equip in tutorial.equipment">{{equip}}</div>
     </h3>
+    <h3 ng-if="tutorial.category.name == 'Recipes'"> Servings: {{tutorial.quantity}}</h3>
 
     <h3>Steps: 
          <div ng-repeat = "(idx, step) in tutorial.steps">
         <!-- {{step}} -->
-        <a ui-sref = "viewStep({stepId: step._id, tutorialId: tutorial._id, tutorial: tutorial})">{{idx + 1}}:{{step.name}}</a>
+        <a ui-sref = "viewStepNav.viewStep({stepId: step._id, tutorialId: tutorial._id})">{{idx + 1}}:{{step.name}}</a>
     </div>
    
     </h3>
+    <button class="btn btn-primary" ui-sref = "viewStepNav.viewStep({stepId: tutorial.steps[0]._id, tutorialId: tutorial._id})">START TUTORIAL</button>
 
-    <h3 ng-if="tutorial.category.name == 'Recipes'"> Servings: {{tutorial.quantity}}</h3>
     <div>
         <table>
             <tr>
@@ -38,11 +39,9 @@
         </table>
     </div>
 
-    <button class='btn btn-default' ng-click="saveList()">Save List</button>
+    <button class='btn btn-default' ng-click="saveList()">Save Grocery List</button>
 
-    <div ng-repeat = "(idx, step) in tutorial.steps">
-        <a ui-sref = "viewStep({stepId: step._id, tutorialId: tutorial._id, tutorial: tutorial})">{{idx + 1}}:{{step.name}}</a>
-    </div>
+
 
     <div ng-if = "!alreadyReviewed()">
         <label>Rating</label>

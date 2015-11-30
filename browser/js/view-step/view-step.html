@@ -10,7 +10,7 @@
 
 	<div class = "col-xs-6">
 		<div>
-			<h3>Requirements</h3>
+			<h3>Ingredients</h3>
 			<table>
 				<tr>
 					<th>Quantity</th>
@@ -38,8 +38,10 @@
 
 	<div class = "col-xs-6">
 		<div>
-			<img ng-if = "media.type === 'image'" ng-src = "step.media.url"></img>
-			<video ng-if = "media.type === 'video'" ng-src = "step.media.url"></video>
+			<img ng-if = "step.media.type === 'image'" ng-src = "{{step.media.url}}" style = "width: 700px;"></img>
+			<video ng-if = "step.media.type === 'video'" controls style = "width: 700px;">
+				<source ng-src = "{{trustUrl(step.media.url)}}"> </source>
+			</video>
 		</div>
 		
 	</div>

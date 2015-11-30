@@ -1,0 +1,18 @@
+<ui-view></ui-view>
+<footer class="footer navbar-fixed-bottom">
+	<div class="container">
+
+
+		<ol>
+			<button ng-click="prevStep()">Back</button>
+			<span ng-repeat = "(idx, step) in tutorial.steps">
+				<a ng-class="{boldtext: isActive(idx)}" ui-sref="viewStepNav.viewStep({stepId: step._id})">{{idx+1}}</a>
+			</span>
+
+			<button ng-click="nextStep()">Next</button>
+		</ol>
+
+		
+		
+	</div>
+</footer>
