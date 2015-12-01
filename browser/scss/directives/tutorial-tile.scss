@@ -4,9 +4,16 @@
 	.tutorial-tile{
 		height:200px;
 		color:white;
-		@include heart-icon-mixin(20px);
+		@include heart-icon-mixin(25px);
+		heart{
+			float:right;
+			margin-right:10px;
+			margin-top: 10px;
+		}
 		.tutorial-info{
-			padding:55px 20px;
+			padding:40px 20px;
+			background-color:$backgroundTopLeft;
+			opacity: .6;
 			.tutorial-description{
 				font-size:20px;
 				font-weight:300;
